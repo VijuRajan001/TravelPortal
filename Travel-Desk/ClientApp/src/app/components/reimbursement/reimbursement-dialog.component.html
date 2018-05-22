@@ -142,12 +142,13 @@
             </form>
         </mat-tab>
 
-        <mat-tab label="Per Diem">
+        <!--<mat-tab label="Per Diem">
             <form [formGroup]="PerDiemForm" (ngSubmit)="onSubmit()">
                 <div class="form-content">
-                    <perdiem-items-array formArrayName="perDiemItems"
-                                       [perDiemItemsFormArray]="PerDiemOptionsForm.get('perDiemItems')">
-                    </perdiem-items-array>
+                   <perDiem-item-control *ngFor="let perDiemItem of perDiemItemsFormArray.controls; let i=index"
+                         [index]="i" [perDiemItem]="perDiemItem" (removed)="perDiemItemsFormArray.removeAt($event)" (add)="addItem($event)">
+                   </perDiem-item-control>
+
                 </div>
 
                 <div class="spacer">
@@ -160,14 +161,14 @@
                     </mat-action-row>
                 </div>
             </form>
-        </mat-tab>
+        </mat-tab>-->
 
         <mat-tab label="Boarding & Lodging Expenses">
             <form [formGroup]="BoardingExpensesForm" (ngSubmit)="onSubmit()">
                 <div class="form-content">
-                    <hotel-items-array formArrayName="hotelItems"
-                                       [hotelItemsFormArray]="HotelOptionsForm.get('hotelItems')">
-                    </hotel-items-array>
+                    <boardingLodging-items-array formArrayName="lodgingItems"
+                                       [boardingLodgingItemsFormArray]="BoardingExpensesForm.get('lodgingItems')">
+                    </boardingLodging-items-array>
                 </div>
 
                 <div class="spacer">
@@ -185,9 +186,9 @@
         <mat-tab label="Travel Expenses supported by Voucher">
             <form [formGroup]="TravelWithVoucherForm" (ngSubmit)="onSubmit()">
                 <div class="form-content">
-                    <hotel-items-array formArrayName="hotelItems"
-                                       [hotelItemsFormArray]="HotelOptionsForm.get('hotelItems')">
-                    </hotel-items-array>
+                    <travelExpensesWithVoucher-items-array formArrayName="voucherItems"
+                                       [travelExpensesWithVoucherItemsFormArray]="TravelWithVoucherForm.get('voucherItems')">
+                    </travelExpensesWithVoucher-items-array>
                 </div>
 
                 <div class="spacer">
@@ -205,9 +206,9 @@
         <mat-tab label="Travel Expenses Unsupported by Voucher">
             <form [formGroup]="TravelWithoutVoucherForm" (ngSubmit)="onSubmit()">
                 <div class="form-content">
-                    <hotel-items-array formArrayName="hotelItems"
-                                       [hotelItemsFormArray]="HotelOptionsForm.get('hotelItems')">
-                    </hotel-items-array>
+                    <travelExpensesWithoutVoucher-items-array formArrayName="nonVoucherItems"
+                                       [travelExpensesWithoutVoucherItemsFormArray]="TravelWithoutVoucherForm.get('nonVoucherItems')">
+                    </travelExpensesWithoutVoucher-items-array>
                 </div>
 
                 <div class="spacer">
@@ -225,9 +226,9 @@
         <mat-tab label="Other Expenses">
             <form [formGroup]="OtherExpensesForm" (ngSubmit)="onSubmit()">
                 <div class="form-content">
-                    <hotel-items-array formArrayName="hotelItems"
-                                       [hotelItemsFormArray]="HotelOptionsForm.get('hotelItems')">
-                    </hotel-items-array>
+                    <otherExpenses-items-array formArrayName="otherExpenseItems"
+                                       [otherExpensesItemsFormArray]="OtherExpensesForm.get('otherExpenseItems')">
+                    </otherExpenses-items-array>
                 </div>
 
                 <div class="spacer">

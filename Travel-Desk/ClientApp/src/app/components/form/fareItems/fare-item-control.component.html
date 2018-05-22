@@ -19,37 +19,37 @@
     <h1>Place of Travel</h1>
     <mat-form-field>
         <input matInput placeholder="From" formControlName="from" [attr.id]="'from'+index" required>
-        <mat-error *ngIf="hotelItem.get('location').hasError('required')">
+        <mat-error *ngIf="fareItem.get('from').hasError('required')">
             Location is <strong>required</strong>
         </mat-error>
     </mat-form-field>
     <mat-form-field>
         <input matInput placeholder="To" formControlName="to" [attr.id]="'to'+index">
-        <mat-error *ngIf="hotelItem.get('website').hasError('required')">
+        <mat-error *ngIf="fareItem.get('to').hasError('required')">
             Website is <strong>required</strong>
         </mat-error>
     </mat-form-field>
     <mat-form-field>
         <input matInput placeholder="Currency" formControlName="currency" [attr.id]="'currency'+index" required>
-        <mat-error *ngIf="hotelItem.get('mobileno').hasError('required')">
+        <mat-error *ngIf="fareItem.get('currency').hasError('required')">
             Mobile number is <strong>required</strong>
         </mat-error>
     </mat-form-field>
     <mat-form-field>
         <input matInput placeholder="Actual Amount Spent" formControlName="amountspent" [attr.id]="'amountspent'+index" required>
-        <mat-error *ngIf="hotelItem.get('mobileno').hasError('required')">
+        <mat-error *ngIf="fareItem.get('amountspent').hasError('required')">
             Mobile number is <strong>required</strong>
         </mat-error>
     </mat-form-field>
     <mat-form-field>
         <input matInput placeholder="Eligibility" formControlName="eligibility" [attr.id]="'eligibility'+index" required>
-        <mat-error *ngIf="hotelItem.get('mobileno').hasError('required')">
+        <mat-error *ngIf="fareItem.get('eligibility').hasError('required')">
             Mobile number is <strong>required</strong>
         </mat-error>
     </mat-form-field>
     <mat-form-field>
         <input matInput placeholder="Remarks" formControlName="remarks" [attr.id]="'remarks'+index" required>
-        <mat-error *ngIf="hotelItem.get('mobileno').hasError('required')">
+        <mat-error *ngIf="fareItem.get('remarks').hasError('required')">
             Mobile number is <strong>required</strong>
         </mat-error>
     </mat-form-field>

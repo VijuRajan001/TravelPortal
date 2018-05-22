@@ -26,7 +26,8 @@ export class FlightService extends BaseService {
   }
 
   addFlightInfo(flightdata: FlightOptions): Observable<any> {
-      return this.http.post(this.baseUrl + 'api/Flight/AddFlights',
+
+    return this.http.post(this.baseUrl + 'api/Flight/AddFlights',
           JSON.stringify(flightdata));
   }
 
@@ -40,9 +41,10 @@ export class FlightService extends BaseService {
 
 
   updateFlightInfo(flightdata: FlightOptions): Observable<any> {
-      console.log(flightdata);
-      return this.http.post(this.baseUrl + 'api/Flight/UpdateFlights', 
+    
+        return this.http.post(this.baseUrl + 'api/Flight/UpdateFlights', 
           JSON.stringify(flightdata));
+     
     }
 
     deleteflights(deletedFlights: number[]):Observable<any> {

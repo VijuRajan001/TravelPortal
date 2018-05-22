@@ -28,12 +28,16 @@ namespace TravelDesk.Controllers
         [HttpPost("AddFlights")]
         public void AddFlights([FromBody]FlightOptionsViewModel flightData)
         {
+
             List<FlightInfo> _onwardflightItems = _mapper.Map<List<FlightItem>, List<FlightInfo>>(flightData.OnwardFlightItems);
             List<FlightInfo> _returnflightItems = _mapper.Map<List<FlightItem>, List<FlightInfo>>(flightData.ReturnFlightItems);
-            _unitofWork.FlightRepository.AddOnwardFlightOptions(_onwardflightItems);
-            _unitofWork.FlightRepository.AddReturnFlightOptions(_returnflightItems);
+                if(_onwardflightItems.Count>0 && _returnflightItems.Count > 0) { 
+                _unitofWork.FlightRepository.AddOnwardFlightOptions(_onwardflightItems);
+                _unitofWork.FlightRepository.AddReturnFlightOptions(_returnflightItems);
+            
 
-            _unitofWork.Complete();
+                _unitofWork.Complete();
+            }
 
         }
 
@@ -67,23 +71,26 @@ namespace TravelDesk.Controllers
             List<FlightItem> flightItems = new List<FlightItem>();
             flightItems.AddRange(flightData.OnwardFlightItems);
             flightItems.AddRange(flightData.ReturnFlightItems);
-            
-            List<FlightInfo> flightDataList = (_unitofWork.FlightRepository.GetFlightsForRequest(flightItems.First().RequestInfoId));
-            
-            foreach(var item in flightItems)
-            {
-                var refItem = flightDataList.FirstOrDefault(i => i.Id == item.Id);
-                if(refItem!=null)
-                {
-                    refItem.FlightFrom = item.FlightFrom;
-                    refItem.FlightTo = item.FlightTo;
-                    refItem.FlightName = item.FlightName;
-                    refItem.FlightItemId = item.FlightItemId;
-    
-                }
-            }
 
-            _unitofWork.Complete();
+            if (flightItems.Count>0)
+            { 
+                List<FlightInfo> flightDataList = (_unitofWork.FlightRepository.GetFlightsForRequest(flightItems.First().RequestInfoId));
+            
+                foreach(var item in flightItems)
+                {
+                    var refItem = flightDataList.FirstOrDefault(i => i.Id == item.Id);
+                    if(refItem!=null)
+                    {
+                        refItem.FlightFrom = item.FlightFrom;
+                        refItem.FlightTo = item.FlightTo;
+                        refItem.FlightName = item.FlightName;
+                        refItem.FlightItemId = item.FlightItemId;
+    
+                    }
+                }
+
+                _unitofWork.Complete();
+            }
 
         }
 

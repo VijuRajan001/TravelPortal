@@ -63,7 +63,7 @@ namespace TravelDesk.Controllers
             newRequest.TravelCountry = requestData.Country;
             newRequest.TravelStart = requestData.TravelDate;
             newRequest.TravelReturn = requestData.ReturnDate;
-            
+            newRequest.RequestStatus = requestData.RequestStatus;
             int i = _unitofWork.Complete();
             
             

@@ -50,7 +50,7 @@ export class RequestDialog implements OnInit, Validators {
     
     step = 0;
     mode = 0;
-    
+    message: string;
     traveldata: TravelData = new TravelData();
     submitActions: number;
     action: typeof SubmitActions = SubmitActions;
@@ -157,8 +157,7 @@ export class RequestDialog implements OnInit, Validators {
         if (this.data > 0) {
             let requestData = this.requestService.getRequestById(this.data);
             let flightData = this.flightService.getFlightsForRequest(this.data);
-            let hotelData = this.hotelService.getHotelsForRequest(this.data);
-
+            let hotelData = this.hotelService.getHotelsForRequest(this.data);``
             let passportData = this.passportService.getPassportDetails(this.data);
             let forexData = this.forexService.getForexDetails(this.data);
 
@@ -272,7 +271,7 @@ export class RequestDialog implements OnInit, Validators {
             saveFlightdata.OnwardFlightItems.forEach(item => {
                 item.requestInfoId = this.data;
                 item.flightDirection = "Onward";
-                if (item.id === null) {
+                if (item.id == 0 || item.id == null) {
                     item.id = 0;
                     addFlightdata.OnwardFlightItems.push(item);
 
@@ -287,8 +286,8 @@ export class RequestDialog implements OnInit, Validators {
             saveFlightdata.ReturnFlightItems.forEach(item => {
                 item.requestInfoId = this.data;
                 item.flightDirection = "Return";
-                if (item.id === null) {
-                    item.id = 0;
+                if (item.id == 0 || item.id == null) {
+                    item.id = 0; 
                     addFlightdata.ReturnFlightItems.push(item);
                 }
                 else {
@@ -298,6 +297,7 @@ export class RequestDialog implements OnInit, Validators {
             });
 
 
+            
             this.flightService.addFlightInfo(addFlightdata).subscribe(
                 (val) => {
                     console.log("POST call success");
@@ -308,6 +308,7 @@ export class RequestDialog implements OnInit, Validators {
                 () => {
                     console.log("The POST observable is now completed.");
                 });
+
 
             this.flightService.updateFlightInfo(updateFlightdata).subscribe(
                 (val) => {
@@ -382,29 +383,34 @@ export class RequestDialog implements OnInit, Validators {
 
             });
 
-            this.hotelService.addHotelInfo(addHoteldata).subscribe(
-                (val) => {
-                    console.log("POST call success");
-                },
-                response => {
-                    console.log("POST call in error", response);
-                },
-                () => {
-                    console.log("The POST observable is now completed.");
-                });
 
+            if (addHoteldata.HotelItems.length > 0) {
+            
+              this.hotelService.addHotelInfo(addHoteldata).subscribe(
+                  (val) => {
+                      console.log("POST call success");
+                  },
+                  response => {
+                      console.log("POST call in error", response);
+                  },
+                  () => {
+                      console.log("The POST observable is now completed.");
+                  });
 
+              }
 
-            this.hotelService.updateHotelInfo(updateHoteldata).subscribe(
-                (val) => {
-                    console.log("POST call success");
-                },
-                response => {
-                    console.log("POST call in error", response);
-                },
-                () => {
-                    console.log("The POST observable is now completed.");
-                });
+            if (updateHoteldata.HotelItems.length > 0) {
+              this.hotelService.updateHotelInfo(updateHoteldata).subscribe(
+                  (val) => {
+                      console.log("POST call success");
+                  },
+                  response => {
+                      console.log("POST call in error", response);
+                  },
+                  () => {
+                      console.log("The POST observable is now completed.");
+                  });
+              }
 
 
 
@@ -520,10 +526,7 @@ export class RequestDialog implements OnInit, Validators {
         }
     }
 
-    updateForexOptions() {
-        console.log('inside Update Forex');
-
-    }
+   
 
     createUpdateRequest() {
     
@@ -543,7 +546,7 @@ export class RequestDialog implements OnInit, Validators {
          
          this.requestService.addRequest(requestdata).subscribe(
            (val) => {
-             console.log("POST call success");
+             
              this.dialogRef.close();
            },
            response => {
@@ -557,7 +560,7 @@ export class RequestDialog implements OnInit, Validators {
        {
            this.requestService.updateRequest(requestdata).subscribe(
              (val) => {
-               console.log("POST call success");
+               console.log("POST call success");               
              },
              response => {
                console.log("POST call in error", response);

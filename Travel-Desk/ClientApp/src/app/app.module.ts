@@ -15,7 +15,7 @@ import { CounterComponent } from './components/counter/counter.component';
 import { LoginComponent } from './components/account/login/login.component';
 import { LoginLayoutComponent } from './components/layout/login/login-layout.component';
 import { HomeLayoutComponent } from './components/layout/home/home-layout.component';
-
+import { ReimbursementDialog } from './components/reimbursement/reimbursement-dialog.component';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { ConfigService } from './shared/utils/config.service';
 import { UserService } from './shared/services/user.service';
@@ -69,8 +69,8 @@ import { BoardingLodgingItemsArrayComponent } from './components/form/boardingLo
 import { BoardingLodgingItemControlComponent } from './components/form/boardingLodgingItems/boardingLodging-item-control.component';
 import { PerDiemItemsArrayComponent } from './components/form/perDiemOptions/perDiemoptions.component';
 import { PerDiemItemControlComponent } from './components/form/perDiemItems/perDiem-item-control.component';
-import { TravelExpensesWithoutVoucherItemsArrayComponent } from './components/form/travelExpensesWithoutVoucherOptions/travelExpensesWithoutVoucheroptions.component';
-import { TravelExpensesWithoutVoucherItemControlComponent } from './components/form/travelExpensesWithoutVoucherItems/travelExpensesWithoutVoucher-item-control.component';
+import { TravelExpensesWithoutVoucherItemsArrayComponent } from './components/form/TravelExpensesWithoutVoucherOptions/travelExpensesWithoutVoucheroptions.component';
+import { TravelExpensesWithoutVoucherItemControlComponent } from './components/form/TravelExpensesWithoutVoucherItems/travelExpensesWithoutVoucher-item-control.component';
 import { TravelExpensesWithVoucherItemsArrayComponent } from './components/form/TravelExpensesWithVoucherOptions/travelExpensesWithVoucheroptions.component';
 import { TravelExpensesWithVoucherItemControlComponent } from './components/form/TravelExpensesWithVoucherItems/travelExpensesWithVoucher-item-control.component';
 import { OtherExpensesItemsArrayComponent } from './components/form/otherExpensesOptions/otherExpensesoptions.component';
@@ -90,6 +90,7 @@ import { ForexService } from './shared/services/forex.service';
     HomeLayoutComponent,
     LoginComponent,
     RequestDialog,
+    ReimbursementDialog,
     TableOverviewExample,
     FlightItemsArrayComponent,
     FlightItemControlComponent,
@@ -174,7 +175,7 @@ import { ForexService } from './shared/services/forex.service';
     ])
   ],
   
-  entryComponents: [RequestDialog],
+  entryComponents: [RequestDialog,ReimbursementDialog],
   providers: [MediaMatcher, ConfigService, RequestService, UserService, GridService, FlightService, HotelService, PassportService, ForexService, AuthService, AuthGuard, httpInterceptorProviders,
     { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }],
   bootstrap: [AppComponent],

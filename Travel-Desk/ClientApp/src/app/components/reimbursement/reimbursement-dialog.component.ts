@@ -21,8 +21,12 @@ import { ViewChild } from '@angular/core/src/metadata/di';
 import { AppComponent } from '../app/app.component';
 import { RequestDialog } from '../request/request-dialog.component';
 import { RequestService } from '../../shared/services/request.service';
-import { FlightItemsArrayComponent } from '../form/flightoptions/flightoptions.component';
-import { HotelItemsArrayComponent } from '../form/hotelOptions/hoteloptions.component';
+import { FareItemsArrayComponent } from '../form/fareOptions/fareoptions.component';
+import { PerDiemItemsArrayComponent } from '../form/perDiemOptions/perDiemoptions.component';
+import { BoardingLodgingItemsArrayComponent } from '../form/boardingLodgingOptions/boardingLodgingoptions.component';
+import { TravelExpensesWithoutVoucherItemsArrayComponent } from '../form/TravelExpensesWithoutVoucherOptions/travelExpensesWithoutVoucheroptions.component';
+import { TravelExpensesWithVoucherItemsArrayComponent } from '../form/TravelExpensesWithVoucherOptions/travelExpensesWithVoucheroptions.component';
+import { OtherExpensesItemsArrayComponent } from '../form/otherExpensesOptions/otherExpensesoptions.component';
 import { RequestData, IRequestData } from '../../shared/models/requestdata.interface';
 import { FlightItem, IFlightItem } from '../../shared/models/flightitem.interface';
 import { HotelOptions, IHotelOptions } from '../../shared/models/hoteloptions.interface';
@@ -55,11 +59,14 @@ export class ReimbursementDialog implements OnInit, Validators {
     submitActions: number;
     action: typeof SubmitActions = SubmitActions;
     matcher = new MyErrorStateMatcher();
-    TravelDataForm: FormGroup;
-    FlightOptionsForm: FormGroup;
-    HotelOptionsForm: FormGroup;
-    PassportForm: FormGroup;
+    ReimbursementForm: FormGroup;
+    FareOptionsForm: FormGroup;
+    PerDiemForm: FormGroup;
+    BoardingExpensesForm: FormGroup;
     ForexForm: FormGroup;
+    TravelWithVoucherForm: FormGroup;
+    TravelWithoutVoucherForm: FormGroup;
+    OtherExpensesForm: FormGroup;
 
 
     constructor(@Inject(MAT_DIALOG_DATA) public data: any,
@@ -84,17 +91,12 @@ export class ReimbursementDialog implements OnInit, Validators {
 
     }
 
-
-    getHotelFormArray() {
-        return (this.HotelOptionsForm.get('hotelItems') as FormArray);
-    }
-    getOnwardFormArray() {
-        return (this.FlightOptionsForm.get('onwardFlightItems') as FormArray);
+  
+    getFareOptionsFormArray() {
+        return (this.FareOptionsForm.get('fareItems') as FormArray);
     }
 
-    getReturnFormArray() {
-        return (this.FlightOptionsForm.get('returnFlightItems') as FormArray);
-    }
+   
 
     onNoClick(): void {
         this.dialogRef.close();
@@ -104,110 +106,120 @@ export class ReimbursementDialog implements OnInit, Validators {
 
     ngOnInit(): void {
 
-        this.TravelDataForm = this.fb.group({
+        this.ReimbursementForm = this.fb.group({
 
-            'project_code': new FormControl(null, [Validators.required, Validators.maxLength(50)]),
-            'country': new FormControl(null, [Validators.required]),
-            'travelDob': new FormControl(null, [Validators.required]),
-            'travelDate': new FormControl(null, [Validators.required]),
-            'returnDate': new FormControl(null, [Validators.required]),
-            'employeeId': new FormControl(null, [Validators.required, Validators.maxLength(50)]),
+            'reimbursement_code': new FormControl(null, [Validators.required, Validators.maxLength(50)]),
+            'employeeId': new FormControl(null, [Validators.required]),
             'employeeName': new FormControl(null, [Validators.required]),
-
+            'designation': new FormControl(null, [Validators.required]),
+            'band': new FormControl(null, [Validators.required]),
+            'clientName': new FormControl(null, [Validators.required, Validators.maxLength(50)]),
+            'projectCode': new FormControl(null, [Validators.required]),
+            'costCenter': new FormControl(null, [Validators.required]),
+            'purposeOfTravel': new FormControl(null, [Validators.required]),
+            'locationOfTravel': new FormControl(null, [Validators.required]),
+            'arrivalDate': new FormControl(null, [Validators.required, Validators.maxLength(50)]),
+            'departureDate': new FormControl(null, [Validators.required]),
+            'travelBillable': new FormControl(null, [Validators.required]),
+            'flightReimbursable': new FormControl(null, [Validators.required]),
+            'travelReimbursable': new FormControl(null, [Validators.required, Validators.maxLength(50)]),
+            'otherReimbursable': new FormControl(null, [Validators.required]),
         
 
             });
 
 
 
-        this.FlightOptionsForm = this.fb.group({
+        this.FareOptionsForm = this.fb.group({
 
-            'onwardFlightItems': FlightItemsArrayComponent.buildItems(),
-            'returnFlightItems': FlightItemsArrayComponent.buildItems()
+            'fareItems': FareItemsArrayComponent.buildItems(),
+            
 
         });
 
-        this.HotelOptionsForm = this.fb.group({
-            'hotelItems': HotelItemsArrayComponent.buildItems()
+        this.PerDiemForm = this.fb.group({
+            'perDiemItems': PerDiemItemsArrayComponent.buildItems()
         });
 
-        this.PassportForm = this.fb.group({
-            'passportNum': new FormControl(null, [Validators.required]),
-            'visaNum': new FormControl(null, [Validators.required]),
-            'passportExpiryDate': new FormControl(null, [Validators.required]),
-            'visaExpiryDate': new FormControl(null, [Validators.required])
+        this.BoardingExpensesForm = this.fb.group({
+            'lodgingItems': BoardingLodgingItemsArrayComponent.buildItems()         
         });
 
-        this.ForexForm = this.fb.group({
-            'cardNumber': new FormControl(null, [Validators.required]),
-            'cardType': new FormControl(null, [Validators.required]),
-            'cardExpiryDate': new FormControl(this.today, [Validators.required])
+        this.TravelWithVoucherForm = this.fb.group({
+            'voucherItems': TravelExpensesWithVoucherItemsArrayComponent.buildItems()
+           
+        });
+        this.TravelWithoutVoucherForm = this.fb.group({
+            'nonVoucherItems': TravelExpensesWithoutVoucherItemsArrayComponent.buildItems()
+           
         });
 
+        this.OtherExpensesForm = this.fb.group({
+            'otherExpenseItems': OtherExpensesItemsArrayComponent.buildItems()
+           
+        });
+
+        //if (this.data > 0) {
+        //    let requestData = this.requestService.getRequestById(this.data);
+        //    let flightData = this.flightService.getFlightsForRequest(this.data);
+        //    let hotelData = this.hotelService.getHotelsForRequest(this.data);
+
+        //    let passportData = this.passportService.getPassportDetails(this.data);
+        //    let forexData = this.forexService.getForexDetails(this.data);
+
+
+        //    forkJoin([requestData, flightData, hotelData, passportData, forexData], ).subscribe(results => {
+
+        //        this.ReimbursementForm.patchValue(new RequestData(<IRequestData>results[0]));
+        //        this.PassportForm.patchValue(new Passport(<IPassport>results[3]));
+        //        this.ForexForm.patchValue(new ForexCard(<IForexCard>results[4]))
+        //        let flightOptions = new FlightOptions(<IFlightOptions>results[1]);
+        //        let hotelOptions = new HotelOptions(<IHotelOptions>results[2]);
+
+
+        //        let i = 0;
+        //        flightOptions.OnwardFlightItems.forEach(item => {
+        //            if (i == 0) {
+        //                this.getOnwardFormArray().setControl(i, FlightItemsArrayComponent.buildItemsWithValue(item));
+        //            } else {
+        //                this.getOnwardFormArray().insert(i, FlightItemsArrayComponent.buildItemsWithValue(item));
+        //            }
+        //            i = i + 1;
+        //        });
+        //        i = 0;
+        //        flightOptions.ReturnFlightItems.forEach(item => {
+        //            if (i == 0) {
+        //                this.getReturnFormArray().setControl(i, FlightItemsArrayComponent.buildItemsWithValue(item));
+        //            } else {
+        //                this.getReturnFormArray().insert(i, FlightItemsArrayComponent.buildItemsWithValue(item));
+        //            }
+        //            i = i + 1;
+        //        });
+        //        i = 0;
+        //        hotelOptions.HotelItems.forEach(item => {
+        //            if (i == 0) {
+        //                this.getHotelFormArray().setControl(i, HotelItemsArrayComponent.buildItemsWithValue(item));
+        //            } else {
+        //                this.getHotelFormArray().insert(i, HotelItemsArrayComponent.buildItemsWithValue(item));
+        //            }
+        //            i = i + 1;
+
+
+        //        });
+
+
+        //        this.traveldata.requestData = new RequestData(<IRequestData>this.ReimbursementDataForm.value);
+        //        this.traveldata.flightData = new FlightOptions(<IFlightOptions>this.FlightOptionsForm.value);
+        //        this.traveldata.hotelData = new HotelOptions(<IHotelOptions>this.HotelOptionsForm.value);
+        //        this.traveldata.passportData = new Passport(<IPassport>this.PassportForm.value);
+        //        this.traveldata.forexCardData = new ForexCard(<IForexCard>this.ForexForm.value);
 
 
 
-        if (this.data > 0) {
-            let requestData = this.requestService.getRequestById(this.data);
-            let flightData = this.flightService.getFlightsForRequest(this.data);
-            let hotelData = this.hotelService.getHotelsForRequest(this.data);
 
-            let passportData = this.passportService.getPassportDetails(this.data);
-            let forexData = this.forexService.getForexDetails(this.data);
+        //    });
 
-
-            forkJoin([requestData, flightData, hotelData, passportData, forexData], ).subscribe(results => {
-
-                this.TravelDataForm.patchValue(new RequestData(<IRequestData>results[0]));
-                this.PassportForm.patchValue(new Passport(<IPassport>results[3]));
-                this.ForexForm.patchValue(new ForexCard(<IForexCard>results[4]))
-                let flightOptions = new FlightOptions(<IFlightOptions>results[1]);
-                let hotelOptions = new HotelOptions(<IHotelOptions>results[2]);
-
-
-                let i = 0;
-                flightOptions.OnwardFlightItems.forEach(item => {
-                    if (i == 0) {
-                        this.getOnwardFormArray().setControl(i, FlightItemsArrayComponent.buildItemsWithValue(item));
-                    } else {
-                        this.getOnwardFormArray().insert(i, FlightItemsArrayComponent.buildItemsWithValue(item));
-                    }
-                    i = i + 1;
-                });
-                i = 0;
-                flightOptions.ReturnFlightItems.forEach(item => {
-                    if (i == 0) {
-                        this.getReturnFormArray().setControl(i, FlightItemsArrayComponent.buildItemsWithValue(item));
-                    } else {
-                        this.getReturnFormArray().insert(i, FlightItemsArrayComponent.buildItemsWithValue(item));
-                    }
-                    i = i + 1;
-                });
-                i = 0;
-                hotelOptions.HotelItems.forEach(item => {
-                    if (i == 0) {
-                        this.getHotelFormArray().setControl(i, HotelItemsArrayComponent.buildItemsWithValue(item));
-                    } else {
-                        this.getHotelFormArray().insert(i, HotelItemsArrayComponent.buildItemsWithValue(item));
-                    }
-                    i = i + 1;
-
-
-                });
-
-
-                this.traveldata.requestData = new RequestData(<IRequestData>this.TravelDataForm.value);
-                this.traveldata.flightData = new FlightOptions(<IFlightOptions>this.FlightOptionsForm.value);
-                this.traveldata.hotelData = new HotelOptions(<IHotelOptions>this.HotelOptionsForm.value);
-                this.traveldata.passportData = new Passport(<IPassport>this.PassportForm.value);
-                this.traveldata.forexCardData = new ForexCard(<IForexCard>this.ForexForm.value);
-
-
-
-
-            });
-
-        }
+        //}
     }
 
 
@@ -237,12 +249,11 @@ export class ReimbursementDialog implements OnInit, Validators {
         console.log(this.submitActions);
         switch (this.submitActions) {
 
-            case SubmitActions.createRequest: this.createNewRequest(); break;
-            case SubmitActions.updateRequest: this.updateRequest(); break;
-            case SubmitActions.createFlightOptions: this.createFlightOptions(); break;
-            case SubmitActions.createHotelOptions: this.createHotelOptions(); break;
-            case SubmitActions.createPassport: this.createPassport(); break;
-            case SubmitActions.createForex: this.createForex(); break;
+            //case SubmitActions.createRequest: this.createNewRequest(); break;
+            //case SubmitActions.updateRequest: this.updateRequest(); break;
+            //case SubmitActions.createHotelOptions: this.createHotelOptions(); break;
+            //case SubmitActions.createPassport: this.createPassport(); break;
+            //case SubmitActions.createForex: this.createForex(); break;
         }
 
     }
@@ -250,71 +261,71 @@ export class ReimbursementDialog implements OnInit, Validators {
 
 
 
-    createFlightOptions() {
-        let saveFlightdata: FlightOptions;
-        let addFlightdata: FlightOptions = new FlightOptions();
-        let updateFlightdata: FlightOptions = new FlightOptions();
+    //createFlightOptions() {
+    //    let saveFlightdata: FlightOptions;
+    //    let addFlightdata: FlightOptions = new FlightOptions();
+    //    let updateFlightdata: FlightOptions = new FlightOptions();
 
 
-        if (this.FlightOptionsForm.valid) {
+    //    if (this.FlightOptionsForm.valid) {
 
 
-            saveFlightdata = new FlightOptions(<IFlightOptions>this.FlightOptionsForm.value);
-            this.deleteFlightOptions(saveFlightdata);
-            saveFlightdata.OnwardFlightItems.forEach(item => {
-                item.requestInfoId = this.data;
-                item.flightDirection = "Onward";
-                if (item.id === null) {
-                    item.id = 0;
-                    addFlightdata.OnwardFlightItems.push(item);
+    //        saveFlightdata = new FlightOptions(<IFlightOptions>this.FlightOptionsForm.value);
+    //        this.deleteFlightOptions(saveFlightdata);
+    //        saveFlightdata.OnwardFlightItems.forEach(item => {
+    //            item.requestInfoId = this.data;
+    //            item.flightDirection = "Onward";
+    //            if (item.id === null) {
+    //                item.id = 0;
+    //                addFlightdata.OnwardFlightItems.push(item);
 
-                }
-                else {
+    //            }
+    //            else {
 
-                    updateFlightdata.OnwardFlightItems.push(item);
-                }
+    //                updateFlightdata.OnwardFlightItems.push(item);
+    //            }
 
-            });
+    //        });
 
-            saveFlightdata.ReturnFlightItems.forEach(item => {
-                item.requestInfoId = this.data;
-                item.flightDirection = "Return";
-                if (item.id === null) {
-                    item.id = 0;
-                    addFlightdata.ReturnFlightItems.push(item);
-                }
-                else {
+    //        saveFlightdata.ReturnFlightItems.forEach(item => {
+    //            item.requestInfoId = this.data;
+    //            item.flightDirection = "Return";
+    //            if (item.id === null) {
+    //                item.id = 0;
+    //                addFlightdata.ReturnFlightItems.push(item);
+    //            }
+    //            else {
 
-                    updateFlightdata.ReturnFlightItems.push(item);
-                }
-            });
-
-
-            this.flightService.addFlightInfo(addFlightdata).subscribe(
-                (val) => {
-                    console.log("POST call success");
-                },
-                response => {
-                    console.log("POST call in error", response);
-                },
-                () => {
-                    console.log("The POST observable is now completed.");
-                });
-
-            this.flightService.updateFlightInfo(updateFlightdata).subscribe(
-                (val) => {
-                    console.log("POST call success");
-                },
-                response => {
-                    console.log("POST call in error", response);
-                },
-                () => {
-                    console.log("The POST observable is now completed.");
-                });
-        }
+    //                updateFlightdata.ReturnFlightItems.push(item);
+    //            }
+    //        });
 
 
-    }
+    //        this.flightService.addFlightInfo(addFlightdata).subscribe(
+    //            (val) => {
+    //                console.log("POST call success");
+    //            },
+    //            response => {
+    //                console.log("POST call in error", response);
+    //            },
+    //            () => {
+    //                console.log("The POST observable is now completed.");
+    //            });
+
+    //        this.flightService.updateFlightInfo(updateFlightdata).subscribe(
+    //            (val) => {
+    //                console.log("POST call success");
+    //            },
+    //            response => {
+    //                console.log("POST call in error", response);
+    //            },
+    //            () => {
+    //                console.log("The POST observable is now completed.");
+    //            });
+    //    }
+
+
+    //}
 
     deleteFlightOptions(finalFlightOPtions: FlightOptions) {
         let initialFlightOPtions: FlightOptions = this.traveldata.flightData;
@@ -349,61 +360,61 @@ export class ReimbursementDialog implements OnInit, Validators {
 
 
     }
-    createHotelOptions() {
+    //createHotelOptions() {
 
-        let saveHoteldata: HotelOptions;
-        let addHoteldata: HotelOptions = new HotelOptions();
-        let updateHoteldata: HotelOptions = new HotelOptions();
+    //    let saveHoteldata: HotelOptions;
+    //    let addHoteldata: HotelOptions = new HotelOptions();
+    //    let updateHoteldata: HotelOptions = new HotelOptions();
 
-        if (this.HotelOptionsForm.valid) {
+    //    if (this.HotelOptionsForm.valid) {
 
-            saveHoteldata = new HotelOptions(<IHotelOptions>this.HotelOptionsForm.value);
-            this.deleteHotelOptions(saveHoteldata);
-            saveHoteldata.HotelItems.forEach(item => {
-                item.requestInfoId = this.data;
+    //        saveHoteldata = new HotelOptions(<IHotelOptions>this.HotelOptionsForm.value);
+    //        this.deleteHotelOptions(saveHoteldata);
+    //        saveHoteldata.HotelItems.forEach(item => {
+    //            item.requestInfoId = this.data;
 
-                if (item.id === null || item.id === 0) {
-                    item.id = 0;
-                    addHoteldata.HotelItems.push(item);
+    //            if (item.id === null || item.id === 0) {
+    //                item.id = 0;
+    //                addHoteldata.HotelItems.push(item);
 
-                }
-                else {
+    //            }
+    //            else {
 
-                    updateHoteldata.HotelItems.push(item);
-                }
+    //                updateHoteldata.HotelItems.push(item);
+    //            }
 
-            });
+    //        });
 
-            this.hotelService.addHotelInfo(addHoteldata).subscribe(
-                (val) => {
-                    console.log("POST call success");
-                },
-                response => {
-                    console.log("POST call in error", response);
-                },
-                () => {
-                    console.log("The POST observable is now completed.");
-                });
-
-
-
-            this.hotelService.updateHotelInfo(updateHoteldata).subscribe(
-                (val) => {
-                    console.log("POST call success");
-                },
-                response => {
-                    console.log("POST call in error", response);
-                },
-                () => {
-                    console.log("The POST observable is now completed.");
-                });
+    //        this.hotelService.addHotelInfo(addHoteldata).subscribe(
+    //            (val) => {
+    //                console.log("POST call success");
+    //            },
+    //            response => {
+    //                console.log("POST call in error", response);
+    //            },
+    //            () => {
+    //                console.log("The POST observable is now completed.");
+    //            });
 
 
 
-        }
+    //        this.hotelService.updateHotelInfo(updateHoteldata).subscribe(
+    //            (val) => {
+    //                console.log("POST call success");
+    //            },
+    //            response => {
+    //                console.log("POST call in error", response);
+    //            },
+    //            () => {
+    //                console.log("The POST observable is now completed.");
+    //            });
 
 
-    }
+
+    //    }
+
+
+    //}
 
     deleteHotelOptions(finalHotelOptions: HotelOptions) {
         let initialHotelOptions: HotelOptions = this.traveldata.hotelData;
@@ -438,43 +449,43 @@ export class ReimbursementDialog implements OnInit, Validators {
     }
 
 
-    createPassport() {
-        if (this.PassportForm.valid) {
-            let passportdata: Passport = new Passport(<IPassport>this.PassportForm.value);
+    //createPassport() {
+    //    if (this.PassportForm.valid) {
+    //        let passportdata: Passport = new Passport(<IPassport>this.PassportForm.value);
 
-            if (passportdata.id == 0 || passportdata.id == null) {
+    //        if (passportdata.id == 0 || passportdata.id == null) {
 
-                passportdata.requestInfoId = this.data;
-                this.passportService.addPassportInfo(passportdata).subscribe(
-                    (val) => {
-                        console.log("POST call success");
-                    },
-                    response => {
-                        console.log("POST call in error", response);
-                    },
-                    () => {
-                        console.log("The POST observable is now completed.");
-                    });
+    //            passportdata.requestInfoId = this.data;
+    //            this.passportService.addPassportInfo(passportdata).subscribe(
+    //                (val) => {
+    //                    console.log("POST call success");
+    //                },
+    //                response => {
+    //                    console.log("POST call in error", response);
+    //                },
+    //                () => {
+    //                    console.log("The POST observable is now completed.");
+    //                });
 
-            }
-            else {
-                this.passportService.updatePassportInfo(passportdata).subscribe(
-                    (val) => {
-                        console.log("POST call success");
-                    },
-                    response => {
-                        console.log("POST call in error", response);
-                    },
-                    () => {
-                        console.log("The POST observable is now completed.");
-                    });
+    //        }
+    //        else {
+    //            this.passportService.updatePassportInfo(passportdata).subscribe(
+    //                (val) => {
+    //                    console.log("POST call success");
+    //                },
+    //                response => {
+    //                    console.log("POST call in error", response);
+    //                },
+    //                () => {
+    //                    console.log("The POST observable is now completed.");
+    //                });
 
-            }
+    //        }
 
-        }
+    //    }
 
 
-    }
+    //}
 
 
     createForex() {
@@ -517,59 +528,59 @@ export class ReimbursementDialog implements OnInit, Validators {
 
     }
 
-    updateRequest() {
+    //updateRequest() {
 
-        let requestdata: RequestData;
-        if (this.TravelDataForm.valid) {
+    //    let requestdata: RequestData;
+    //    if (this.ReimbursementDataForm.valid) {
 
-            requestdata = new RequestData();
-            requestdata.requestId = this.data;
-            requestdata.project_code = this.TravelDataForm.controls['project_Code'].value;
-            requestdata.country = this.TravelDataForm.controls['country'].value;
-            requestdata.travelDate = this.TravelDataForm.controls['travelDate'].value;
-            requestdata.returnDate = this.TravelDataForm.controls['returnDate'].value;
-            requestdata.employeeId = this.TravelDataForm.controls['employeeId'].value;
-            requestdata.employeeName = this.TravelDataForm.controls['employeeName'].value;
-            this.requestService.updateRequest(requestdata).subscribe(
-                (val) => {
-                    console.log("POST call success");
-                },
-                response => {
-                    console.log("POST call in error", response);
-                },
-                () => {
-                    console.log("The POST observable is now completed.");
-                });
+    //        requestdata = new RequestData();
+    //        requestdata.requestId = this.data;
+    //        requestdata.project_code = this.ReimbursementDataForm.controls['project_Code'].value;
+    //        requestdata.country = this.ReimbursementDataForm.controls['country'].value;
+    //        requestdata.travelDate = this.ReimbursementDataForm.controls['travelDate'].value;
+    //        requestdata.returnDate = this.ReimbursementDataForm.controls['returnDate'].value;
+    //        requestdata.employeeId = this.ReimbursementDataForm.controls['employeeId'].value;
+    //        requestdata.employeeName = this.ReimbursementDataForm.controls['employeeName'].value;
+    //        this.requestService.updateRequest(requestdata).subscribe(
+    //            (val) => {
+    //                console.log("POST call success");
+    //            },
+    //            response => {
+    //                console.log("POST call in error", response);
+    //            },
+    //            () => {
+    //                console.log("The POST observable is now completed.");
+    //            });
 
 
-        }
+    //    }
 
-    }
+    //}
 
-    createNewRequest() {
-        let requestdata: RequestData;
-        if (this.TravelDataForm.valid) {
-            requestdata = new RequestData();
-            requestdata.project_code = this.TravelDataForm.controls['project_code'].value;
-            requestdata.country = this.TravelDataForm.controls['country'].value;
-            requestdata.travelDate = this.TravelDataForm.controls['travelDate'].value;
-            requestdata.returnDate = this.TravelDataForm.controls['returnDate'].value;
-            requestdata.employeeId = this.TravelDataForm.controls['employeeId'].value;
-            requestdata.employeeName = this.TravelDataForm.controls['employeeName'].value;
+    //createNewRequest() {
+    //    let requestdata: RequestData;
+    //    if (this.ReimbursementDataForm.valid) {
+    //        requestdata = new RequestData();
+    //        requestdata.project_code = this.ReimbursementDataForm.controls['project_code'].value;
+    //        requestdata.country = this.ReimbursementDataForm.controls['country'].value;
+    //        requestdata.travelDate = this.ReimbursementDataForm.controls['travelDate'].value;
+    //        requestdata.returnDate = this.ReimbursementDataForm.controls['returnDate'].value;
+    //        requestdata.employeeId = this.ReimbursementDataForm.controls['employeeId'].value;
+    //        requestdata.employeeName = this.ReimbursementDataForm.controls['employeeName'].value;
 
-            this.requestService.addRequest(requestdata).subscribe(
-                (val) => {
-                    console.log("POST call success");
-                },
-                response => {
-                    console.log("POST call in error", response);
-                },
-                () => {
-                    console.log("The POST observable is now completed.");
-                });
+    //        this.requestService.addRequest(requestdata).subscribe(
+    //            (val) => {
+    //                console.log("POST call success");
+    //            },
+    //            response => {
+    //                console.log("POST call in error", response);
+    //            },
+    //            () => {
+    //                console.log("The POST observable is now completed.");
+    //            });
 
-        }
-    }
+    //    }
+    //}
 
     isOnward(c: FormControl) {
         

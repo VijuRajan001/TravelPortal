@@ -2,7 +2,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Injectable } from '@angular/core';
-import { TravelExpensesWithoutVoucherItemControlComponent } from '../travelExpensesWithoutVoucherItems/travelExpensesWithoutVoucher-item-control.component';
+import { TravelExpensesWithoutVoucherItemControlComponent } from '../TravelExpensesWithoutVoucherItems/travelExpensesWithoutVoucher-item-control.component';
 
 @Component({
     selector: 'travelExpensesWithoutVoucher-items-array',

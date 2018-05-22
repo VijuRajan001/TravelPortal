@@ -41,13 +41,16 @@ export class BoardingLodgingItemControlComponent {
     }
 
 
-    static buildItem(val: string) {
+    static buildItem(data: any) {
         return new FormGroup({
-            'id': new FormControl(),
-            'hotelName': new FormControl(val, Validators.required),
-            'location': new FormControl(val, Validators.required),
-            'website': new FormControl(val, Validators.required),
-            'mobileno': new FormControl(val, Validators.required)
+            'placeOfStay': new FormControl(data.placeOfStay),
+            'fromDate': new FormControl(data.fromDate, Validators.required),
+            'toDate': new FormControl(data.toDate, Validators.required),
+            'currency': new FormControl(data.currency, Validators.required),
+            'amountSpent': new FormControl(data.amountSpent, Validators.required),
+            'eligibility': new FormControl(data.eligibility, Validators.required),
+            'remarks': new FormControl(data.remarks, Validators.required),
+
         })
     }
 }

@@ -30,6 +30,8 @@ namespace TravelDesk.Mappings
                             opt => opt.MapFrom(src => src.EmployeeId))
                 .ForMember(dest => dest.EmployeeName,
                             opt => opt.MapFrom(src => src.EmployeeName))
+                .ForMember(dest => dest.RequestStatus,
+                            opt => opt.MapFrom(src => src.RequestStatus))
                 .ReverseMap();
 
             CreateMap<FlightInfo, FlightItem>()

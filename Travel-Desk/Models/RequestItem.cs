@@ -15,5 +15,6 @@ namespace TravelDesk.Models
         public DateTime Dob { get; set; }
         public string EmployeeId { get; set; }
         public string EmployeeName { get; set; }
+        public string RequestStatus { get; set; }
     }
 }
