@@ -1,0 +1,59 @@
+
+<div class="form-group boardingLodgingOptions" [formGroup]="boardingLodgingItem">
+
+
+    <mat-form-field>
+        <input matInput placeholder="Place of Stay" formControlName="placeOfStay" [attr.id]="'placeOfStay'+index" required>
+        <mat-error *ngIf="hotelItem.get('hotelName').hasError('required')">
+            Hotel name is <strong>required</strong>
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput [max]="maxDate" placeholder="Date From" class="datecontrol" [matDatepicker]="fromdate" (focus)="fromdate.open()" readonly formControlName="fromdate">
+        <mat-icon class="small">date_range</mat-icon>
+        <mat-error *ngIf="fareItem.get('date').hasError('required')">
+            Date of Arrival is <strong>required</strong>
+        </mat-error>
+    </mat-form-field>
+    <mat-datepicker #fromdate></mat-datepicker>
+    <mat-form-field>
+        <input matInput [max]="maxDate" placeholder="Date to" class="datecontrol" [matDatepicker]="todate" (focus)="todate.open()" readonly formControlName="todate">
+        <mat-icon class="small">date_range</mat-icon>
+        <mat-error *ngIf="fareItem.get('date').hasError('required')">
+            Date of Arrival is <strong>required</strong>
+        </mat-error>
+    </mat-form-field>
+    <mat-datepicker #todate></mat-datepicker>
+    <mat-form-field>
+        <input matInput placeholder="Currency" formControlName="currency" [attr.id]="'currency'+index" required>
+        <mat-error *ngIf="hotelItem.get('mobileno').hasError('required')">
+            Mobile number is <strong>required</strong>
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Amount Spent" formControlName="amountSpent" [attr.id]="'amountSpent'+index" required>
+        <mat-error *ngIf="hotelItem.get('mobileno').hasError('required')">
+            Mobile number is <strong>required</strong>
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Eligibility" formControlName="eligibility" [attr.id]="'eligibility'+index" required>
+        <mat-error *ngIf="hotelItem.get('mobileno').hasError('required')">
+            Mobile number is <strong>required</strong>
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Remarks" formControlName="remarks" [attr.id]="'remarks'+index" required>
+        <mat-error *ngIf="hotelItem.get('mobileno').hasError('required')">
+            Mobile number is <strong>required</strong>
+        </mat-error>
+    </mat-form-field>
+    <button mat-icon-button type="button" color="primary" (click)="removed.emit(index)">
+        <mat-icon>remove_circle</mat-icon>
+    </button>
+    <button mat-icon-button type="button" color="primary" (click)="add.emit(index)">
+        <mat-icon>add_circle</mat-icon>
+    </button>
+
+
+</div>

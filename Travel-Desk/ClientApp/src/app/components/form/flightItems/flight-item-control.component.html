@@ -1,0 +1,36 @@
+
+<div class="form-group flightOptions" [formGroup]="item">
+
+    <mat-form-field>
+        <input matInput placeholder="Flight ID" formControlName="flightItemId" [attr.id]="'flightItemId'+index">
+        <mat-error *ngIf="item.get('flightItemId').hasError('required')">
+            Flight ID is <strong>required</strong>
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Flight Carrier Name" formControlName="flightName" [attr.id]="'flightName'+index">
+        <mat-error *ngIf="item.get('flightName').hasError('required')">
+            Flight name is <strong>required</strong>
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Flight Start" formControlName="flightFrom" [attr.id]="'flightFrom'+index">
+        <mat-error *ngIf="item.get('flightFrom').hasError('required')">
+            Departure is <strong>required</strong>
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Flight Destination" formControlName="flightTo" [attr.id]="'flightTo'+index">
+        <mat-error *ngIf="item.get('flightTo').hasError('required')">
+            Arrival is <strong>required</strong>
+        </mat-error>
+    </mat-form-field>
+    <button mat-icon-button type="button" color="primary" (click)="removed.emit(index)">
+        <mat-icon>remove_circle</mat-icon>
+    </button>
+    <button mat-icon-button type="button" color="primary" (click)="add.emit(index)">
+        <mat-icon>add_circle</mat-icon>
+    </button>
+
+
+</div>

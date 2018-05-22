@@ -1,0 +1,251 @@
+<div mat-dialog-content>
+    <mat-tab-group #tabGroup (selectedIndexChange)="resetExpansionPanel($event)" [selectedIndex]="step">
+        <mat-tab label="Add Reimbursement" class="flex-expand">
+            <form [formGroup]="ReimbursementForm" (ngSubmit)="onSubmit()" class="tab-form">
+                <div class="form-content">
+                    <mat-form-field>
+                        <input matInput placeholder="Reimbursement Code" formControlName="reimbursement_code" [errorStateMatcher]="matcher">
+                        <mat-error *ngIf="ReimbursementForm.get('reimbursement_code').hasError('required')">
+                            Reimbursement Code is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput placeholder="Employee Id" formControlName="employeeId">
+                        <mat-error *ngIf="ReimbursementForm.get('employeeId').hasError('required')">
+                            Employee Id is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput placeholder="Employee Name" formControlName="employeeName">
+                        <mat-error *ngIf="ReimbursementForm.get('employeeName').hasError('required')">
+                            Employee Name is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput placeholder="Designation" formControlName="designation">
+                        <mat-error *ngIf="ReimbursementForm.get('designation').hasError('required')">
+                            Designation is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput placeholder="Band/ Work Level" formControlName="band">
+                        <mat-error *ngIf="ReimbursementForm.get('band').hasError('required')">
+                            Band/ Work Level is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput placeholder="Client Name" formControlName="clientName">
+                        <mat-error *ngIf="ReimbursementForm.get('clientName').hasError('required')">
+                            Client Name is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput placeholder="Project Code" formControlName="projectCode">
+                        <mat-error *ngIf="ReimbursementForm.get('projectCode').hasError('required')">
+                            Project Code is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput placeholder="Cost Center" formControlName="costCenter">
+                        <mat-error *ngIf="ReimbursementForm.get('costCenter').hasError('required')">
+                            Cost Center is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput placeholder="Purpose of Travel" formControlName="purposeOfTravel">
+                        <mat-error *ngIf="ReimbursementForm.get('purposeOfTravel').hasError('required')">
+                            Purpose of Travel is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput placeholder="Location of Travel" formControlName="locationOfTravel">
+                        <mat-error *ngIf="ReimbursementForm.get('locationOfTravel').hasError('required')">
+                            Location of Travel is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <input matInput [max]="maxDate" placeholder="Date of Arrival at Location" class="datecontrol" [matDatepicker]="arrival_date" (focus)="arrival_date.open()" readonly formControlName="arrivalDate">
+                        <mat-icon class="small">date_range</mat-icon>
+                        <mat-error *ngIf="ReimbursementForm.get('arrivalDate').hasError('required')">
+                            Date of Arrival is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-datepicker #arrival_date></mat-datepicker>
+                    <mat-form-field>
+                        <input matInput [max]="maxDate" placeholder="Date of Departure from Location" class="datecontrol" [matDatepicker]="departure_date" (focus)="departure_date.open()" readonly formControlName="departureDate">
+                        <mat-icon class="small">date_range</mat-icon>
+                        <mat-error *ngIf="ReimbursementForm.get('departureDate').hasError('required')">
+                            Date of Departure is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-datepicker #departure_date></mat-datepicker>
+                    <mat-form-field>
+                        <input matInput placeholder="Travel Billable to Customer" formControlName="travelBillable">
+                        <mat-error *ngIf="ReimbursementForm.get('travelBillable').hasError('required')">
+                            Travel Billable to Customer is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput placeholder="Flight Charges reimbursable by Customer" formControlName="flightReimbursable">
+                        <mat-error *ngIf="ReimbursementForm.get('flightReimbursable').hasError('required')">
+                            Flight Charges reimbursable by Customer is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput placeholder="Travel expenses are reimbursable by Customer" formControlName="travelReimbursable">
+                        <mat-error *ngIf="ReimbursementForm.get('travelReimbursable').hasError('required')">
+                            Travel expenses are reimbursable by Customer is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput placeholder="Any other expenses reimbursable by Customer" formControlName="otherReimbursable">
+                        <mat-error *ngIf="ReimbursementForm.get('otherReimbursable').hasError('required')">
+                            Any other expenses reimbursable by Customer is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                    <h1>Note: Attach boarding pass for each leg traveled</h1>
+                </div>
+                <div class="spacer">
+                    <mat-divider></mat-divider>
+                    <mat-action-row>
+                        <button mat-button color="primary" type="submit" (click)="submitActions=action.createNewReimbursement">Create Reimbursement</button>
+                        <button mat-button color="primary" type="submit" (click)="submitActions=action.updateReimbursement">Save</button>
+                        <button mat-button color="primary" (click)="nextStep()">Next</button>
+
+                    </mat-action-row>
+                </div>
+
+            </form>
+
+        </mat-tab>
+
+
+
+        <mat-tab label="Fare">
+            <form [formGroup]="FareOptionsForm" (ngSubmit)="onSubmit()">
+                <div class="form-content">
+                    <fare-items-array formArrayName="fareItems"
+                                       [fareItemsFormArray]="FareOptionsForm.get('fareItems')">
+                    </fare-items-array>
+                </div>
+
+                <div class="spacer">
+                    <mat-divider></mat-divider>
+                    <mat-action-row>
+                        <button mat-button color="primary" type="submit" (click)="submitActions=action.createHotelOptions">Save</button>
+                        <button mat-button color="primary" (click)="prevStep()">Previous</button>
+                        <button mat-button color="primary" (click)="nextStep()">Next</button>
+
+                    </mat-action-row>
+                </div>
+            </form>
+        </mat-tab>
+
+        <mat-tab label="Per Diem">
+            <form [formGroup]="PerDiemForm" (ngSubmit)="onSubmit()">
+                <div class="form-content">
+                    <perdiem-items-array formArrayName="perDiemItems"
+                                       [perDiemItemsFormArray]="PerDiemOptionsForm.get('perDiemItems')">
+                    </perdiem-items-array>
+                </div>
+
+                <div class="spacer">
+                    <mat-divider></mat-divider>
+                    <mat-action-row>
+                        <button mat-button color="primary" type="submit" (click)="submitActions=action.createHotelOptions">Save</button>
+                        <button mat-button color="primary" (click)="prevStep()">Previous</button>
+                        <button mat-button color="primary" (click)="nextStep()">Next</button>
+
+                    </mat-action-row>
+                </div>
+            </form>
+        </mat-tab>
+
+        <mat-tab label="Boarding & Lodging Expenses">
+            <form [formGroup]="BoardingExpensesForm" (ngSubmit)="onSubmit()">
+                <div class="form-content">
+                    <hotel-items-array formArrayName="hotelItems"
+                                       [hotelItemsFormArray]="HotelOptionsForm.get('hotelItems')">
+                    </hotel-items-array>
+                </div>
+
+                <div class="spacer">
+                    <mat-divider></mat-divider>
+                    <mat-action-row>
+                        <button mat-button color="primary" type="submit" (click)="submitActions=action.createHotelOptions">Save</button>
+                        <button mat-button color="primary" (click)="prevStep()">Previous</button>
+                        <button mat-button color="primary" (click)="nextStep()">Next</button>
+
+                    </mat-action-row>
+                </div>
+            </form>
+        </mat-tab>
+
+        <mat-tab label="Travel Expenses supported by Voucher">
+            <form [formGroup]="TravelWithVoucherForm" (ngSubmit)="onSubmit()">
+                <div class="form-content">
+                    <hotel-items-array formArrayName="hotelItems"
+                                       [hotelItemsFormArray]="HotelOptionsForm.get('hotelItems')">
+                    </hotel-items-array>
+                </div>
+
+                <div class="spacer">
+                    <mat-divider></mat-divider>
+                    <mat-action-row>
+                        <button mat-button color="primary" type="submit" (click)="submitActions=action.createHotelOptions">Save</button>
+                        <button mat-button color="primary" (click)="prevStep()">Previous</button>
+                        <button mat-button color="primary" (click)="nextStep()">Next</button>
+
+                    </mat-action-row>
+                </div>
+            </form>
+        </mat-tab>
+
+        <mat-tab label="Travel Expenses Unsupported by Voucher">
+            <form [formGroup]="TravelWithoutVoucherForm" (ngSubmit)="onSubmit()">
+                <div class="form-content">
+                    <hotel-items-array formArrayName="hotelItems"
+                                       [hotelItemsFormArray]="HotelOptionsForm.get('hotelItems')">
+                    </hotel-items-array>
+                </div>
+
+                <div class="spacer">
+                    <mat-divider></mat-divider>
+                    <mat-action-row>
+                        <button mat-button color="primary" type="submit" (click)="submitActions=action.createHotelOptions">Save</button>
+                        <button mat-button color="primary" (click)="prevStep()">Previous</button>
+                        <button mat-button color="primary" (click)="nextStep()">Next</button>
+
+                    </mat-action-row>
+                </div>
+            </form>
+        </mat-tab>
+
+        <mat-tab label="Other Expenses">
+            <form [formGroup]="OtherExpensesForm" (ngSubmit)="onSubmit()">
+                <div class="form-content">
+                    <hotel-items-array formArrayName="hotelItems"
+                                       [hotelItemsFormArray]="HotelOptionsForm.get('hotelItems')">
+                    </hotel-items-array>
+                </div>
+
+                <div class="spacer">
+                    <mat-divider></mat-divider>
+                    <mat-action-row>
+                        <button mat-button color="primary" type="submit" (click)="submitActions=action.createHotelOptions">Save</button>
+                        <button mat-button color="primary" (click)="prevStep()">Previous</button>
+                        <button mat-button color="primary" (click)="nextStep()">Next</button>
+
+                    </mat-action-row>
+                </div>
+            </form>
+        </mat-tab>
+
+
+    </mat-tab-group>
+
+
+
+</div>
+

@@ -1,0 +1,52 @@
+<div class="example-container" [class.example-is-mobile]="mobileQuery.matches" layout="row" layout-align="center center">
+    <mat-toolbar color="primary" class="mat-elevation-z4">
+        <button mat-button (click)="snav.toggle()" class="example-buttons"><mat-icon>menu</mat-icon></button>
+        <mat-icon svgIcon ="logo" class="example-logo-container"></mat-icon><h1 class="example-app-name">Travel Desk</h1>
+        <span class="example-fill-remaining-space"></span>
+        <button mat-button [matMenuTriggerFor]="menu" class="example-buttons-icon">
+
+            <mat-icon>person</mat-icon>
+
+
+
+        </button>
+        
+
+        <mat-menu [overlapTrigger]="false" x-position="after" y-position="below" #menu="matMenu">
+
+
+
+
+            <button mat-menu-item class="example-buttons" (click)="signout();">
+
+                <mat-icon>
+                    exit_to_app
+                </mat-icon>
+                <span>Sign Out</span>
+            </button>
+
+        </mat-menu>
+    </mat-toolbar>
+
+    <mat-sidenav-container class="example-sidenav-container alternate-theme"
+                           [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+        <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
+                     [fixedInViewport]="mobileQuery.matches" fixedTopGap="56"
+                     [opened]="true" class="mat-elevation-z4" color="primary">
+            <mat-nav-list color="primary">
+                <a mat-list-item routerLink="/home"><mat-icon>home</mat-icon><span>Home</span></a>
+
+            </mat-nav-list>
+            <mat-nav-list>
+                <button mat-menu-item class="example-buttons" (click)="openRequestDialog();"><mat-icon>add_box</mat-icon><span>Add Request</span></button>
+            </mat-nav-list>
+            <mat-nav-list>
+                <button mat-menu-item class="example-buttons" (click)="openReimbursementDialog();"><mat-icon>add_reimbursement</mat-icon><span>Add Reimbursement</span></button>
+            </mat-nav-list>
+        </mat-sidenav>
+
+        <mat-sidenav-content class="main-content-page">
+            <router-outlet></router-outlet>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>
