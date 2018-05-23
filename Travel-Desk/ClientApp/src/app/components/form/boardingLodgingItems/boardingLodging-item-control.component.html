@@ -1,7 +1,7 @@
 
-<div class="form-group boardingLodgingOptions" [formGroup]="boardingLodgingItem">
+<div class="form-group boardingLodgingOptions flex-grid " [formGroup]="boardingLodgingItem">
 
-
+  <div class="col2">
     <mat-form-field>
         <input matInput placeholder="Place of Stay" formControlName="placeOfStay" [attr.id]="'placeOfStay'+index" required>
         <mat-error *ngIf="boardingLodgingItem.get('placeOfStay').hasError('required')">
@@ -36,24 +36,22 @@
             Mobile number is <strong>required</strong>
         </mat-error>
     </mat-form-field>
-    <mat-form-field>
-        <input matInput placeholder="Eligibility" formControlName="eligibility" [attr.id]="'eligibility'+index" required>
-        <mat-error *ngIf="boardingLodgingItem.get('eligibility').hasError('required')">
-            Mobile number is <strong>required</strong>
-        </mat-error>
-    </mat-form-field>
+    
     <mat-form-field>
         <input matInput placeholder="Remarks" formControlName="remarks" [attr.id]="'remarks'+index" required>
         <mat-error *ngIf="boardingLodgingItem.get('remarks').hasError('required')">
             Mobile number is <strong>required</strong>
         </mat-error>
     </mat-form-field>
-    <button mat-icon-button type="button" color="primary" (click)="removed.emit(index)">
-        <mat-icon>remove_circle</mat-icon>
-    </button>
-    <button mat-icon-button type="button" color="primary" (click)="add.emit(index)">
-        <mat-icon>add_circle</mat-icon>
-    </button>
+    </div>
+    <mat-divider [vertical]="true"></mat-divider>
+    <div class="col1">
+        <button mat-icon-button type="button" color="primary" (click)="removed.emit(index)">
+            <mat-icon>remove_circle</mat-icon>
+        </button>
+        <button mat-icon-button type="button" color="primary" (click)="add.emit(index)">
+            <mat-icon>add_circle</mat-icon>
+        </button>
 
-
+    </div>
 </div>

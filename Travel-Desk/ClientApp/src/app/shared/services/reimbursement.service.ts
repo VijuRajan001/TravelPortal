@@ -25,17 +25,18 @@ export class ReimbursementService extends BaseService {
     this.baseUrl = configService.getApiURI();
   }
 
-  addRequest(reimbursementData: ReimbursementData): Observable<any> {
-      return this.http.post(this.baseUrl + 'api/Reimbursement/AddReimbursement',
+  addReimbursement(reimbursementData: ReimbursementData): Observable<any> {
+    console.log('inside reimbursement' + reimbursementData);
+    return this.http.post(this.baseUrl + 'api/Reimbursement/AddReimbursement',
           JSON.stringify(reimbursementData));
   }
 
-  getRequestList(): Observable<ReimbursementData[]> {
+  getReimbursementList(): Observable<ReimbursementData[]> {
 
       return this.http.get<ReimbursementData[]>(this.baseUrl + 'api/Reimbursement/GetReimbursementList');
   }
 
-  getRequestById(id:number): Observable<ReimbursementData> {
+  getReimbursementById(id:number): Observable<ReimbursementData> {
       
       return this.http.get<ReimbursementData>(this.baseUrl + 'api/Reimbursement/GetReimbursementById', {
           params: new HttpParams().set('id', id.toString())
@@ -43,7 +44,7 @@ export class ReimbursementService extends BaseService {
     );
   }
 
-  updateRequest(reimbursementData: ReimbursementData): Observable<any> {
+  updateReimbursement(reimbursementData: ReimbursementData): Observable<any> {
       let travelData: TravelData = new TravelData();
       travelData.reimbursementData = reimbursementData;
       return this.http.post(this.baseUrl + 'api/Reimbursement/UpdateReimbursement', 

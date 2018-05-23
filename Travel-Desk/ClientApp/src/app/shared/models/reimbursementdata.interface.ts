@@ -14,10 +14,10 @@ export class ReimbursementData {
         locationOfTravel: "",
         dateOfArrival: "",
         dateOfDeparture: "",
-        travelBillableToCustomer: 0,
-        flightChargesReimbursed: 0,
-        travelExpenseReimbursed: 0,
-        anyOtherExpenseReimbursed: 0
+        travelBillableToCustomer: false,
+        flightChargesReimbursed: false,
+        travelExpenseReimbursed: false,
+        anyOtherExpenseReimbursed: false
     }) {
 
         this.reimbursementInfoId = request.reimbursementInfoId;
@@ -50,10 +50,10 @@ export class ReimbursementData {
     public locationOfTravel: string;
     public dateOfArrival: string;
     public dateOfDeparture: string;
-    public travelBillableToCustomer: number;
-    public flightChargesReimbursed: number;
-    public travelExpenseReimbursed: number;
-    public anyOtherExpenseReimbursed: number;
+    public travelBillableToCustomer: boolean;
+    public flightChargesReimbursed: boolean;
+    public travelExpenseReimbursed: boolean;
+    public anyOtherExpenseReimbursed: boolean;
 
 }
 
@@ -71,8 +71,8 @@ export interface IReimbursementData {
     locationOfTravel: string;
     dateOfArrival: string;
     dateOfDeparture: string;
-    travelBillableToCustomer: number;
-    flightChargesReimbursed: number;
-    travelExpenseReimbursed: number;
-    anyOtherExpenseReimbursed: number;
+    travelBillableToCustomer: boolean;
+     flightChargesReimbursed: boolean;
+     travelExpenseReimbursed: boolean;
+     anyOtherExpenseReimbursed: boolean;
 }

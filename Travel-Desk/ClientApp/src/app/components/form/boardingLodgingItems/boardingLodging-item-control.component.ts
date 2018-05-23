@@ -2,12 +2,13 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Injectable } from '@angular/core';
-import { MatInputModule,MatFormFieldModule,MatButtonModule} from '@angular/material';
+import { MatInputModule,MatFormFieldModule,MatButtonModule,MatDividerModule} from '@angular/material';
 
 
 @Component({
     selector: 'boardingLodging-item-control',
-    templateUrl:'./boardingLodging-item-control.component.html'
+    templateUrl: './boardingLodging-item-control.component.html',
+    styleUrls:['./boardingLodging-item-control.component.css']
         
 })
 @Injectable()
@@ -34,7 +35,6 @@ export class BoardingLodgingItemControlComponent {
             'toDate': new FormControl(data.toDate, Validators.required),
             'currency': new FormControl(data.currency, Validators.required),
             'amountSpent': new FormControl(data.amountSpent, Validators.required),
-            'eligibility': new FormControl(data.eligibility, Validators.required),
             'remarks': new FormControl(data.remarks, Validators.required),
 
         });
@@ -48,7 +48,6 @@ export class BoardingLodgingItemControlComponent {
             'toDate': new FormControl(data.toDate, Validators.required),
             'currency': new FormControl(data.currency, Validators.required),
             'amountSpent': new FormControl(data.amountSpent, Validators.required),
-            'eligibility': new FormControl(data.eligibility, Validators.required),
             'remarks': new FormControl(data.remarks, Validators.required),
 
         })

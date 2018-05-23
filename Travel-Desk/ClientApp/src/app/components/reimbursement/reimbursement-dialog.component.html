@@ -3,12 +3,7 @@
         <mat-tab label="Add Reimbursement" class="flex-expand">
             <form [formGroup]="ReimbursementForm" (ngSubmit)="onSubmit()" class="tab-form">
                 <div class="form-content">
-                    <mat-form-field>
-                        <input matInput placeholder="Reimbursement Code" formControlName="reimbursement_code" [errorStateMatcher]="matcher">
-                        <mat-error *ngIf="ReimbursementForm.get('reimbursement_code').hasError('required')">
-                            Reimbursement Code is <strong>required</strong>
-                        </mat-error>
-                    </mat-form-field>
+                    
                     <mat-form-field>
                         <input matInput placeholder="Employee Id" formControlName="employeeId">
                         <mat-error *ngIf="ReimbursementForm.get('employeeId').hasError('required')">
@@ -109,8 +104,8 @@
                 <div class="spacer">
                     <mat-divider></mat-divider>
                     <mat-action-row>
-                        <button mat-button color="primary" type="submit" (click)="submitActions=action.createNewReimbursement">Create Reimbursement</button>
-                        <button mat-button color="primary" type="submit" (click)="submitActions=action.updateReimbursement">Save</button>
+                        
+                        <button mat-button color="primary" type="submit" (click)="submitActions=action.createUpdateReimbursement">Save</button>
                         <button mat-button color="primary" (click)="nextStep()">Next</button>
 
                     </mat-action-row>
@@ -133,7 +128,7 @@
                 <div class="spacer">
                     <mat-divider></mat-divider>
                     <mat-action-row>
-                        <button mat-button color="primary" type="submit" (click)="submitActions=action.createHotelOptions">Save</button>
+                        <button mat-button color="primary" type="submit" (click)="submitActions=action.createUpdateFare">Save</button>
                         <button mat-button color="primary" (click)="prevStep()">Previous</button>
                         <button mat-button color="primary" (click)="nextStep()">Next</button>
 
@@ -174,7 +169,7 @@
                 <div class="spacer">
                     <mat-divider></mat-divider>
                     <mat-action-row>
-                        <button mat-button color="primary" type="submit" (click)="submitActions=action.createHotelOptions">Save</button>
+                        <button mat-button color="primary" type="submit" (click)="submitActions=action.createUpdateBoarding">Save</button>
                         <button mat-button color="primary" (click)="prevStep()">Previous</button>
                         <button mat-button color="primary" (click)="nextStep()">Next</button>
 

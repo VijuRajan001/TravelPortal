@@ -14,7 +14,7 @@ namespace DataAccessRepository.Entities
         public string To { get; set; }
         public string Currency { get; set; }
         public double AmountSpent { get; set; }
-        public int Eligibility { get; set; }
+        public bool Eligibility { get; set; }
         public string Remark { get; set; }
         public double Total { get; set; }
         public int ReimbursementInfoId { get; set; }

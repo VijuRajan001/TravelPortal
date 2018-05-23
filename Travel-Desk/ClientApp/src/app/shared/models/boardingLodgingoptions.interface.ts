@@ -5,12 +5,12 @@ export class BoardingLodgingOptions {
 
     constructor(boardingLodgingOptions: IBoardingLodgingOptions = {
 
-        boardingLodgingItems: new Array<BoardingLodgingItem>(),
+        lodgingItems: new Array<BoardingLodgingItem>(),
         
 
     }) {
 
-        this.BoardingLodgingItems = boardingLodgingOptions.boardingLodgingItems;
+        this.BoardingLodgingItems = boardingLodgingOptions.lodgingItems;
        
 
     }
@@ -20,5 +20,5 @@ export class BoardingLodgingOptions {
 
 
 export interface IBoardingLodgingOptions {
-    boardingLodgingItems: BoardingLodgingItem[]
+    lodgingItems: BoardingLodgingItem[]
 }

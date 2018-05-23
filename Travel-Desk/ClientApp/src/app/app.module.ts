@@ -22,6 +22,13 @@ import { UserService } from './shared/services/user.service';
 import { RequestService } from './shared/services/request.service';
 import { AuthService } from './shared/services/auth.service';
 import { GridService } from './shared/services/grid.service';
+import { ReimbursementService } from './shared/services/reimbursement.service';
+import { FareService } from './shared/services/fareinfo.service';
+import { PerDiemService } from './shared/services/perDiemInfo.service';
+import { BoardingLodgingService } from './shared/services/boardingLodging.service';
+import { TravelExpensesWithoutVoucherService } from './shared/services/travelExpensesWithoutVoucher.service';
+import { TravelExpensesWithVoucherService } from './shared/services/travelExpensesWithVoucher.service';
+import { OtherExpensesService } from './shared/services/otherExpenses.service';
 import { AuthGuard } from '../app/auth.guard';
 import { httpInterceptorProviders } from '../app/shared/interceptors/http.intercep.providers';
 import {
@@ -176,7 +183,7 @@ import { ForexService } from './shared/services/forex.service';
   ],
   
   entryComponents: [RequestDialog,ReimbursementDialog],
-  providers: [MediaMatcher, ConfigService, RequestService, UserService, GridService, FlightService, HotelService, PassportService, ForexService, AuthService, AuthGuard, httpInterceptorProviders,
+  providers: [MediaMatcher,FareService,BoardingLodgingService,PerDiemService,TravelExpensesWithVoucherService,TravelExpensesWithoutVoucherService,OtherExpensesService,ConfigService, RequestService, UserService, GridService,ReimbursementService, FlightService, HotelService, PassportService, ForexService, AuthService, AuthGuard, httpInterceptorProviders,
     { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }],
   bootstrap: [AppComponent],
 

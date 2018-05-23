@@ -1,7 +1,7 @@
 
 <div class="form-group otherExpensesOptions" [formGroup]="otherExpensesItem">
 
-
+  
     <mat-form-field>
         <input matInput [max]="maxDate" placeholder="Date" class="datecontrol" [matDatepicker]="date" (focus)="date.open()" readonly formControlName="date">
         <mat-icon class="small">date_range</mat-icon>
@@ -40,12 +40,13 @@
             Mobile number is <strong>required</strong>
         </mat-error>
     </mat-form-field>
-    <button mat-icon-button type="button" color="primary" (click)="removed.emit(index)">
-        <mat-icon>remove_circle</mat-icon>
-    </button>
-    <button mat-icon-button type="button" color="primary" (click)="add.emit(index)">
-        <mat-icon>add_circle</mat-icon>
-    </button>
-
+    
+      <button mat-icon-button type="button" color="primary" (click)="removed.emit(index)">
+          <mat-icon>remove_circle</mat-icon>
+      </button>
+      <button mat-icon-button type="button" color="primary" (click)="add.emit(index)">
+          <mat-icon>add_circle</mat-icon>
+      </button>
+    
 
 </div>

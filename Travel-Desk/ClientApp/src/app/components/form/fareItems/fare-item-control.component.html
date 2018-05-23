@@ -41,12 +41,7 @@
             Mobile number is <strong>required</strong>
         </mat-error>
     </mat-form-field>
-    <mat-form-field>
-        <input matInput placeholder="Eligibility" formControlName="eligibility" [attr.id]="'eligibility'+index" required>
-        <mat-error *ngIf="fareItem.get('eligibility').hasError('required')">
-            Mobile number is <strong>required</strong>
-        </mat-error>
-    </mat-form-field>
+   
     <mat-form-field>
         <input matInput placeholder="Remarks" formControlName="remarks" [attr.id]="'remarks'+index" required>
         <mat-error *ngIf="fareItem.get('remarks').hasError('required')">

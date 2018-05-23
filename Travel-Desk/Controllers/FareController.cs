@@ -76,7 +76,7 @@ namespace TravelDesk.Controllers
                     refItem.To = item.To;
                     refItem.Currency = item.Currency;
                     refItem.AmountSpent = item.AmountSpent;
-                    refItem.Eligibility = item.Eligibility;
+                    
                     refItem.Remark = item.Remarks;
 
                 }

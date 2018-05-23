@@ -15,7 +15,7 @@ import '../../rxjs-operators';
 
 @Injectable()
 
-export class HotelService extends BaseService {
+export class FareService extends BaseService {
 
   baseUrl: string = '';
   private loggedIn = false;

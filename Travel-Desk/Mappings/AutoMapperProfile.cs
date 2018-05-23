@@ -148,12 +148,10 @@ namespace TravelDesk.Mappings
                             opt => opt.MapFrom(src => src.Currency))
                 .ForMember(dest => dest.AmountSpent,
                             opt => opt.MapFrom(src => src.AmountSpent))
-                .ForMember(dest => dest.Eligibility,
-                            opt => opt.MapFrom(src => src.Eligibility))
+                
                 .ForMember(dest => dest.Remarks,
                             opt => opt.MapFrom(src => src.Remark))
-                .ForMember(dest => dest.Total,
-                            opt => opt.MapFrom(src => src.Total))
+                
                 .ForMember(dest => dest.ReimbursementInfoId,
                             opt => opt.MapFrom(src => src.ReimbursementInfoId))
                 .ReverseMap();
