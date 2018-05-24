@@ -1,6 +1,7 @@
 export class TravelExpensesWithoutVoucherItem {
 
-    constructor(travelExpensesWithoutVoucherItem: ITravelExpensesWithoutVoucherItem = {
+  constructor(travelExpensesWithoutVoucherItem: ITravelExpensesWithoutVoucherItem = {
+        id:0,
         date: "",
         from: "",
         to: "",
@@ -9,7 +10,8 @@ export class TravelExpensesWithoutVoucherItem {
         amountSpent: 0,
         remarks: "",
         reimbursementInfoId: 0,
-    }) {
+  }) {
+    this.id = travelExpensesWithoutVoucherItem.id;
         this.date = travelExpensesWithoutVoucherItem.date;
         this.from = travelExpensesWithoutVoucherItem.from;
         this.to = travelExpensesWithoutVoucherItem.to;
@@ -19,8 +21,9 @@ export class TravelExpensesWithoutVoucherItem {
         this.remarks = travelExpensesWithoutVoucherItem.remarks;
         this.reimbursementInfoId = travelExpensesWithoutVoucherItem.reimbursementInfoId;
         
-    }
-    public date: string
+  }
+  public id: number;
+  public date: string;
     public from: string;
     public to: string;
     public modeOfConveyance: string;
@@ -32,7 +35,8 @@ export class TravelExpensesWithoutVoucherItem {
 
 
 export interface ITravelExpensesWithoutVoucherItem {
-    date: string
+  id: number;
+  date: string;
     from: string;
     to: string;
     modeOfConveyance: string;

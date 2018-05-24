@@ -248,18 +248,16 @@ namespace TravelDesk.Mappings
             CreateMap<OtherExpensesInfo, OtherExpensesItem>()
                 .ForMember(dest => dest.Date,
                             opt => opt.MapFrom(src => src.Date))
-                .ForMember(dest => dest.NatureofExpense,
+                .ForMember(dest => dest.NatureOfExpenses,
                             opt => opt.MapFrom(src => src.NatureofExpense))
                 .ForMember(dest => dest.Currency,
                             opt => opt.MapFrom(src => src.Currency))
                 .ForMember(dest => dest.AmountSpent,
                             opt => opt.MapFrom(src => src.AmountSpent))
-                .ForMember(dest => dest.Eligibility,
-                            opt => opt.MapFrom(src => src.Eligibility))
-                .ForMember(dest => dest.SupportbyVoucher,
+                
+                .ForMember(dest => dest.SupportByVoucher,
                             opt => opt.MapFrom(src => src.SupportbyVoucher))
-                .ForMember(dest => dest.Total,
-                            opt => opt.MapFrom(src => src.Total))
+               
                 .ForMember(dest => dest.ReimbursementInfoId,
                             opt => opt.MapFrom(src => src.ReimbursementInfoId))
                 .ReverseMap();

@@ -10,5 +10,7 @@ namespace DataAccessRepository.Interfaces
     {
         void AddPerDiemOptions(List<PerDiemInfo> perDiemItems );
         List<PerDiemInfo> GetPerDiemForRequest(int id);
+        void AddperDiemInfo(PerDiemInfo info);
+
     }
 }

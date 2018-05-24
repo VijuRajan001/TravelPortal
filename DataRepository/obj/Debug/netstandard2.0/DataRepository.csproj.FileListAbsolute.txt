@@ -16,3 +16,12 @@ C:\Users\vijurajana\Documents\GitHub\TravelPortal\DataRepository\obj\Debug\netst
 C:\Users\vijurajana\Documents\GitHub\TravelPortal\DataRepository\obj\Debug\netstandard2.0\DataRepository.AssemblyInfo.cs
 C:\Users\vijurajana\Documents\GitHub\TravelPortal\DataRepository\obj\Debug\netstandard2.0\DataRepository.dll
 C:\Users\vijurajana\Documents\GitHub\TravelPortal\DataRepository\obj\Debug\netstandard2.0\DataRepository.pdb
+C:\Users\Viju-Pc\Documents\GitHub\TravelPortal\DataRepository\bin\Debug\netstandard2.0\DataRepository.deps.json
+C:\Users\Viju-Pc\Documents\GitHub\TravelPortal\DataRepository\bin\Debug\netstandard2.0\DataRepository.dll
+C:\Users\Viju-Pc\Documents\GitHub\TravelPortal\DataRepository\bin\Debug\netstandard2.0\DataRepository.pdb
+C:\Users\Viju-Pc\Documents\GitHub\TravelPortal\DataRepository\obj\Debug\netstandard2.0\DataRepository.csproj.CoreCompileInputs.cache
+C:\Users\Viju-Pc\Documents\GitHub\TravelPortal\DataRepository\obj\Debug\netstandard2.0\DataRepository.AssemblyInfoInputs.cache
+C:\Users\Viju-Pc\Documents\GitHub\TravelPortal\DataRepository\obj\Debug\netstandard2.0\DataRepository.AssemblyInfo.cs
+C:\Users\Viju-Pc\Documents\GitHub\TravelPortal\DataRepository\obj\Debug\netstandard2.0\DataRepository.dll
+C:\Users\Viju-Pc\Documents\GitHub\TravelPortal\DataRepository\obj\Debug\netstandard2.0\DataRepository.pdb
+C:\Users\Viju-Pc\Documents\GitHub\TravelPortal\DataRepository\obj\Debug\netstandard2.0\DataRepository.csprojResolveAssemblyReference.cache

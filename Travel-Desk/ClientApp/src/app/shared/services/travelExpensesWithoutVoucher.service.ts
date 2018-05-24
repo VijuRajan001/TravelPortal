@@ -26,12 +26,12 @@ export class TravelExpensesWithoutVoucherService extends BaseService {
   }
 
     addTravelExpensesWithoutVoucherInfo(travelExpensesWithoutVoucherdata: TravelExpensesWithoutVoucherOptions): Observable<any> {
-      return this.http.post(this.baseUrl + 'api/ExpenseWithoutVoucher/AddExpenseWithoutVoucher',
+      return this.http.post(this.baseUrl + 'api/TravelExpensesWithoutVoucher/AddTravelExpensesWithoutVoucher',
           JSON.stringify(travelExpensesWithoutVoucherdata));
   }
 
   getTravelExpensesWithoutVoucherForRequest(requestId: number): Observable<any> {
-        return this.http.get(this.baseUrl + 'api/ExpenseWithoutVoucher/GetExpenseWithoutVoucherForRequest',
+    return this.http.get(this.baseUrl + 'api/TravelExpensesWithoutVoucher/GetTravelExpensesWithoutVoucherForRequest',
             {
                 params: new HttpParams().set('id', requestId.toString())
             });
@@ -40,13 +40,13 @@ export class TravelExpensesWithoutVoucherService extends BaseService {
 
     updateTravelExpensesWithoutVoucherInfo(travelExpensesWithoutVoucherdata: TravelExpensesWithoutVoucherOptions): Observable<any> {
 
-      return this.http.post(this.baseUrl + 'api/ExpenseWithoutVoucher/UpdateExpenseWithoutVoucher', 
+      return this.http.post(this.baseUrl + 'api/TravelExpensesWithoutVoucher/UpdateTravelExpensesWithoutVoucher', 
           JSON.stringify(travelExpensesWithoutVoucherdata));
     }
 
 
     deleteTravelExpensesWithoutVoucher(deletedTravelExpensesWithoutVoucher: number[]): Observable<any> {
-        return this.http.post(this.baseUrl + 'api/ExpenseWithoutVoucher/DeleteExpenseWithoutVoucher',
+      return this.http.post(this.baseUrl + 'api/TravelExpensesWithoutVoucher/DeleteTravelExpensesWithoutVoucher',
             JSON.stringify(deletedTravelExpensesWithoutVoucher));
 
     }

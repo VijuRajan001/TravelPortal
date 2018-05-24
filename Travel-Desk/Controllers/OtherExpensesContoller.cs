@@ -73,9 +73,9 @@ namespace TravelDesk.Controllers
                     refItem.Date = item.Date;
                     refItem.Currency = item.Currency;
                     refItem.AmountSpent = item.AmountSpent;
-                    refItem.Eligibility = item.Eligibility;
-                    refItem.NatureofExpense = item.NatureofExpense;
-                    refItem.SupportbyVoucher = item.SupportbyVoucher;
+                    
+                    refItem.NatureofExpense = item.NatureOfExpenses;
+                    refItem.SupportbyVoucher = item.SupportByVoucher;
     
                 }
             }

@@ -32,7 +32,13 @@ namespace DataAccessRepository.Implementation
 
             return PerDiemInfo;
         }
-        
+
+
+        public void AddperDiemInfo(PerDiemInfo info)
+        {
+            TravDeskDbcontext.PerDiemInfo.Add(info);
+        }
+
 
         public TravDeskDbcontext TravDeskDbcontext
         {

@@ -12,6 +12,7 @@ import { PerDiemOptions} from '../models/perDiemoptions.interface';
 //import * as _ from 'lodash';
 // Add the RxJS Observable operators we need in this app.
 import '../../rxjs-operators';
+import { PerDiemItem } from '../models/perDiemitem.interface';
 
 @Injectable()
 
@@ -25,7 +26,7 @@ export class PerDiemService extends BaseService {
     this.baseUrl = configService.getApiURI();
   }
 
-  addPerDiemInfo(perDiemdata: PerDiemOptions): Observable<any> {
+  addPerDiemInfo(perDiemdata: PerDiemItem): Observable<any> {
       return this.http.post(this.baseUrl + 'api/PerDiem/AddPerDiem',
           JSON.stringify(perDiemdata));
   }
@@ -38,7 +39,7 @@ export class PerDiemService extends BaseService {
     }
 
 
-  updatePerDiemInfo(perDiemdata: PerDiemOptions): Observable<any> {
+  updatePerDiemInfo(perDiemdata: PerDiemItem): Observable<any> {
 
       return this.http.post(this.baseUrl + 'api/PerDiem/UpdatePerDiem', 
           JSON.stringify(perDiemdata));

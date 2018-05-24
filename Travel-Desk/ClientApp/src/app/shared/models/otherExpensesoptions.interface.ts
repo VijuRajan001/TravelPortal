@@ -5,13 +5,13 @@ export class OtherExpensesOptions {
 
     constructor(otherExpensesOptions: IOtherExpensesOptions = {
 
-        otherExpensesItems: new Array<OtherExpensesItem>(),
+      otherExpenseItems: new Array<OtherExpensesItem>(),
         
 
     }) {
 
-        this.OtherExpensesItems = otherExpensesOptions.otherExpensesItems;
-       
+       otherExpensesOptions.otherExpenseItems.forEach(item => item.supportByVoucher = false);
+      this.OtherExpensesItems = otherExpensesOptions.otherExpenseItems;
 
     }
     public OtherExpensesItems: OtherExpensesItem[];
@@ -20,5 +20,5 @@ export class OtherExpensesOptions {
 
 
 export interface IOtherExpensesOptions {
-    otherExpensesItems: OtherExpensesItem[]
+  otherExpenseItems: OtherExpensesItem[]
 }

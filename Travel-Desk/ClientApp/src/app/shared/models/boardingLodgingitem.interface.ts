@@ -26,7 +26,7 @@ export class BoardingLodgingItem {
     public toDate: string;
     public currency: string;
     public amountSpent: number;
-        public remarks: string;
+    public remarks: string;
     public reimbursementInfoId: number;
 }
 

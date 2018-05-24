@@ -45,6 +45,11 @@ import { FlightService } from '../../shared/services/flight.service';
 import { IHotelItem, HotelItem } from '../../shared/models/hotelitem.interface';
 import { FareOptions, IFareOptions } from '../../shared/models/fareoptions.interface';
 import { BoardingLodgingOptions, IBoardingLodgingOptions } from '../../shared/models/boardingLodgingoptions.interface';
+import { ITravelExpensesWithVoucherItem, TravelExpensesWithVoucherItem } from '../../shared/models/travelExpensesWithVoucheritem.interface';
+import { TravelExpensesWithVoucherOptions, ITravelExpensesWithVoucherOptions } from '../../shared/models/travelExpensesWithVoucheroptions.interface';
+import { ITravelExpensesWithoutVoucherOptions, TravelExpensesWithoutVoucherOptions } from '../../shared/models/travelExpensesWithoutVoucheroptions.interface';
+import { OtherExpensesOptions, IOtherExpensesOptions } from '../../shared/models/otherExpensesoptions.interface';
+import { PerDiemItem } from '../../shared/models/perDiemitem.interface';
 @Component({
     selector: 'reimbursement-dialog',
     templateUrl: './reimbursement-dialog.component.html',
@@ -146,7 +151,14 @@ export class ReimbursementDialog implements OnInit, Validators {
         });
 
         this.PerDiemForm = this.fb.group({
-            'perDiemItems': PerDiemItemsArrayComponent.buildItems()
+          'arrivaldate': new FormControl(null, [Validators.required]),
+          'departuredate': new FormControl(null, [Validators.required]),
+          'currency': new FormControl(null, [Validators.required]),
+          'eligibility': new FormControl(null, [Validators.required]),
+          'totalDays': new FormControl(null, [Validators.required, Validators.maxLength(50)]),
+          'totalAmount': new FormControl(null, [Validators.required]),
+          'remarks': new FormControl(null, [Validators.required]),
+          
         });
 
         this.BoardingExpensesForm = this.fb.group({
@@ -256,11 +268,13 @@ export class ReimbursementDialog implements OnInit, Validators {
         console.log(this.submitActions);
         switch (this.submitActions) {
 
-            case SubmitActionsReimburseMent.createUpdateReimbursement: this.createUpdateReimbursement(); break;
-            case SubmitActionsReimburseMent.createUpdateFare: this.createUpdateFare(); break;
-            case SubmitActionsReimburseMent.createUpdateBoarding: this.createUpdateBoarding(); break;
-            //case SubmitActions.createPassport: this.createPassport(); break;
-            //case SubmitActions.createForex: this.createForex(); break;
+          case SubmitActionsReimburseMent.createUpdateReimbursement: this.createUpdateReimbursement(); break;
+          case SubmitActionsReimburseMent.createUpdateFare: this.createUpdateFare(); break;
+          case SubmitActionsReimburseMent.createUpdateBoarding: this.createUpdateBoarding(); break;
+          case SubmitActionsReimburseMent.createUpdatereVoucherItems: this.createUpdatereVoucherItems(); break;
+          case SubmitActionsReimburseMent.createUpdatereNonVoucherItems: this.createUpdatereNonVoucherItems(); break;
+          case SubmitActionsReimburseMent.createUpdatereOtherExpenses: this.createUpdatereOtherExpenses(); break;
+          case SubmitActionsReimburseMent.createUpdatePerDiem: this.createUpdatePerDiem(); break;
         }
 
     }
@@ -457,79 +471,139 @@ export class ReimbursementDialog implements OnInit, Validators {
     //}
 
 
-    //createPassport() {
-    //    if (this.PassportForm.valid) {
-    //        let passportdata: Passport = new Passport(<IPassport>this.PassportForm.value);
-
-    //        if (passportdata.id == 0 || passportdata.id == null) {
-
-    //            passportdata.requestInfoId = this.data;
-    //            this.passportService.addPassportInfo(passportdata).subscribe(
-    //                (val) => {
-    //                    console.log("POST call success");
-    //                },
-    //                response => {
-    //                    console.log("POST call in error", response);
-    //                },
-    //                () => {
-    //                    console.log("The POST observable is now completed.");
-    //                });
-
-    //        }
-    //        else {
-    //            this.passportService.updatePassportInfo(passportdata).subscribe(
-    //                (val) => {
-    //                    console.log("POST call success");
-    //                },
-    //                response => {
-    //                    console.log("POST call in error", response);
-    //                },
-    //                () => {
-    //                    console.log("The POST observable is now completed.");
-    //                });
-
-    //        }
-
-    //    }
+  createUpdatereVoucherItems() {
+    let saveVoucherData: TravelExpensesWithVoucherOptions;
+    let addVoucherData: TravelExpensesWithVoucherOptions = new TravelExpensesWithVoucherOptions();
+    let updateVoucherData: TravelExpensesWithVoucherOptions = new TravelExpensesWithVoucherOptions();
 
 
-    //}
+    if (this.TravelWithVoucherForm.valid) {
 
 
-    //createForex() {
-    //    if (this.ForexForm.valid) {
+      saveVoucherData = new TravelExpensesWithVoucherOptions(<ITravelExpensesWithVoucherOptions>this.TravelWithVoucherForm.value);
+      //this.deleteFare(savefaredata);
+      saveVoucherData.TravelExpensesWithVoucherItems.forEach(item => {
+        item.reimbursementInfoId = this.data;
 
-    //        let forexdata = new ForexCard(<IForexCard>this.ForexForm.value);
+        if (item.id === null) {
+          item.id = 0;
+          addVoucherData.TravelExpensesWithVoucherItems.push(item);
 
-    //        if (forexdata.id == 0 || forexdata.id == null) {
-    //            forexdata.requestInfoId = this.data;
-    //            this.forexService.addForexInfo(forexdata).subscribe(
-    //                (val) => {
-    //                    console.log("POST call success");
-    //                },
-    //                response => {
-    //                    console.log("POST call in error", response);
-    //                },
-    //                () => {
-    //                    console.log("The POST observable is now completed.");
-    //                });
+        }
+        else {
 
-    //        }
-    //        else {
-    //            this.forexService.updateForexInfo(forexdata).subscribe(
-    //                (val) => {
-    //                    console.log("POST call success");
-    //                },
-    //                response => {
-    //                    console.log("POST call in error", response);
-    //                },
-    //                () => {
-    //                    console.log("The POST observable is now completed.");
-    //                });
+          updateVoucherData.TravelExpensesWithVoucherItems.push(item);
+        }
 
-    //        }
-    //    }
-    //}
+      });
+
+      console.log(addVoucherData);
+      saveVoucherData.TravelExpensesWithVoucherItems.forEach(item => {
+        item.reimbursementInfoId = this.data;
+
+        if (item.id === null) {
+          item.id = 0;
+          addVoucherData.TravelExpensesWithVoucherItems.push(item);
+        }
+        else {
+
+          updateVoucherData.TravelExpensesWithVoucherItems.push(item);
+        }
+      });
+
+
+      this.travelExpensesWithVoucherService.addTravelExpensesWithVoucherInfo(addVoucherData).subscribe(
+        (val) => {
+          console.log("POST call success");
+        },
+        response => {
+          console.log("POST call in error", response);
+        },
+        () => {
+          console.log("The POST observable is now completed.");
+        });
+
+      //this.fareService.updateFareInfo(updateFlightdata).subscribe(
+      //    (val) => {
+      //        console.log("POST call success");
+      //    },
+      //    response => {
+      //        console.log("POST call in error", response);
+      //    },
+      //    () => {
+      //        console.log("The POST observable is now completed.");
+      //    });
+
+      }
+    
+    }
+
+
+  createUpdatereNonVoucherItems() {
+    let saveNonVoucherData: TravelExpensesWithoutVoucherOptions;
+    let addNonVoucherData: TravelExpensesWithoutVoucherOptions = new TravelExpensesWithoutVoucherOptions();
+    let updateNonVoucherData: TravelExpensesWithoutVoucherOptions = new TravelExpensesWithoutVoucherOptions();
+
+
+    if (this.TravelWithoutVoucherForm.valid) {
+
+
+      saveNonVoucherData = new TravelExpensesWithoutVoucherOptions(<ITravelExpensesWithoutVoucherOptions>this.TravelWithoutVoucherForm.value);
+      //this.deleteFare(savefaredata);
+      saveNonVoucherData.TravelExpensesWithoutVoucherItems.forEach(item => {
+        item.reimbursementInfoId = this.data;
+
+        if (item.id === null) {
+          item.id = 0;
+          addNonVoucherData.TravelExpensesWithoutVoucherItems.push(item);
+
+        }
+        else {
+
+          updateNonVoucherData.TravelExpensesWithoutVoucherItems.push(item);
+        }
+
+      });
+
+      console.log(addNonVoucherData);
+      saveNonVoucherData.TravelExpensesWithoutVoucherItems.forEach(item => {
+        item.reimbursementInfoId = this.data;
+
+        if (item.id === null) {
+          item.id = 0;
+          addNonVoucherData.TravelExpensesWithoutVoucherItems.push(item);
+        }
+        else {
+
+          updateNonVoucherData.TravelExpensesWithoutVoucherItems.push(item);
+        }
+      });
+
+
+      this.travelExpensesWithoutVoucherService.addTravelExpensesWithoutVoucherInfo(addNonVoucherData).subscribe(
+        (val) => {
+          console.log("POST call success");
+        },
+        response => {
+          console.log("POST call in error", response);
+        },
+        () => {
+          console.log("The POST observable is now completed.");
+        });
+
+      //this.fareService.updateFareInfo(updateFlightdata).subscribe(
+      //    (val) => {
+      //        console.log("POST call success");
+      //    },
+      //    response => {
+      //        console.log("POST call in error", response);
+      //    },
+      //    () => {
+      //        console.log("The POST observable is now completed.");
+      //    });
+
+      }
+    }
 
   
 
@@ -561,6 +635,101 @@ export class ReimbursementDialog implements OnInit, Validators {
     //    }
 
     //}
+
+  createUpdatereOtherExpenses() {
+    let saveOtherExpenseData: OtherExpensesOptions;
+    let addOtherExpenseData: OtherExpensesOptions = new OtherExpensesOptions();
+    let updateOtherExpenseData: OtherExpensesOptions = new OtherExpensesOptions();
+
+
+    if (this.OtherExpensesForm.valid) {
+
+
+      saveOtherExpenseData = new OtherExpensesOptions(<IOtherExpensesOptions>this.OtherExpensesForm.value);
+      //this.deleteFare(savefaredata);
+      saveOtherExpenseData.OtherExpensesItems.forEach(item => {
+        item.reimbursementInfoId = this.data;
+
+        if (item.id === null) {
+          item.id = 0;
+          addOtherExpenseData.OtherExpensesItems.push(item);
+
+        }
+        else {
+
+          updateOtherExpenseData.OtherExpensesItems.push(item);
+        }
+
+      });
+
+      console.log(addOtherExpenseData);
+      saveOtherExpenseData.OtherExpensesItems.forEach(item => {
+        item.reimbursementInfoId = this.data;
+
+        if (item.id === null) {
+          item.id = 0;
+          addOtherExpenseData.OtherExpensesItems.push(item);
+        }
+        else {
+
+          updateOtherExpenseData.OtherExpensesItems.push(item);
+        }
+      });
+
+
+      this.otherExpensesService.addOtherExpensesInfo(addOtherExpenseData).subscribe(
+        (val) => {
+          console.log("POST call success");
+        },
+        response => {
+          console.log("POST call in error", response);
+        },
+        () => {
+          console.log("The POST observable is now completed.");
+        });
+
+      //this.fareService.updateFareInfo(updateFlightdata).subscribe(
+      //    (val) => {
+      //        console.log("POST call success");
+      //    },
+      //    response => {
+      //        console.log("POST call in error", response);
+      //    },
+      //    () => {
+      //        console.log("The POST observable is now completed.");
+      //    });
+
+    }
+
+  }
+
+  createUpdatePerDiem() {
+    let perDiemItem: PerDiemItem;
+    if (this.PerDiemForm.valid) {
+      perDiemItem = new PerDiemItem();
+
+      perDiemItem.arrivalDate = this.PerDiemForm.controls['arrivaldate'].value;
+      perDiemItem.departureDate = this.PerDiemForm.controls['departuredate'].value;
+      perDiemItem.currency = this.PerDiemForm.controls['currency'].value;
+      perDiemItem.eligibility = this.PerDiemForm.controls['eligibility'].value;
+      perDiemItem.totalDays = this.PerDiemForm.controls['totalDays'].value;
+      perDiemItem.totalAmount = this.PerDiemForm.controls['totalAmount'].value;
+      perDiemItem.remarks = this.PerDiemForm.controls['remarks'].value;
+     
+      this.perDiemService.addPerDiemInfo(perDiemItem).subscribe(
+        (val) => {
+          console.log("POST call success");
+        },
+        response => {
+          console.log("POST call in error", response);
+        },
+        () => {
+          console.log("The POST observable is now completed.");
+        });
+
+    }
+
+  }
 
     createUpdateReimbursement() {
         let reimbursementData: ReimbursementData;

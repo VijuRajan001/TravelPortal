@@ -10,7 +10,7 @@ namespace DataAccessRepository.Entities
         public int OtherExpensesInfoId { get; set; }
         public DateTime Date { get; set;}
         public string NatureofExpense { get; set; }
-        public double Currency { get; set; }
+        public string Currency { get; set; }
         public double AmountSpent { get; set; }
         public int Eligibility { get; set; }
         public Boolean  SupportbyVoucher{ get; set; }

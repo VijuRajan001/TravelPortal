@@ -28,12 +28,12 @@ export class OtherExpensesItemControlComponent {
 
     static buildItemwithValue(data: any) {
 
-        return new FormGroup({
+      return new FormGroup({
+        'id': new FormControl(),
             'date': new FormControl(data.date),
             'natureOfExpenses': new FormControl(data.natureOfExpenses, Validators.required),
             'currency': new FormControl(data.currency, Validators.required),
             'amountSpent': new FormControl(data.amountSpent, Validators.required),
-            'eligibility': new FormControl(data.eligibility, Validators.required),
             'supportByVoucher': new FormControl(data.supportByVoucher, Validators.required)
 
         });
@@ -41,12 +41,12 @@ export class OtherExpensesItemControlComponent {
 
 
     static buildItem(val: string) {
-        return new FormGroup({
+      return new FormGroup({
+        'id': new FormControl(),
             'date': new FormControl(),
             'natureOfExpenses': new FormControl(val, Validators.required),
             'currency': new FormControl(val, Validators.required),
             'amountSpent': new FormControl(val, Validators.required),
-            'eligibility': new FormControl(val, Validators.required),
             'supportByVoucher': new FormControl(val, Validators.required)
         })
     }

@@ -5,12 +5,12 @@ export class TravelExpensesWithVoucherOptions {
 
     constructor(travelExpensesWithVoucherOptions: ITravelExpensesWithVoucherOptions = {
 
-        travelExpensesWithVoucherItems: new Array<TravelExpensesWithVoucherItem>(),
+      voucherItems: new Array<TravelExpensesWithVoucherItem>(),
         
 
     }) {
 
-        this.TravelExpensesWithVoucherItems = travelExpensesWithVoucherOptions.travelExpensesWithVoucherItems;
+      this.TravelExpensesWithVoucherItems = travelExpensesWithVoucherOptions.voucherItems;
        
 
     }
@@ -20,5 +20,5 @@ export class TravelExpensesWithVoucherOptions {
 
 
 export interface ITravelExpensesWithVoucherOptions {
-    travelExpensesWithVoucherItems: TravelExpensesWithVoucherItem[]
+  voucherItems: TravelExpensesWithVoucherItem[]
 }

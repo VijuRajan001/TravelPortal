@@ -26,10 +26,10 @@ namespace TravelDesk.Controllers
         }
 
         [HttpPost("AddPerDiem")]
-        public void AddPerDiem([FromBody] PerDiemViewModel perDiemViewModel)
+        public void AddPerDiem([FromBody] PerDiemItem perDiemitem)
         {
-            List<PerDiemInfo> _perDiemItems = _mapper.Map<List<PerDiemItem>, List<PerDiemInfo>>(perDiemViewModel.perDiemItems);
-            _unitofWork.PerDiemRepository.AddPerDiemOptions(_perDiemItems);
+            PerDiemInfo _perDiemItem = _mapper.Map<PerDiemItem, PerDiemInfo>(perDiemitem);
+            _unitofWork.PerDiemRepository.AddperDiemInfo(_perDiemItem);
             _unitofWork.Complete();
 
         }
