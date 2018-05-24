@@ -29,6 +29,7 @@ import { BoardingLodgingService } from './shared/services/boardingLodging.servic
 import { TravelExpensesWithoutVoucherService } from './shared/services/travelExpensesWithoutVoucher.service';
 import { TravelExpensesWithVoucherService } from './shared/services/travelExpensesWithVoucher.service';
 import { OtherExpensesService } from './shared/services/otherExpenses.service';
+import { ReimburseGrid } from './components/dashboard/reimbursement/reimburse-grid.component';
 import { AuthGuard } from '../app/auth.guard';
 import { httpInterceptorProviders } from '../app/shared/interceptors/http.intercep.providers';
 import {
@@ -114,7 +115,8 @@ import { ForexService } from './shared/services/forex.service';
     TravelExpensesWithVoucherItemsArrayComponent,
     TravelExpensesWithVoucherItemControlComponent,
     OtherExpensesItemsArrayComponent,
-    OtherExpensesItemControlComponent
+    OtherExpensesItemControlComponent,
+    ReimburseGrid
   ],
   imports: [
     CommonModule,

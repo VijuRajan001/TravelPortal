@@ -1,11 +1,12 @@
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { RequestService} from './request.service';
+import { RequestService } from './request.service';
+import { ReimbursementService} from './reimbursement.service';
 import { from } from 'rxjs/observable/from'; 
 @Injectable()
 export class GridService {
-    constructor(private requestService: RequestService,) {  }
+    constructor(private requestService: RequestService,private reimbursementService:ReimbursementService) {  }
 
     private gridDataSource = new BehaviorSubject<any[]>([]);
 
@@ -28,6 +29,11 @@ export class GridService {
     loadGridData(): void {
 
         this.requestService.getRequestList().subscribe(requests => this.pushGridData(requests));
+    }
+
+    loadReimbursementData(): void {
+
+      this.reimbursementService.getReimbursementList().subscribe((requests => this.pushGridData(requests)))
     }
 
 }

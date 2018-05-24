@@ -53,8 +53,8 @@ h1.example-app-name {
 }
 
 .example-toolbar {
-    height: 50px;
-    padding: 0 0px;
+    
+    padding: 0px 0px 0px 0px;
 }
 .example-buttons-icon{
     height:50px;
@@ -63,8 +63,14 @@ h1.example-app-name {
 
 .example-buttons{
     height:50px;
+    width:150px;
 }
 
 .mat-list-item {
     height: 50px;
+}
+.example-logo-container{
+  background-color:white;
+  padding-top:2px;
+  padding-bottom:2px;
 }

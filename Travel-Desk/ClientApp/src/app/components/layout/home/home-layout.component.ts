@@ -7,22 +7,23 @@ import { RequestDialog } from '../../request/request-dialog.component';
 import { TableOverviewExample } from '../../dashboard/grid/dashboard-grid.component';
 import { GridService } from '../../../shared/services/grid.service';
 import { ReimbursementDialog } from '../../reimbursement/reimbursement-dialog.component';
+
+import { MatIconRegistry } from "@angular/material/icon";
+import { DomSanitizer } from "@angular/platform-browser";
 @Component({
     selector: 'home-layout',
     templateUrl: './home-layout.component.html',
     styleUrls: ['./home-layout.component.css']
 })
-export class HomeLayoutComponent implements AfterViewInit {
+export class HomeLayoutComponent {
     
      
-    @ViewChild('snav') snav: MatSidenav;
+   
     
     @ViewChildren(TableOverviewExample) DashBoardGrid: QueryList<TableOverviewExample>
 
-    
-   
     mobileQuery: MediaQueryList;
-    fillerNav = Array(50).fill(0).map((_, i) => `Nav Item ${i + 1}`);
+    
 
     
     private _mobileQueryListener: () => void;
@@ -30,10 +31,17 @@ export class HomeLayoutComponent implements AfterViewInit {
     constructor(public dialog: MatDialog, changeDetectorRef: ChangeDetectorRef,
         media: MediaMatcher, private renderer: Renderer2, private router: Router,
         private gridService: GridService,
-        private userService: UserService) {
+        private userService: UserService
+         , private matIconRegistry: MatIconRegistry,
+    private domSanitizer: DomSanitizer
+    ) {
         this.mobileQuery = media.matchMedia('(max-width: 600px)');
         this._mobileQueryListener = () => changeDetectorRef.detectChanges();
         this.mobileQuery.addListener(this._mobileQueryListener);
+      this.matIconRegistry.addSvgIcon(
+      "nous-logo",
+      this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/Nous_logo.svg")
+    );
         
     }
     
@@ -64,14 +72,7 @@ export class HomeLayoutComponent implements AfterViewInit {
         });
     }
     
-    ngAfterViewInit(): void {
-
-        if (this.mobileQuery.matches) {
-            this.snav.close();
-        }
-        
-        
-    }
+    
     ngOnDestroy(): void {
         this.mobileQuery.removeListener(this._mobileQueryListener);
     }

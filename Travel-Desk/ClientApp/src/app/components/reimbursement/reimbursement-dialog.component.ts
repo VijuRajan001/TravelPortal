@@ -322,28 +322,31 @@ export class ReimbursementDialog implements OnInit, Validators {
                 }
             });
 
+            if (addfaredata.FareItems.length > 0) {
+                this.fareService.addFareInfo(addfaredata).subscribe(
+                    (val) => {
+                        console.log("POST call success");
+                    },
+                    response => {
+                        console.log("POST call in error", response);
+                    },
+                    () => {
+                        console.log("The POST observable is now completed.");
+                    });
+              }
 
-            this.fareService.addFareInfo(addfaredata).subscribe(
-                (val) => {
-                    console.log("POST call success");
-                },
-                response => {
-                    console.log("POST call in error", response);
-                },
-                () => {
-                    console.log("The POST observable is now completed.");
-                });
-
-            //this.fareService.updateFareInfo(updateFlightdata).subscribe(
-            //    (val) => {
-            //        console.log("POST call success");
-            //    },
-            //    response => {
-            //        console.log("POST call in error", response);
-            //    },
-            //    () => {
-            //        console.log("The POST observable is now completed.");
-            //    });
+            if (updateFlightdata.FareItems.length > 0) {
+              this.fareService.updateFareInfo(updateFlightdata).subscribe(
+                  (val) => {
+                      console.log("POST call success");
+                  },
+                  response => {
+                      console.log("POST call in error", response);
+                  },
+                  () => {
+                      console.log("The POST observable is now completed.");
+                  });
+              }
         }
 
 
@@ -407,31 +410,33 @@ export class ReimbursementDialog implements OnInit, Validators {
 
             });
 
-            this.boardingLodgingService.addBoardingLodgingInfo(addBoardingdata).subscribe(
-                (val) => {
-                    console.log("POST call success");
-                },
-                response => {
-                    console.log("POST call in error", response);
-                },
-                () => {
-                    console.log("The POST observable is now completed.");
-                });
+            if (addBoardingdata.BoardingLodgingItems.length > 0) {
+              this.boardingLodgingService.addBoardingLodgingInfo(addBoardingdata).subscribe(
+                  (val) => {
+                      console.log("POST call success");
+                  },
+                  response => {
+                      console.log("POST call in error", response);
+                  },
+                  () => {
+                      console.log("The POST observable is now completed.");
+                  });
 
+            }
 
+            if (updateBoardingdata.BoardingLodgingItems.length > 0) {
+              this.boardingLodgingService.updateBoardingLodgingInfo(updateBoardingdata).subscribe(
+                  (val) => {
+                      console.log("POST call success");
+                  },
+                  response => {
+                      console.log("POST call in error", response);
+                  },
+                  () => {
+                      console.log("The POST observable is now completed.");
+                  });
 
-            //this.boardingLodgingService.updateBoardingLodgingInfo(updateBoardingdata).subscribe(
-            //    (val) => {
-            //        console.log("POST call success");
-            //    },
-            //    response => {
-            //        console.log("POST call in error", response);
-            //    },
-            //    () => {
-            //        console.log("The POST observable is now completed.");
-            //    });
-
-
+              }
 
         }
 
@@ -497,7 +502,7 @@ export class ReimbursementDialog implements OnInit, Validators {
 
       });
 
-      console.log(addVoucherData);
+   ;
       saveVoucherData.TravelExpensesWithVoucherItems.forEach(item => {
         item.reimbursementInfoId = this.data;
 
@@ -511,6 +516,7 @@ export class ReimbursementDialog implements OnInit, Validators {
         }
       });
 
+      if (addVoucherData.TravelExpensesWithVoucherItems.length > 0) {
 
       this.travelExpensesWithVoucherService.addTravelExpensesWithVoucherInfo(addVoucherData).subscribe(
         (val) => {
@@ -522,18 +528,22 @@ export class ReimbursementDialog implements OnInit, Validators {
         () => {
           console.log("The POST observable is now completed.");
         });
+      }
 
-      //this.fareService.updateFareInfo(updateFlightdata).subscribe(
-      //    (val) => {
-      //        console.log("POST call success");
-      //    },
-      //    response => {
-      //        console.log("POST call in error", response);
-      //    },
-      //    () => {
-      //        console.log("The POST observable is now completed.");
-      //    });
+      if (updateVoucherData.TravelExpensesWithVoucherItems.length > 0) {
 
+        this.travelExpensesWithVoucherService.updateTravelExpensesWithVoucherInfo(updateVoucherData).subscribe(
+            (val) => {
+                console.log("POST call success");
+            },
+            response => {
+                console.log("POST call in error", response);
+            },
+            () => {
+                console.log("The POST observable is now completed.");
+            });
+
+        }
       }
     
     }
@@ -579,7 +589,7 @@ export class ReimbursementDialog implements OnInit, Validators {
         }
       });
 
-
+      if (addNonVoucherData.TravelExpensesWithoutVoucherItems.length > 0) {
       this.travelExpensesWithoutVoucherService.addTravelExpensesWithoutVoucherInfo(addNonVoucherData).subscribe(
         (val) => {
           console.log("POST call success");
@@ -590,18 +600,20 @@ export class ReimbursementDialog implements OnInit, Validators {
         () => {
           console.log("The POST observable is now completed.");
         });
+      }
+      if (updateNonVoucherData.TravelExpensesWithoutVoucherItems.length > 0) {
+        this.travelExpensesWithoutVoucherService.updateTravelExpensesWithoutVoucherInfo(updateNonVoucherData).subscribe(
+            (val) => {
+                console.log("POST call success");
+            },
+            response => {
+                console.log("POST call in error", response);
+            },
+            () => {
+                console.log("The POST observable is now completed.");
+            });
 
-      //this.fareService.updateFareInfo(updateFlightdata).subscribe(
-      //    (val) => {
-      //        console.log("POST call success");
-      //    },
-      //    response => {
-      //        console.log("POST call in error", response);
-      //    },
-      //    () => {
-      //        console.log("The POST observable is now completed.");
-      //    });
-
+      }
       }
     }
 
@@ -676,7 +688,7 @@ export class ReimbursementDialog implements OnInit, Validators {
         }
       });
 
-
+      if(addOtherExpenseData.OtherExpensesItems.length>0)
       this.otherExpensesService.addOtherExpensesInfo(addOtherExpenseData).subscribe(
         (val) => {
           console.log("POST call success");
@@ -688,16 +700,17 @@ export class ReimbursementDialog implements OnInit, Validators {
           console.log("The POST observable is now completed.");
         });
 
-      //this.fareService.updateFareInfo(updateFlightdata).subscribe(
-      //    (val) => {
-      //        console.log("POST call success");
-      //    },
-      //    response => {
-      //        console.log("POST call in error", response);
-      //    },
-      //    () => {
-      //        console.log("The POST observable is now completed.");
-      //    });
+      if(updateOtherExpenseData.OtherExpensesItems.length>0)
+      this.otherExpensesService.updateOtherExpensesInfo(updateOtherExpenseData).subscribe(
+          (val) => {
+              console.log("POST call success");
+          },
+          response => {
+              console.log("POST call in error", response);
+          },
+          () => {
+              console.log("The POST observable is now completed.");
+          });
 
     }
 
@@ -715,18 +728,33 @@ export class ReimbursementDialog implements OnInit, Validators {
       perDiemItem.totalDays = this.PerDiemForm.controls['totalDays'].value;
       perDiemItem.totalAmount = this.PerDiemForm.controls['totalAmount'].value;
       perDiemItem.remarks = this.PerDiemForm.controls['remarks'].value;
-     
-      this.perDiemService.addPerDiemInfo(perDiemItem).subscribe(
-        (val) => {
-          console.log("POST call success");
-        },
-        response => {
-          console.log("POST call in error", response);
-        },
-        () => {
-          console.log("The POST observable is now completed.");
-        });
 
+      if (this.data > 0) {
+        this.perDiemService.addPerDiemInfo(perDiemItem).subscribe(
+          (val) => {
+            console.log("POST call success");
+          },
+          response => {
+            console.log("POST call in error", response);
+          },
+          () => {
+            console.log("The POST observable is now completed.");
+          });
+      } else {
+
+        this.perDiemService.updatePerDiemInfo(perDiemItem).subscribe(
+          (val) => {
+            console.log("POST call success");
+          },
+          response => {
+            console.log("POST call in error", response);
+          },
+          () => {
+            console.log("The POST observable is now completed.");
+          });
+
+
+      }
     }
 
   }
@@ -752,17 +780,33 @@ export class ReimbursementDialog implements OnInit, Validators {
             reimbursementData.anyOtherExpenseReimbursed = this.ReimbursementForm.controls['otherReimbursable'].value=='Yes'?true:false;
 
             
-        
-            this.reimbursementService.addReimbursement(reimbursementData).subscribe(
+            if (this.data > 0) {
+              this.reimbursementService.addReimbursement(reimbursementData).subscribe(
                 (val) => {
-                    console.log("POST call success");
+                  console.log("POST call success");
                 },
                 response => {
-                    console.log("POST call in error", response);
+                  console.log("POST call in error", response);
                 },
                 () => {
-                    console.log("The POST observable is now completed.");
+                  console.log("The POST observable is now completed.");
                 });
+            }
+            else {
+              this.reimbursementService.updateReimbursement(reimbursementData).subscribe(
+                (val) => {
+                  console.log("POST call success");
+                },
+                response => {
+                  console.log("POST call in error", response);
+                },
+                () => {
+                  console.log("The POST observable is now completed.");
+                });
+
+
+
+            }
 
         }
     }
