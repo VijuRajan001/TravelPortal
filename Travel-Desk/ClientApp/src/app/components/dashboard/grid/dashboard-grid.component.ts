@@ -11,9 +11,10 @@ import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { GridService } from '../../../shared/services/grid.service';
 import { CollectionViewer } from '@angular/cdk/collections';
-import { catchError, finalize } from 'rxjs/operators';
+import { catchError, finalize, tap } from 'rxjs/operators';
 import { MatProgressSpinnerModule } from '@angular/material';
 import { of } from 'rxjs/observable/of';
+import { ActivatedRoute } from '@angular/router';
 
 /**
  * @title Data table with sorting, pagination, and filtering.
@@ -25,13 +26,15 @@ import { of } from 'rxjs/observable/of';
 })
 export class TableOverviewExample implements OnInit {
 
-  displayedColumns = ['requestId', 'project_Code', 'country', 'employeeId', 'employeeName', 'travelDate', 'returnDate','actions'];
+    displayedColumns = ['requestId', 'project_Code', 'country', 'employeeId', 'employeeName', 'travelDate', 'returnDate','actions'];
     dataSource: RequestDataSource;
-    request: RequestData;
+    length=0;
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
 
-    constructor(public dialog: MatDialog, private requestService: RequestService) {
+    constructor(public dialog: MatDialog, private requestService: RequestService,
+      private route: ActivatedRoute
+    ) {
         // Create 100 users
         
         
@@ -42,13 +45,22 @@ export class TableOverviewExample implements OnInit {
      * be able to query its view for the initialized paginator and sort.
      */
     ngAfterViewInit() {
-    //    this.dataSource.paginator = this.paginator;
-    //    this.dataSource.sort = this.sort;
+      this.paginator.page
+            .pipe(
+                tap(() => this.loadRequestPage())
+            )
+            .subscribe();
+
+      this.paginator.length = this.length;
+      
     }
 
     ngOnInit() {
+        
         this.dataSource = new RequestDataSource(this.requestService);
         this.dataSource.loadRequests();
+        this.length = this.dataSource.getRequestlength();
+        
 
     }
 
@@ -78,23 +90,15 @@ export class TableOverviewExample implements OnInit {
     }
 
 
-    openReimbursementDialog(id: number): void {
+    
+    loadRequestPage() {
 
-
-        let dialogRef = this.dialog.open(ReimbursementDialog, {
-            width: '80vw',
-            height: '70vh',
-            data: id
-        });
-
-        dialogRef.afterClosed().subscribe(result => {
-
-            this.dataSource.loadRequests();
-
-        });
-
-
-
+      this.dataSource.loadRequests(
+              '',
+            'asc',
+            this.paginator.pageIndex,
+            this.paginator.pageSize);
+      
     }
 
 
@@ -104,9 +108,10 @@ export class TableOverviewExample implements OnInit {
 export class RequestDataSource implements DataSource<any>
 {
 
-    private requestSubject = new BehaviorSubject<RequestData[]>([]);
+  private requestSubject = new BehaviorSubject<RequestData[]>([]);
   private loadingRequestSubject = new BehaviorSubject<boolean>(false);
   public loading$ = this.loadingRequestSubject.asObservable();
+  private requestLength= 0;
 
   constructor(private requestService: RequestService) {
         
@@ -119,7 +124,12 @@ export class RequestDataSource implements DataSource<any>
       this.loadingRequestSubject.complete();
     }
 
-  loadRequests(filter = '',
+    getRequestlength() {
+
+      return this.requestLength;
+    }
+
+    loadRequests(filter = '',
     sortDirection = 'asc', pageIndex = 0, pageSize = 3) {
         this.loadingRequestSubject.next(true);
     this.requestService.getRequestList(filter, sortDirection,
@@ -127,7 +137,11 @@ export class RequestDataSource implements DataSource<any>
         catchError(() => of([])),
         finalize(() => this.loadingRequestSubject.next(false))
       )
-        .subscribe(request => this.requestSubject.next(request));
+      .subscribe(request => {
+        this.requestLength = request.length;
+        this.requestSubject.next(request);
+
+      });
             
         
     }

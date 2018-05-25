@@ -16,6 +16,7 @@
                             Employee Name is <strong>required</strong>
                         </mat-error>
                     </mat-form-field>
+                    <mat-divider></mat-divider>
                     <mat-form-field>
                         <input matInput placeholder="Designation" formControlName="designation">
                         <mat-error *ngIf="ReimbursementForm.get('designation').hasError('required')">
@@ -28,6 +29,7 @@
                             Band/ Work Level is <strong>required</strong>
                         </mat-error>
                     </mat-form-field>
+                    <mat-divider></mat-divider>
                     <mat-form-field>
                         <input matInput placeholder="Client Name" formControlName="clientName">
                         <mat-error *ngIf="ReimbursementForm.get('clientName').hasError('required')">
@@ -46,6 +48,7 @@
                             Cost Center is <strong>required</strong>
                         </mat-error>
                     </mat-form-field>
+                    <mat-divider></mat-divider>
                     <mat-form-field>
                         <input matInput placeholder="Purpose of Travel" formControlName="purposeOfTravel">
                         <mat-error *ngIf="ReimbursementForm.get('purposeOfTravel').hasError('required')">
@@ -75,7 +78,9 @@
                         </mat-error>
                     </mat-form-field>
                     <mat-datepicker #departure_date></mat-datepicker>
+                    <mat-divider></mat-divider>
                     <mat-form-field>
+
                         <input matInput placeholder="Travel Billable to Customer" formControlName="travelBillable">
                         <mat-error *ngIf="ReimbursementForm.get('travelBillable').hasError('required')">
                             Travel Billable to Customer is <strong>required</strong>
@@ -99,10 +104,11 @@
                             Any other expenses reimbursable by Customer is <strong>required</strong>
                         </mat-error>
                     </mat-form-field>
-                    <h1>Note: Attach boarding pass for each leg traveled</h1>
+                    
                 </div>
+                <mat-divider></mat-divider>
                 <div class="spacer">
-                    <mat-divider></mat-divider>
+                    
                     <mat-action-row>
                         
                         <button mat-button color="primary" type="submit" (click)="submitActions=action.createUpdateReimbursement">Save</button>

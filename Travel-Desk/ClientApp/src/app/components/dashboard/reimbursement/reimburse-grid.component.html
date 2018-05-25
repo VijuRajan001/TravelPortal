@@ -11,7 +11,7 @@
   <mat-table [dataSource]="dataSource" matSort>
     <!-- ID Column -->
     <ng-container matColumnDef="reimbursementInfoId">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Reimbursement Info </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Reimbursement Id </mat-header-cell>
       <mat-cell *matCellDef="let row"> {{row.reimbursementInfoId}} </mat-cell>
     </ng-container>
     <!-- Progress Column -->
@@ -42,7 +42,7 @@
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Actions </mat-header-cell>
       <mat-cell *matCellDef="let row" (click)="$event.stopPropagation()">
-        <button mat-icon-button (click)="openReimbursementDialog(row.requestId)" color="primary">
+        <button mat-icon-button (click)="openReimbursementDialog(row.reimbursementInfoId)" color="primary">
           <mat-icon>edit</mat-icon>
         </button>
         <button mat-icon-button (click)="requestId.status=true" style="color:greenyellow">

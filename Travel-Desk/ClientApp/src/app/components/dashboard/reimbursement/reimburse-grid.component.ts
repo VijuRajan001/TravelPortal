@@ -13,7 +13,7 @@ import { GridService } from '../../../shared/services/grid.service';
 import { GridreimbursementService } from '../../../shared/services/gridreimbursement.service';
 import { ReimbursementService } from '../../../shared/services/reimbursement.service';
 import { CollectionViewer } from '@angular/cdk/collections';
-import { catchError, finalize } from 'rxjs/operators';
+import { catchError, finalize, tap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 
 /**
@@ -43,8 +43,7 @@ export class ReimburseGrid implements OnInit {
      * be able to query its view for the initialized paginator and sort.
      */
     ngAfterViewInit() {
-    //    this.dataSource.paginator = this.paginator;
-    //    this.dataSource.sort = this.sort;
+     
     }
 
     ngOnInit() {
@@ -58,25 +57,7 @@ export class ReimburseGrid implements OnInit {
         //filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
         //this.dataSource.filter = filterValue;
     }
-
-    openRequestDialog(id:number): void {
-
-
-        let dialogRef = this.dialog.open(RequestDialog, {
-            width: '80vw',
-            height: '70vh',
-            data: id
-        });
-
-        dialogRef.afterClosed().subscribe(result => {
-
-            this.dataSource.loadReimbursement();
-
-        });
-
-                  
-        
-    }
+  
 
 
     openReimbursementDialog(id: number): void {

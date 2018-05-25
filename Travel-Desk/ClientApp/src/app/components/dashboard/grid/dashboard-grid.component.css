@@ -19,3 +19,7 @@
     overflow: auto;
     max-height: 500px;
 }
+
+.spinner-container{
+  align-self:center;
+}
