@@ -10,6 +10,10 @@ import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { GridService } from '../../../shared/services/grid.service';
+import { CollectionViewer } from '@angular/cdk/collections';
+import { catchError, finalize } from 'rxjs/operators';
+import { MatProgressSpinnerModule } from '@angular/material';
+import { of } from 'rxjs/observable/of';
 
 /**
  * @title Data table with sorting, pagination, and filtering.
@@ -27,7 +31,7 @@ export class TableOverviewExample implements OnInit {
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
 
-    constructor(public dialog: MatDialog, private requestService: RequestService, private gridService: GridService) {
+    constructor(public dialog: MatDialog, private requestService: RequestService) {
         // Create 100 users
         
         
@@ -43,7 +47,7 @@ export class TableOverviewExample implements OnInit {
     }
 
     ngOnInit() {
-        this.dataSource = new RequestDataSource(this.gridService);
+        this.dataSource = new RequestDataSource(this.requestService);
         this.dataSource.loadRequests();
 
     }
@@ -97,29 +101,33 @@ export class TableOverviewExample implements OnInit {
 }
 
 /** Builds and returns a new User. */
-export class RequestDataSource extends DataSource<any>
+export class RequestDataSource implements DataSource<any>
 {
-    
-    private loadingRequestSubject = new BehaviorSubject<boolean>(false);
 
-    constructor(private gridService : GridService) {
-        super();
-    }
-    connect(): Observable<any[]> {
-        
-        
-        return this.gridService.getGridData();
+    private requestSubject = new BehaviorSubject<RequestData[]>([]);
+  private loadingRequestSubject = new BehaviorSubject<boolean>(false);
+  public loading$ = this.loadingRequestSubject.asObservable();
+
+  constructor(private requestService: RequestService) {
         
     }
-    disconnect() {
-        this.gridService.disconnect();
-        this.loadingRequestSubject.complete();
-
+    connect(collectionViewer: CollectionViewer): Observable<RequestData[]> {
+      return this.requestSubject.asObservable();
+    }
+    disconnect(collectionViewer: CollectionViewer): void {
+      this.requestSubject.complete();
+      this.loadingRequestSubject.complete();
     }
 
-    loadRequests() {
+  loadRequests(filter = '',
+    sortDirection = 'asc', pageIndex = 0, pageSize = 3) {
         this.loadingRequestSubject.next(true);
-        this.gridService.loadGridData();
+    this.requestService.getRequestList(filter, sortDirection,
+      pageIndex, pageSize).pipe(
+        catchError(() => of([])),
+        finalize(() => this.loadingRequestSubject.next(false))
+      )
+        .subscribe(request => this.requestSubject.next(request));
             
         
     }

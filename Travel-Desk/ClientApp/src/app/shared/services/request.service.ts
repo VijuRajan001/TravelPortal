@@ -30,9 +30,16 @@ export class RequestService extends BaseService {
           JSON.stringify(requestData));
   }
 
-  getRequestList(): Observable<RequestData[]> {
+  getRequestList(filter = '', sortOrder = 'asc',
+    pageNumber = 0, pageSize = 3): Observable<RequestData[]> {
 
-      return this.http.get<RequestData[]>(this.baseUrl + 'api/Request/GetRequestList');
+    return this.http.get<RequestData[]>(this.baseUrl + 'api/Request/GetRequestList', {
+      params: new HttpParams()
+        .set('filter', filter)
+        .set('sortOrder', sortOrder)
+        .set('pageNumber', pageNumber.toString())
+        .set('pageSize', pageSize.toString())
+    });
   }
 
   getRequestById(id:number): Observable<RequestData> {

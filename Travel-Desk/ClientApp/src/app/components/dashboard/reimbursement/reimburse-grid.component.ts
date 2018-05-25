@@ -10,6 +10,11 @@ import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { GridService } from '../../../shared/services/grid.service';
+import { GridreimbursementService } from '../../../shared/services/gridreimbursement.service';
+import { ReimbursementService } from '../../../shared/services/reimbursement.service';
+import { CollectionViewer } from '@angular/cdk/collections';
+import { catchError, finalize } from 'rxjs/operators';
+import { of } from 'rxjs/observable/of';
 
 /**
  * @title Data table with sorting, pagination, and filtering.
@@ -27,7 +32,7 @@ export class ReimburseGrid implements OnInit {
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
 
-    constructor(public dialog: MatDialog, private gridService: GridService) {
+  constructor(public dialog: MatDialog, private reimbursementService: ReimbursementService) {
         // Create 100 users
         
         
@@ -43,7 +48,7 @@ export class ReimburseGrid implements OnInit {
     }
 
     ngOnInit() {
-        this.dataSource = new ReimbursementDataSource(this.gridService);
+      this.dataSource = new ReimbursementDataSource(this.reimbursementService);
         this.dataSource.loadReimbursement();
 
     }
@@ -100,29 +105,32 @@ export class ReimburseGrid implements OnInit {
 export class ReimbursementDataSource extends DataSource<any>
 {
     
-    private loadingreimbursementSubject = new BehaviorSubject<boolean>(false);
+  private reimbursementSubject = new BehaviorSubject<ReimbursementData[]>([]);
+  private loadingReimbursementSubject = new BehaviorSubject<boolean>(false);
+  public loading$ = this.loadingReimbursementSubject.asObservable();
 
-    constructor(private gridService : GridService) {
+  constructor(private reimbursementService: ReimbursementService) {
         super();
     }
-    connect(): Observable<any[]> {
-        
-        
-        return this.gridService.getGridData();
-        
-    }
-    disconnect() {
-        this.gridService.disconnect();
-        this.loadingreimbursementSubject.complete();
+  connect(collectionViewer: CollectionViewer): Observable<ReimbursementData[]> {
+    return this.reimbursementSubject.asObservable();
+  }
+  disconnect(collectionViewer: CollectionViewer): void {
+    this.reimbursementSubject.complete();
+    this.loadingReimbursementSubject.complete();
+  }
 
-    }
+  loadReimbursement() {
+    this.loadingReimbursementSubject.next(true);
+    this.reimbursementService.getReimbursementList().pipe(
+      catchError(() => of([])),
+      finalize(() => this.loadingReimbursementSubject.next(false))
+    )
+      .subscribe(request => this.reimbursementSubject.next(request));
 
-    loadReimbursement() {
-        this.loadingreimbursementSubject.next(true);
-        this.gridService.loadReimbursementData();
-            
-        
-    }
+
+  }
+
 
 }
 

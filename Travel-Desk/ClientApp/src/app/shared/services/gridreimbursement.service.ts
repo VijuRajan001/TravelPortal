@@ -5,8 +5,8 @@ import { RequestService } from './request.service';
 import { ReimbursementService} from './reimbursement.service';
 import { from } from 'rxjs/observable/from'; 
 @Injectable()
-export class GridService {
-    constructor(private requestService: RequestService) {  }
+export class GridreimbursementService {
+    constructor(private reimbursementService:ReimbursementService) {  }
 
     private gridDataSource = new BehaviorSubject<any[]>([]);
 
@@ -26,10 +26,9 @@ export class GridService {
         this.gridDataSource.complete();
     }
 
-    loadGridData(): void {
+    loadReimbursementData(): void {
 
-        this.requestService.getRequestList().subscribe(requests => this.pushGridData(requests));
+      this.reimbursementService.getReimbursementList().subscribe((requests => this.pushGridData(requests)))
     }
 
-   
 }

@@ -87,6 +87,7 @@ import { FlightService } from './shared/services/flight.service';
 import { HotelService } from './shared/services/hotel.service';
 import { PassportService } from './shared/services/passport.service';
 import { ForexService } from './shared/services/forex.service';
+import { GridreimbursementService } from './shared/services/gridreimbursement.service';
 
 @NgModule({
   declarations: [
@@ -164,6 +165,7 @@ import { ForexService } from './shared/services/forex.service';
         canActivate: [AuthGuard],
         children: [
           { path: '', redirectTo: 'home', pathMatch: 'full' },
+          {path: 'reimbursement',component:ReimburseGrid},
           { path: 'counter', component: CounterComponent },
           { path: 'fetch-data', component: FetchDataComponent },
           { path: 'home', component: TableOverviewExample },
@@ -185,7 +187,7 @@ import { ForexService } from './shared/services/forex.service';
   ],
   
   entryComponents: [RequestDialog,ReimbursementDialog],
-  providers: [MediaMatcher,FareService,BoardingLodgingService,PerDiemService,TravelExpensesWithVoucherService,TravelExpensesWithoutVoucherService,OtherExpensesService,ConfigService, RequestService, UserService, GridService,ReimbursementService, FlightService, HotelService, PassportService, ForexService, AuthService, AuthGuard, httpInterceptorProviders,
+  providers: [MediaMatcher,GridreimbursementService,FareService,BoardingLodgingService,PerDiemService,TravelExpensesWithVoucherService,TravelExpensesWithoutVoucherService,OtherExpensesService,ConfigService, RequestService, UserService, GridService,ReimbursementService, FlightService, HotelService, PassportService, ForexService, AuthService, AuthGuard, httpInterceptorProviders,
     { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }],
   bootstrap: [AppComponent],
 
