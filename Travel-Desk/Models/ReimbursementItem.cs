@@ -29,10 +29,15 @@ namespace TravelDesk.Models
             set; }
         public DateTime DateofArrival { get;
             set; }
-        public DateTime DateofDeparture { get; set; }
-        public Boolean TravelBillabletoCustomer { get; set; }
-        public Boolean FlightChargesReimbursed { get; set; }
-        public Boolean TravelExpenseReimbursed { get; set; }
-        public Boolean AnyOtherExpenseReimbursed { get; set; }
+        public DateTime DateofDeparture { get;
+            set; }
+        public Boolean TravelBillabletoCustomer { get;
+            set; }
+        public Boolean FlightChargesReimbursed { get;
+            set; }
+        public Boolean TravelExpenseReimbursed { get;
+            set; }
+        public Boolean AnyOtherExpenseReimbursed { get;
+            set; }
     }
 }

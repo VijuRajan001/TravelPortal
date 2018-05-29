@@ -10,11 +10,11 @@ export class ReimbursementData {
         clientName: "",
         projectCode: "",
         costCenter: "",
-        purposeOfTravel: "",
-        locationOfTravel: "",
-        dateOfArrival: "",
-        dateOfDeparture: "",
-        travelBillableToCustomer: false,
+        purposeofTravel: "",
+        locationofTravel: "",
+        dateofArrival: "",
+        dateofDeparture: "",
+        travelBillabletoCustomer: false,
         flightChargesReimbursed: false,
         travelExpenseReimbursed: false,
         anyOtherExpenseReimbursed: false
@@ -24,18 +24,18 @@ export class ReimbursementData {
         this.employeeName = request.employeeName;
         this.employeeId = request.employeeId;
         this.designation = request.designation;
-        this.bandWorkLevel = request.bandWorkLevel;
-        this.clientName = request.clientName;
-        this.projectCode = request.projectCode;
-        this.costCenter = request.costCenter;
-        this.purposeOfTravel = request.purposeOfTravel;
-        this.locationOfTravel = request.locationOfTravel;
-        this.dateOfArrival = request.dateOfArrival;
-        this.dateOfDeparture = request.dateOfDeparture;
-        this.travelBillableToCustomer = request.travelBillableToCustomer;
-        this.flightChargesReimbursed = request.flightChargesReimbursed;
-        this.travelExpenseReimbursed = request.travelExpenseReimbursed;
-        this.anyOtherExpenseReimbursed = request.anyOtherExpenseReimbursed;
+      this.bandWorkLevel = request.bandWorkLevel;
+      this.clientName = request.clientName;
+      this.projectCode = request.projectCode;
+      this.costCenter = request.costCenter;
+      this.purposeofTravel = request.purposeofTravel;
+      this.locationofTravel = request.locationofTravel;
+      this.dateofArrival = request.dateofArrival;
+      this.dateofDeparture = request.dateofDeparture;
+      this.travelBillabletoCustomer = request.travelBillabletoCustomer;
+      this.flightChargesReimbursed = request.flightChargesReimbursed;
+      this.travelExpenseReimbursed = request.travelExpenseReimbursed;
+      this.anyOtherExpenseReimbursed = request.anyOtherExpenseReimbursed;
 
     }
     public reimbursementInfoId: number;
@@ -46,11 +46,11 @@ export class ReimbursementData {
     public clientName: string;
     public projectCode: string;
     public costCenter: string;
-    public purposeOfTravel: string;
-    public locationOfTravel: string;
-    public dateOfArrival: string;
-    public dateOfDeparture: string;
-    public travelBillableToCustomer: boolean;
+  public purposeofTravel: string;
+  public locationofTravel: string;
+  public dateofArrival: string;
+  public dateofDeparture: string;
+  public travelBillabletoCustomer: boolean;
     public flightChargesReimbursed: boolean;
     public travelExpenseReimbursed: boolean;
     public anyOtherExpenseReimbursed: boolean;
@@ -67,11 +67,11 @@ export interface IReimbursementData {
     clientName: string;
     projectCode: string;
     costCenter: string;
-    purposeOfTravel: string;
-    locationOfTravel: string;
-    dateOfArrival: string;
-    dateOfDeparture: string;
-    travelBillableToCustomer: boolean;
+  purposeofTravel: string;
+    locationofTravel: string;
+    dateofArrival: string;
+    dateofDeparture: string;
+    travelBillabletoCustomer: boolean;
      flightChargesReimbursed: boolean;
      travelExpenseReimbursed: boolean;
      anyOtherExpenseReimbursed: boolean;

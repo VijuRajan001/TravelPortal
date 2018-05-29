@@ -45,9 +45,8 @@ export class ReimbursementService extends BaseService {
   }
 
   updateReimbursement(reimbursementData: ReimbursementData): Observable<any> {
-      let travelData: TravelData = new TravelData();
-      travelData.reimbursementData = reimbursementData;
+      
       return this.http.post(this.baseUrl + 'api/Reimbursement/UpdateReimbursement', 
-          JSON.stringify(travelData));
+        JSON.stringify(reimbursementData));
     }
 }

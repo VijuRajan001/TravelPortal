@@ -3,109 +3,116 @@
         <mat-tab label="Add Reimbursement" class="flex-expand">
             <form [formGroup]="ReimbursementForm" (ngSubmit)="onSubmit()" class="tab-form">
                 <div class="form-content">
-                    
-                    <mat-form-field>
-                        <input matInput placeholder="Employee Id" formControlName="employeeId">
-                        <mat-error *ngIf="ReimbursementForm.get('employeeId').hasError('required')">
-                            Employee Id is <strong>required</strong>
-                        </mat-error>
-                    </mat-form-field>
-                    <mat-form-field>
-                        <input matInput placeholder="Employee Name" formControlName="employeeName">
-                        <mat-error *ngIf="ReimbursementForm.get('employeeName').hasError('required')">
-                            Employee Name is <strong>required</strong>
-                        </mat-error>
-                    </mat-form-field>
-                    <mat-divider></mat-divider>
-                    <mat-form-field>
-                        <input matInput placeholder="Designation" formControlName="designation">
-                        <mat-error *ngIf="ReimbursementForm.get('designation').hasError('required')">
-                            Designation is <strong>required</strong>
-                        </mat-error>
-                    </mat-form-field>
-                    <mat-form-field>
-                        <input matInput placeholder="Band/ Work Level" formControlName="band">
-                        <mat-error *ngIf="ReimbursementForm.get('band').hasError('required')">
-                            Band/ Work Level is <strong>required</strong>
-                        </mat-error>
-                    </mat-form-field>
-                    <mat-divider></mat-divider>
-                    <mat-form-field>
+                    <div class="row-flex-container">
+                      <mat-form-field class="row-flex-item">
+                          <input matInput placeholder="Employee Id" formControlName="employeeId">
+                          <mat-error *ngIf="ReimbursementForm.get('employeeId').hasError('required')">
+                              Employee Id is <strong>required</strong>
+                          </mat-error>
+                      </mat-form-field>
+                      <mat-form-field class="row-flex-item">
+                          <input matInput placeholder="Employee Name" formControlName="employeeName">
+                          <mat-error *ngIf="ReimbursementForm.get('employeeName').hasError('required')">
+                              Employee Name is <strong>required</strong>
+                          </mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div class="row-flex-container">
+                      <mat-form-field class="row-flex-item">
+                          <input matInput placeholder="Designation" formControlName="designation">
+                          <mat-error *ngIf="ReimbursementForm.get('designation').hasError('required')">
+                              Designation is <strong>required</strong>
+                          </mat-error>
+                      </mat-form-field>
+                      <mat-form-field class="row-flex-item">
+                          <input matInput placeholder="Band/ Work Level" formControlName="bandWorkLevel">
+                          <mat-error *ngIf="ReimbursementForm.get('bandWorkLevel').hasError('required')">
+                              Band/ Work Level is <strong>required</strong>
+                          </mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div class="row-flex-container">
+                      <mat-form-field class="row-flex-item">
                         <input matInput placeholder="Client Name" formControlName="clientName">
                         <mat-error *ngIf="ReimbursementForm.get('clientName').hasError('required')">
-                            Client Name is <strong>required</strong>
+                          Client Name is <strong>required</strong>
                         </mat-error>
-                    </mat-form-field>
-                    <mat-form-field>
+                      </mat-form-field>
+                      <mat-form-field class="row-flex-item">
                         <input matInput placeholder="Project Code" formControlName="projectCode">
                         <mat-error *ngIf="ReimbursementForm.get('projectCode').hasError('required')">
-                            Project Code is <strong>required</strong>
+                          Project Code is <strong>required</strong>
                         </mat-error>
-                    </mat-form-field>
-                    <mat-form-field>
+                      </mat-form-field>
+                      <mat-form-field class="row-flex-item">
                         <input matInput placeholder="Cost Center" formControlName="costCenter">
                         <mat-error *ngIf="ReimbursementForm.get('costCenter').hasError('required')">
-                            Cost Center is <strong>required</strong>
+                          Cost Center is <strong>required</strong>
                         </mat-error>
-                    </mat-form-field>
-                    <mat-divider></mat-divider>
-                    <mat-form-field>
-                        <input matInput placeholder="Purpose of Travel" formControlName="purposeOfTravel">
-                        <mat-error *ngIf="ReimbursementForm.get('purposeOfTravel').hasError('required')">
-                            Purpose of Travel is <strong>required</strong>
+                      </mat-form-field>
+                      </div>
+                      <div class="row-flex-container">
+                      <mat-form-field class="row-flex-item">
+                        <input matInput placeholder="Purpose of Travel" formControlName="purposeofTravel">
+                        <mat-error *ngIf="ReimbursementForm.get('purposeofTravel').hasError('required')">
+                          Purpose of Travel is <strong>required</strong>
                         </mat-error>
-                    </mat-form-field>
-                    <mat-form-field>
-                        <input matInput placeholder="Location of Travel" formControlName="locationOfTravel">
-                        <mat-error *ngIf="ReimbursementForm.get('locationOfTravel').hasError('required')">
-                            Location of Travel is <strong>required</strong>
+                      </mat-form-field>
+                      <mat-form-field class="row-flex-item">
+                        <input matInput placeholder="Location of Travel" formControlName="locationofTravel">
+                        <mat-error *ngIf="ReimbursementForm.get('locationofTravel').hasError('required')">
+                          Location of Travel is <strong>required</strong>
                         </mat-error>
-                    </mat-form-field>
+                      </mat-form-field>
+                      
+                      <mat-form-field class="row-flex-item">
+                        <input matInput [max]="maxDate" placeholder="Date of Arrival at Location" class="datecontrol" [matDatepicker]="arrival_date" (focus)="arrival_date.open()" readonly formControlName="dateofArrival">
+                        <mat-datepicker-toggle matSuffix [for]="arrival_date"></mat-datepicker-toggle>
+                        <mat-datepicker #arrival_date></mat-datepicker>
+                        <mat-error *ngIf="ReimbursementForm.get('dateofArrival').hasError('required')">
+                          Date of Arrival is <strong>required</strong>
+                        </mat-error>
+                      </mat-form-field>
+                        
+                      <mat-form-field class="row-flex-item">
+                        <input matInput [max]="maxDate" placeholder="Date of Departure from Location" class="datecontrol" [matDatepicker]="departure_date" (focus)="departure_date.open()" readonly formControlName="dateofDeparture">
+                        <mat-datepicker-toggle matSuffix [for]="departure_date"></mat-datepicker-toggle>
+                        <mat-datepicker #departure_date></mat-datepicker>
+                        <mat-error *ngIf="ReimbursementForm.get('dateofDeparture').hasError('required')">
+                          Date of Departure is <strong>required</strong>
+                        </mat-error>
+                      </mat-form-field>
+                        
+                      </div>
+                      <div class="row-flex-container">
+                      <mat-form-field class="row-flex-item">
 
-                    <mat-form-field>
-                        <input matInput [max]="maxDate" placeholder="Date of Arrival at Location" class="datecontrol" [matDatepicker]="arrival_date" (focus)="arrival_date.open()" readonly formControlName="arrivalDate">
-                        <mat-icon class="small">date_range</mat-icon>
-                        <mat-error *ngIf="ReimbursementForm.get('arrivalDate').hasError('required')">
-                            Date of Arrival is <strong>required</strong>
+                        <input matInput placeholder="Travel Billable to Customer" formControlName="travelBillabletoCustomer">
+                        <mat-error *ngIf="ReimbursementForm.get('travelBillabletoCustomer').hasError('required')">
+                          Travel Billable to Customer is <strong>required</strong>
                         </mat-error>
-                    </mat-form-field>
-                    <mat-datepicker #arrival_date></mat-datepicker>
-                    <mat-form-field>
-                        <input matInput [max]="maxDate" placeholder="Date of Departure from Location" class="datecontrol" [matDatepicker]="departure_date" (focus)="departure_date.open()" readonly formControlName="departureDate">
-                        <mat-icon class="small">date_range</mat-icon>
-                        <mat-error *ngIf="ReimbursementForm.get('departureDate').hasError('required')">
-                            Date of Departure is <strong>required</strong>
+                      </mat-form-field>
+                      <mat-form-field class="row-flex-item">
+                        <input matInput placeholder="Flight Charges reimbursable by Customer" formControlName="flightChargesReimbursed">
+                        <mat-error *ngIf="ReimbursementForm.get('flightChargesReimbursed').hasError('required')">
+                          Flight Charges reimbursable by Customer is <strong>required</strong>
                         </mat-error>
-                    </mat-form-field>
-                    <mat-datepicker #departure_date></mat-datepicker>
-                    <mat-divider></mat-divider>
-                    <mat-form-field>
+                      </mat-form-field>
+                      <mat-form-field class="row-flex-item">
+                        <input matInput placeholder="Travel expenses are reimbursable by Customer" formControlName="travelExpenseReimbursed">
+                        <mat-error *ngIf="ReimbursementForm.get('travelExpenseReimbursed').hasError('required')">
+                          Travel expenses are reimbursable by Customer is <strong>required</strong>
+                        </mat-error>
+                      </mat-form-field>
+                      <mat-form-field class="row-flex-item">
+                        <input matInput placeholder="Any other expenses reimbursable by Customer" formControlName="anyOtherExpenseReimbursed">
+                        <mat-error *ngIf="ReimbursementForm.get('anyOtherExpenseReimbursed').hasError('required')">
+                          Any other expenses reimbursable by Customer is <strong>required</strong>
+                        </mat-error>
+                      </mat-form-field>
 
-                        <input matInput placeholder="Travel Billable to Customer" formControlName="travelBillable">
-                        <mat-error *ngIf="ReimbursementForm.get('travelBillable').hasError('required')">
-                            Travel Billable to Customer is <strong>required</strong>
-                        </mat-error>
-                    </mat-form-field>
-                    <mat-form-field>
-                        <input matInput placeholder="Flight Charges reimbursable by Customer" formControlName="flightReimbursable">
-                        <mat-error *ngIf="ReimbursementForm.get('flightReimbursable').hasError('required')">
-                            Flight Charges reimbursable by Customer is <strong>required</strong>
-                        </mat-error>
-                    </mat-form-field>
-                    <mat-form-field>
-                        <input matInput placeholder="Travel expenses are reimbursable by Customer" formControlName="travelReimbursable">
-                        <mat-error *ngIf="ReimbursementForm.get('travelReimbursable').hasError('required')">
-                            Travel expenses are reimbursable by Customer is <strong>required</strong>
-                        </mat-error>
-                    </mat-form-field>
-                    <mat-form-field>
-                        <input matInput placeholder="Any other expenses reimbursable by Customer" formControlName="otherReimbursable">
-                        <mat-error *ngIf="ReimbursementForm.get('otherReimbursable').hasError('required')">
-                            Any other expenses reimbursable by Customer is <strong>required</strong>
-                        </mat-error>
-                    </mat-form-field>
-                    
-                </div>
+                    </div>
+                  </div>
                 <mat-divider></mat-divider>
                 <div class="spacer">
                     
@@ -145,25 +152,28 @@
 
         <mat-tab label="Per Diem">
           <form [formGroup]="PerDiemForm" (ngSubmit)="onSubmit()">
-            <div class="form-content">
+            <div class="form-content form-container">
               <mat-form-field>
                 <input matInput [max]="maxDate" placeholder="Date of Arrival at Location" class="datecontrol" [matDatepicker]="arrivaldate" (focus)="arrivaldate.open()" readonly formControlName="arrivaldate">
-                <mat-icon class="small">date_range</mat-icon>
+                <mat-datepicker-toggle matSuffix [for]="arrivaldate"></mat-datepicker-toggle>
+                <mat-datepicker #arrivaldate></mat-datepicker>
                 <mat-error *ngIf="PerDiemForm.get('arrivaldate').hasError('required')">
                   Date of Arrival is <strong>required</strong>
                 </mat-error>
               </mat-form-field>
-              <mat-datepicker #arrivaldate></mat-datepicker>
+              
               <mat-form-field>
                 <input matInput [max]="maxDate" placeholder="Date of Departure from Location" class="datecontrol" [matDatepicker]="departuredate" (focus)="departuredate.open()" readonly formControlName="departuredate">
-                <mat-icon class="small">date_range</mat-icon>
+                <mat-datepicker-toggle matSuffix [for]="departuredate"></mat-datepicker-toggle>
+                <mat-datepicker #departuredate></mat-datepicker>
                 <mat-error *ngIf="PerDiemForm.get('departuredate').hasError('required')">
                   Date of Arrival is <strong>required</strong>
                 </mat-error>
               </mat-form-field>
-              <mat-datepicker #departuredate></mat-datepicker>
+              
               <mat-form-field>
                 <input matInput placeholder="Currency" formControlName="currency" [attr.id]="'currency'+index">
+
                 <mat-error *ngIf="PerDiemForm.get('currency').hasError('required')">
                   Website is <strong>required</strong>
                 </mat-error>

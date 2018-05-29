@@ -125,18 +125,18 @@ export class ReimbursementDialog implements OnInit, Validators {
             'employeeId': new FormControl(null, [Validators.required]),
             'employeeName': new FormControl(null, [Validators.required]),
             'designation': new FormControl(null, [Validators.required]),
-            'band': new FormControl(null, [Validators.required]),
+            'bandWorkLevel': new FormControl(null, [Validators.required]),
             'clientName': new FormControl(null, [Validators.required, Validators.maxLength(50)]),
             'projectCode': new FormControl(null, [Validators.required]),
             'costCenter': new FormControl(null, [Validators.required]),
-            'purposeOfTravel': new FormControl(null, [Validators.required]),
-            'locationOfTravel': new FormControl(null, [Validators.required]),
-            'arrivalDate': new FormControl(null, [Validators.required, Validators.maxLength(50)]),
-            'departureDate': new FormControl(null, [Validators.required]),
-            'travelBillable': new FormControl(null, [Validators.required]),
-            'flightReimbursable': new FormControl(null, [Validators.required]),
-            'travelReimbursable': new FormControl(null, [Validators.required, Validators.maxLength(50)]),
-            'otherReimbursable': new FormControl(null, [Validators.required]),
+            'purposeofTravel': new FormControl(null, [Validators.required]),
+            'locationofTravel': new FormControl(null, [Validators.required]),
+            'dateofArrival': new FormControl(null, [Validators.required, Validators.maxLength(50)]),
+            'dateofDeparture': new FormControl(null, [Validators.required]),
+            'travelBillabletoCustomer': new FormControl(null, [Validators.required]),
+            'flightChargesReimbursed': new FormControl(null, [Validators.required]),
+            'travelExpenseReimbursed': new FormControl(null, [Validators.required, Validators.maxLength(50)]),
+            'anyOtherExpenseReimbursed': new FormControl(null, [Validators.required]),
         
 
             });
@@ -190,21 +190,22 @@ export class ReimbursementDialog implements OnInit, Validators {
            forkJoin([reimbursementData, fareData, perDiemData, boardingData, voucherData,nonVoucher,otherExpenseData], ).subscribe(results => {
 
                 this.ReimbursementForm.patchValue(new ReimbursementData(<IReimbursementData>results[0]));
-        //        this.PassportForm.patchValue(new Passport(<IPassport>results[3]));
+                let fareOptions = new FareOptions(<IFareOptions>results[1]);
         //        this.ForexForm.patchValue(new ForexCard(<IForexCard>results[4]))
         //        let flightOptions = new FlightOptions(<IFlightOptions>results[1]);
         //        let hotelOptions = new HotelOptions(<IHotelOptions>results[2]);
 
 
-        //        let i = 0;
-        //        flightOptions.OnwardFlightItems.forEach(item => {
-        //            if (i == 0) {
-        //                this.getOnwardFormArray().setControl(i, FlightItemsArrayComponent.buildItemsWithValue(item));
-        //            } else {
-        //                this.getOnwardFormArray().insert(i, FlightItemsArrayComponent.buildItemsWithValue(item));
-        //            }
-        //            i = i + 1;
-        //        });
+                let i = 0;
+                fareOptions.FareItems.forEach(item => {
+                    if (i == 0) {
+                      this.FareOptionsForm.setControl(i, FareItemsArrayComponent.buildItemsWithValue(item));
+                  }
+                    else {
+                      this.FareOptionsForm.insert(i, FareItemsArrayComponent.buildItemsWithValue(item));
+                    }
+                    i = i + 1;
+                });
         //        i = 0;
         //        flightOptions.ReturnFlightItems.forEach(item => {
         //            if (i == 0) {
@@ -729,7 +730,7 @@ export class ReimbursementDialog implements OnInit, Validators {
       perDiemItem.totalAmount = this.PerDiemForm.controls['totalAmount'].value;
       perDiemItem.remarks = this.PerDiemForm.controls['remarks'].value;
 
-      if (this.data > 0) {
+      if (this.data == 0) {
         this.perDiemService.addPerDiemInfo(perDiemItem).subscribe(
           (val) => {
             console.log("POST call success");
@@ -763,24 +764,25 @@ export class ReimbursementDialog implements OnInit, Validators {
         let reimbursementData: ReimbursementData;
         if (this.ReimbursementForm.valid) {
             reimbursementData = new ReimbursementData();
-            
+            reimbursementData.reimbursementInfoId = this.data;
             reimbursementData.employeeId = this.ReimbursementForm.controls['employeeId'].value;
             reimbursementData.employeeName = this.ReimbursementForm.controls['employeeName'].value;
             reimbursementData.designation = this.ReimbursementForm.controls['designation'].value;
-            reimbursementData.bandWorkLevel = this.ReimbursementForm.controls['band'].value;
+            reimbursementData.bandWorkLevel = this.ReimbursementForm.controls['bandWorkLevel'].value;
             reimbursementData.clientName = this.ReimbursementForm.controls['clientName'].value;
-            reimbursementData.costCenter = this.ReimbursementForm.controls['costCenter'].value;
-            reimbursementData.purposeOfTravel = this.ReimbursementForm.controls['purposeOfTravel'].value;
-            reimbursementData.locationOfTravel = this.ReimbursementForm.controls['locationOfTravel'].value;
-            reimbursementData.dateOfArrival = this.ReimbursementForm.controls['arrivalDate'].value;
-            reimbursementData.dateOfDeparture = this.ReimbursementForm.controls['departureDate'].value;
-            reimbursementData.travelBillableToCustomer = this.ReimbursementForm.controls['travelBillable'].value =='Yes'?true:false;
-            reimbursementData.flightChargesReimbursed = this.ReimbursementForm.controls['flightReimbursable'].value=='Yes'?true:false;
-            reimbursementData.travelExpenseReimbursed= this.ReimbursementForm.controls['travelReimbursable'].value=='Yes'?true:false;
-            reimbursementData.anyOtherExpenseReimbursed = this.ReimbursementForm.controls['otherReimbursable'].value=='Yes'?true:false;
+          reimbursementData.costCenter = this.ReimbursementForm.controls['costCenter'].value;
+          reimbursementData.projectCode = this.ReimbursementForm.controls['projectCode'].value;
+            reimbursementData.purposeofTravel = this.ReimbursementForm.controls['purposeofTravel'].value;
+            reimbursementData.locationofTravel = this.ReimbursementForm.controls['locationofTravel'].value;
+          reimbursementData.dateofArrival = this.ReimbursementForm.controls['dateofArrival'].value;
+          reimbursementData.dateofDeparture = this.ReimbursementForm.controls['dateofDeparture'].value;
+          reimbursementData.travelBillabletoCustomer = this.ReimbursementForm.controls['travelBillabletoCustomer'].value =='Yes'?true:false;
+          reimbursementData.flightChargesReimbursed = this.ReimbursementForm.controls['flightChargesReimbursed'].value=='Yes'?true:false;
+          reimbursementData.travelExpenseReimbursed = this.ReimbursementForm.controls['travelExpenseReimbursed'].value=='Yes'?true:false;
+          reimbursementData.anyOtherExpenseReimbursed = this.ReimbursementForm.controls['anyOtherExpenseReimbursed'].value=='Yes'?true:false;
 
             
-            if (this.data > 0) {
+            if (this.data == 0) {
               this.reimbursementService.addReimbursement(reimbursementData).subscribe(
                 (val) => {
                   console.log("POST call success");

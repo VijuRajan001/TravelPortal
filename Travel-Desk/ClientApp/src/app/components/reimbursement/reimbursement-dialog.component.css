@@ -33,12 +33,7 @@
     flex: 1 1 auto;
     
 }
-.mat-input-element {
-    width: 80%;
-    min-width:80%;
-    max-width: 100%;
-    
-}
+
 
 ::ng-deep .mat-dialog-content {
     padding: 0px 0px 0px 0px;
@@ -75,3 +70,13 @@ form{
 }
 
 
+.row-flex-container {
+  display: flex;
+  
+}
+
+
+.row-flex-item {
+  flex: 1;
+  width: 0;
+}
