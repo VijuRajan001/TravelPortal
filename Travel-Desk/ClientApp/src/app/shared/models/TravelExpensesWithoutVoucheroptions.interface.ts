@@ -5,12 +5,12 @@ export class TravelExpensesWithoutVoucherOptions {
 
     constructor(travelExpensesWithoutVoucherOptions: ITravelExpensesWithoutVoucherOptions = {
 
-      nonVoucherItems: new Array<TravelExpensesWithoutVoucherItem>(),
+      travelExpensesWithoutVoucherItems: new Array<TravelExpensesWithoutVoucherItem>(),
         
 
     }) {
 
-      this.TravelExpensesWithoutVoucherItems = travelExpensesWithoutVoucherOptions.nonVoucherItems;
+      this.TravelExpensesWithoutVoucherItems = travelExpensesWithoutVoucherOptions.travelExpensesWithoutVoucherItems;
        
 
     }
@@ -20,5 +20,5 @@ export class TravelExpensesWithoutVoucherOptions {
 
 
 export interface ITravelExpensesWithoutVoucherOptions {
-  nonVoucherItems: TravelExpensesWithoutVoucherItem[]
+  travelExpensesWithoutVoucherItems: TravelExpensesWithoutVoucherItem[]
 }

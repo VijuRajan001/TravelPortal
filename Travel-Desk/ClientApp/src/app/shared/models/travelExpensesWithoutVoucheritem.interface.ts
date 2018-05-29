@@ -5,7 +5,7 @@ export class TravelExpensesWithoutVoucherItem {
         date: "",
         from: "",
         to: "",
-        modeOfConveyance: "",
+        modeofConveyance: "",
         currency: "",
         amountSpent: 0,
         remarks: "",
@@ -15,7 +15,7 @@ export class TravelExpensesWithoutVoucherItem {
         this.date = travelExpensesWithoutVoucherItem.date;
         this.from = travelExpensesWithoutVoucherItem.from;
         this.to = travelExpensesWithoutVoucherItem.to;
-        this.modeOfConveyance = travelExpensesWithoutVoucherItem.modeOfConveyance;
+        this.modeofConveyance = travelExpensesWithoutVoucherItem.modeofConveyance;
         this.currency = travelExpensesWithoutVoucherItem.currency;
         this.amountSpent = travelExpensesWithoutVoucherItem.amountSpent;
         this.remarks = travelExpensesWithoutVoucherItem.remarks;
@@ -26,7 +26,7 @@ export class TravelExpensesWithoutVoucherItem {
   public date: string;
     public from: string;
     public to: string;
-    public modeOfConveyance: string;
+    public modeofConveyance: string;
     public currency: string;
     public amountSpent: number;
     public remarks: string;
@@ -39,7 +39,7 @@ export interface ITravelExpensesWithoutVoucherItem {
   date: string;
     from: string;
     to: string;
-    modeOfConveyance: string;
+    modeofConveyance: string;
     currency: string;
     amountSpent: number;
     remarks: string;

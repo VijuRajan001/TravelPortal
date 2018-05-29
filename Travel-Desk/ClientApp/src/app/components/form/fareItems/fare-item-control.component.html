@@ -36,8 +36,8 @@
         </mat-error>
     </mat-form-field>
     <mat-form-field>
-        <input matInput placeholder="Actual Amount Spent" formControlName="amountspent" [attr.id]="'amountspent'+index" required>
-        <mat-error *ngIf="fareItem.get('amountspent').hasError('required')">
+        <input matInput placeholder="Actual Amount Spent" formControlName="amountSpent" [attr.id]="'amountspent'+index" required>
+        <mat-error *ngIf="fareItem.get('amountSpent').hasError('required')">
             Mobile number is <strong>required</strong>
         </mat-error>
     </mat-form-field>

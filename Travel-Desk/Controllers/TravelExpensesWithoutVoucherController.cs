@@ -67,7 +67,7 @@ namespace TravelDesk.Controllers
 
             foreach (var item in travelExpensesWithoutVoucherItems)
             {
-                var refItem = travelExpensesWithoutVoucherDataList.FirstOrDefault(i => i.ReimbursementInfoId == item.ReimbursementInfoId);
+                var refItem = travelExpensesWithoutVoucherDataList.FirstOrDefault(i => i.TravelExpensesWithoutVoucherInfoId == item.Id);
                 if (refItem != null)
                 {
                     refItem.Date = item.Date;

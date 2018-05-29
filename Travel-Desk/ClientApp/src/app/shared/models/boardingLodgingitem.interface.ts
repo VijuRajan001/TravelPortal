@@ -2,7 +2,7 @@ export class BoardingLodgingItem {
 
     constructor(boardingLodgingItem: IBoardingLodgingItem = {
         id:0,
-        placeOfStay: "",
+        placeofStay: "",
         fromDate: "",
         toDate: "",
         currency: "",
@@ -11,7 +11,7 @@ export class BoardingLodgingItem {
         reimbursementInfoId: 0,
     }) {
         this.id = boardingLodgingItem.id;
-        this.placeOfStay =boardingLodgingItem.placeOfStay;
+        this.placeofStay =boardingLodgingItem.placeofStay;
         this.fromDate = boardingLodgingItem.fromDate;
         this.toDate = boardingLodgingItem.toDate;
         this.currency = boardingLodgingItem.currency;
@@ -21,7 +21,7 @@ export class BoardingLodgingItem {
         
   }
     public id:number
-    public placeOfStay: string;
+    public placeofStay: string;
     public fromDate: string;
     public toDate: string;
     public currency: string;
@@ -33,7 +33,7 @@ export class BoardingLodgingItem {
 
 export interface IBoardingLodgingItem {
     id:number
-    placeOfStay: string;
+    placeofStay: string;
     fromDate: string;
     toDate: string;
     currency: string;

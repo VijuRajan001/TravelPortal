@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 namespace TravelDesk.Models
 {
     public class OtherExpensesItem
-    {
+    {   
+        public int Id { get; set; }
         public DateTime Date { get;
             set; }
         public string NatureOfExpenses { get;

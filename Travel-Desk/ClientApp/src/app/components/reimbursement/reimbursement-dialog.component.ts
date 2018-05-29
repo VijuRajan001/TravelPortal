@@ -50,6 +50,9 @@ import { TravelExpensesWithVoucherOptions, ITravelExpensesWithVoucherOptions } f
 import { ITravelExpensesWithoutVoucherOptions, TravelExpensesWithoutVoucherOptions } from '../../shared/models/travelExpensesWithoutVoucheroptions.interface';
 import { OtherExpensesOptions, IOtherExpensesOptions } from '../../shared/models/otherExpensesoptions.interface';
 import { PerDiemItem } from '../../shared/models/perDiemitem.interface';
+import { FareItem } from '../../shared/models/fareitem.interface';
+import { Reimbursementform } from '../../shared/models/reimbursementform.interface';
+import { BoardingLodgingItem } from '../../shared/models/boardingLodgingitem.interface';
 @Component({
     selector: 'reimbursement-dialog',
     templateUrl: './reimbursement-dialog.component.html',
@@ -67,10 +70,11 @@ export class ReimbursementDialog implements OnInit, Validators {
     step = 0;
 
 
-    traveldata: TravelData = new TravelData();
+    
     submitActions: number;
     action: typeof SubmitActionsReimburseMent = SubmitActionsReimburseMent;
     matcher = new MyErrorStateMatcher();
+    reimbursementformInfo:Reimbursementform=new Reimbursementform();
     ReimbursementForm: FormGroup;
     FareOptionsForm: FormGroup;
     PerDiemForm: FormGroup;
@@ -162,15 +166,15 @@ export class ReimbursementDialog implements OnInit, Validators {
         });
 
         this.BoardingExpensesForm = this.fb.group({
-            'lodgingItems': BoardingLodgingItemsArrayComponent.buildItems()         
+            'boardingLodgingItems': BoardingLodgingItemsArrayComponent.buildItems()         
         });
 
         this.TravelWithVoucherForm = this.fb.group({
-            'voucherItems': TravelExpensesWithVoucherItemsArrayComponent.buildItems()
+            'travelExpensesWithVoucherItems': TravelExpensesWithVoucherItemsArrayComponent.buildItems()
            
         });
         this.TravelWithoutVoucherForm = this.fb.group({
-            'nonVoucherItems': TravelExpensesWithoutVoucherItemsArrayComponent.buildItems()
+            'travelExpensesWithoutVoucherItems': TravelExpensesWithoutVoucherItemsArrayComponent.buildItems()
            
         });
 
@@ -187,50 +191,51 @@ export class ReimbursementDialog implements OnInit, Validators {
           let voucherData = this.travelExpensesWithVoucherService.getTravelExpensesWithVoucherForRequest(this.data);
           let nonVoucher =  this.travelExpensesWithoutVoucherService.getTravelExpensesWithoutVoucherForRequest(this.data);
           let otherExpenseData = this.otherExpensesService.getOtherExpensesForRequest(this.data);
-           forkJoin([reimbursementData, fareData, perDiemData, boardingData, voucherData,nonVoucher,otherExpenseData], ).subscribe(results => {
+           forkJoin([reimbursementData, fareData, perDiemData, boardingData, voucherData,nonVoucher,otherExpenseData] ).subscribe(results => {
 
                 this.ReimbursementForm.patchValue(new ReimbursementData(<IReimbursementData>results[0]));
                 let fareOptions = new FareOptions(<IFareOptions>results[1]);
-        //        this.ForexForm.patchValue(new ForexCard(<IForexCard>results[4]))
-        //        let flightOptions = new FlightOptions(<IFlightOptions>results[1]);
+                debugger;
+                let boardingOptions = new BoardingLodgingOptions(<IBoardingLodgingOptions>results[3]);
+                let VoucherOptions = new TravelExpensesWithVoucherOptions(<ITravelExpensesWithVoucherOptions>results[4]);
         //        let hotelOptions = new HotelOptions(<IHotelOptions>results[2]);
 
-
+                
                 let i = 0;
                 fareOptions.FareItems.forEach(item => {
                     if (i == 0) {
-                      this.FareOptionsForm.setControl(i, FareItemsArrayComponent.buildItemsWithValue(item));
+                      (this.FareOptionsForm.get('fareItems') as FormArray).setControl(i, FareItemsArrayComponent.buildItemsWithValue(item));
                   }
                     else {
-                      this.FareOptionsForm.insert(i, FareItemsArrayComponent.buildItemsWithValue(item));
+                      (this.FareOptionsForm.get('fareItems') as FormArray).insert(i, FareItemsArrayComponent.buildItemsWithValue(item));
                     }
                     i = i + 1;
                 });
-        //        i = 0;
-        //        flightOptions.ReturnFlightItems.forEach(item => {
-        //            if (i == 0) {
-        //                this.getReturnFormArray().setControl(i, FlightItemsArrayComponent.buildItemsWithValue(item));
-        //            } else {
-        //                this.getReturnFormArray().insert(i, FlightItemsArrayComponent.buildItemsWithValue(item));
-        //            }
-        //            i = i + 1;
-        //        });
-        //        i = 0;
-        //        hotelOptions.HotelItems.forEach(item => {
-        //            if (i == 0) {
-        //                this.getHotelFormArray().setControl(i, HotelItemsArrayComponent.buildItemsWithValue(item));
-        //            } else {
-        //                this.getHotelFormArray().insert(i, HotelItemsArrayComponent.buildItemsWithValue(item));
-        //            }
-        //            i = i + 1;
+                i = 0;
+                boardingOptions.BoardingLodgingItems.forEach(item => {
+                    if (i == 0) {
+                        (this.BoardingExpensesForm.get('boardingLodgingItems') as FormArray).setControl(i, BoardingLodgingItemsArrayComponent.buildItemsWithValue(item));
+                    } else {
+                        (this.BoardingExpensesForm.get('boardingLodgingItems') as FormArray).insert(i, BoardingLodgingItemsArrayComponent.buildItemsWithValue(item));
+                    }
+                    i = i + 1;
+                });
+                i = 0;
+                VoucherOptions.TravelExpensesWithVoucherItems.forEach(item => {
+                    if (i == 0) {
+                        (this.TravelWithVoucherForm.get('travelExpensesWithVoucherItems') as FormArray).setControl(i, TravelExpensesWithVoucherItemsArrayComponent.buildItemsWithValue(item));
+                    } else {
+                        (this.TravelWithVoucherForm.get('travelExpensesWithVoucherItems') as FormArray).insert(i, TravelExpensesWithVoucherItemsArrayComponent.buildItemsWithValue(item));
+                    }
+                    i = i + 1;
 
 
-        //        });
+                });
 
 
-        //        this.traveldata.requestData = new RequestData(<IRequestData>this.ReimbursementDataForm.value);
-        //        this.traveldata.flightData = new FlightOptions(<IFlightOptions>this.FlightOptionsForm.value);
-        //        this.traveldata.hotelData = new HotelOptions(<IHotelOptions>this.HotelOptionsForm.value);
+                  this.reimbursementformInfo.fareOptions = new FareOptions(<IFareOptions> this.FareOptionsForm.value);
+                  this.reimbursementformInfo.boardingLodgingOptions = new BoardingLodgingOptions(<IBoardingLodgingOptions> this.BoardingExpensesForm.value);
+                  this.reimbursementformInfo.travelExpensesWithVoucherOptions = new TravelExpensesWithVoucherOptions(<ITravelExpensesWithVoucherOptions>this.TravelWithVoucherForm.value);
         //        this.traveldata.passportData = new Passport(<IPassport>this.PassportForm.value);
         //        this.traveldata.forexCardData = new ForexCard(<IForexCard>this.ForexForm.value);
 
@@ -291,13 +296,13 @@ export class ReimbursementDialog implements OnInit, Validators {
 
         if (this.FareOptionsForm.valid) {
 
-
+            
             savefaredata = new FareOptions(<IFareOptions>this.FareOptionsForm.value);
-            //this.deleteFare(savefaredata);
+            this.deleteFare(savefaredata);
             savefaredata.FareItems.forEach(item => {
                 item.reimbursementInfoId = this.data;
                 
-                if (item.id === null) {
+                if (item.id === null || item.id==0) {
                     item.id = 0;
                     addfaredata.FareItems.push(item);
 
@@ -309,19 +314,7 @@ export class ReimbursementDialog implements OnInit, Validators {
 
             });
 
-            console.log(addfaredata);
-            savefaredata.FareItems.forEach(item => {
-                item.reimbursementInfoId = this.data;
-               
-                if (item.id === null) {
-                    item.id = 0;
-                    addfaredata.FareItems.push(item);
-                }
-                else {
-
-                    updateFlightdata.FareItems.push(item);
-                }
-            });
+            
 
             if (addfaredata.FareItems.length > 0) {
                 this.fareService.addFareInfo(addfaredata).subscribe(
@@ -353,39 +346,40 @@ export class ReimbursementDialog implements OnInit, Validators {
 
     }
 
-    //deleteFare(fareOptions: fareOptions) {
-    //    let initialfareOptions: fareOptions = this.traveldata.flightData;
-    //    let deletedItemsId: number[] = [];
+    deleteFare(fareOptions: FareOptions) {
+        let initialfareOptions: FareOptions = this.reimbursementformInfo.fareOptions;
+        let deletedItemsId: number[] = [];
+        
+        if (initialfareOptions.FareItems.length > fareOptions.FareItems.length
+           ) {
 
-    //    if (initialFlightOPtions.OnwardFlightItems.length > finalFlightOPtions.OnwardFlightItems.length
-    //        || initialFlightOPtions.ReturnFlightItems.length > finalFlightOPtions.ReturnFlightItems.length) {
+            initialfareOptions.FareItems.forEach(item => {
+                let index = fareOptions.FareItems.findIndex((fareitem: FareItem) => { return item.id == fareitem.id })
 
-    //        initialFlightOPtions.OnwardFlightItems.forEach(item => {
-    //            let index = finalFlightOPtions.OnwardFlightItems.findIndex((flightItem: FlightItem) => { return item.id == flightItem.id })
+                if (index === -1) {
+                  deletedItemsId.push(item.id);
 
-    //            if (index === -1) {
-    //                deletedItemsId.push(item.id);
-    //            }
-    //        });
+                }
+            });
 
-    //    }
+        }
 
-    //    if (deletedItemsId.length > 0) {
-    //        this.flightService.deleteflights(deletedItemsId).subscribe(
-    //            (val) => {
-    //                console.log("POST call success");
-    //            },
-    //            response => {
-    //                console.log("POST call in error", response);
-    //            },
-    //            () => {
-    //                console.log("The POST observable is now completed.");
-    //            });
-    //    }
+        if (deletedItemsId.length > 0) {
+            this.fareService.deleteFare(deletedItemsId).subscribe(
+                (val) => {
+                    console.log("POST call success");
+                },
+                response => {
+                    console.log("POST call in error", response);
+                },
+                () => {
+                    console.log("The POST observable is now completed.");
+                });
+        }
 
 
 
-    //}
+    }
     createUpdateBoarding() {
 
         let saveBoardingdata: BoardingLodgingOptions;
@@ -395,7 +389,7 @@ export class ReimbursementDialog implements OnInit, Validators {
         if (this.BoardingExpensesForm.valid) {
 
             saveBoardingdata = new BoardingLodgingOptions(<IBoardingLodgingOptions>this.BoardingExpensesForm.value);
-            //this.deleteHotelOptions(saveHoteldata);
+            this.deleteBoardingOptions(saveBoardingdata);
             saveBoardingdata.BoardingLodgingItems.forEach(item => {
                 item.reimbursementInfoId = this.data;
 
@@ -444,37 +438,37 @@ export class ReimbursementDialog implements OnInit, Validators {
 
     }
 
-    //deleteHotelOptions(finalHotelOptions: HotelOptions) {
-    //    let initialHotelOptions: HotelOptions = this.traveldata.hotelData;
-    //    let deletedItemsId: number[] = [];
+    deleteBoardingOptions(finalBoardingOptions: BoardingLodgingOptions) {
+        let initialBoardingOPtions: BoardingLodgingOptions = this.reimbursementformInfo.boardingLodgingOptions;
+        let deletedItemsId: number[] = [];
 
-    //    if (initialHotelOptions.HotelItems.length > finalHotelOptions.HotelItems.length) {
+        if (initialBoardingOPtions.BoardingLodgingItems.length > finalBoardingOptions.BoardingLodgingItems.length) {
 
-    //        initialHotelOptions.HotelItems.forEach(item => {
-    //            let index = finalHotelOptions.HotelItems.findIndex((hotelItem: HotelItem) => { return item.id == hotelItem.id })
+            initialBoardingOPtions.BoardingLodgingItems.forEach(item => {
+                let index = finalBoardingOptions.BoardingLodgingItems.findIndex((boardingItem: BoardingLodgingItem) => { return item.id == boardingItem.id })
 
-    //            if (index === -1) {
-    //                deletedItemsId.push(item.id);
-    //            }
-    //        });
+                if (index === -1) {
+                    deletedItemsId.push(item.id);
+                }
+            });
 
-    //    }
+        }
 
-    //    if (deletedItemsId.length > 0) {
-    //        this.hotelService.deleteHotels(deletedItemsId).subscribe(
-    //            (val) => {
-    //                console.log("POST call success");
-    //            },
-    //            response => {
-    //                console.log("POST call in error", response);
-    //            },
-    //            () => {
-    //                console.log("The POST observable is now completed.");
-    //            });
-    //    }
+        if (deletedItemsId.length > 0) {
+            this.boardingLodgingService.deleteBoardingLodging(deletedItemsId).subscribe(
+                (val) => {
+                    console.log("POST call success");
+                },
+                response => {
+                    console.log("POST call in error", response);
+                },
+                () => {
+                    console.log("The POST observable is now completed.");
+                });
+        }
 
 
-    //}
+    }
 
 
   createUpdatereVoucherItems() {
@@ -485,9 +479,9 @@ export class ReimbursementDialog implements OnInit, Validators {
 
     if (this.TravelWithVoucherForm.valid) {
 
-
+      
       saveVoucherData = new TravelExpensesWithVoucherOptions(<ITravelExpensesWithVoucherOptions>this.TravelWithVoucherForm.value);
-      //this.deleteFare(savefaredata);
+      this.deleteVoucherData(saveVoucherData);
       saveVoucherData.TravelExpensesWithVoucherItems.forEach(item => {
         item.reimbursementInfoId = this.data;
 
@@ -502,20 +496,7 @@ export class ReimbursementDialog implements OnInit, Validators {
         }
 
       });
-
-   ;
-      saveVoucherData.TravelExpensesWithVoucherItems.forEach(item => {
-        item.reimbursementInfoId = this.data;
-
-        if (item.id === null) {
-          item.id = 0;
-          addVoucherData.TravelExpensesWithVoucherItems.push(item);
-        }
-        else {
-
-          updateVoucherData.TravelExpensesWithVoucherItems.push(item);
-        }
-      });
+      
 
       if (addVoucherData.TravelExpensesWithVoucherItems.length > 0) {
 
@@ -549,6 +530,39 @@ export class ReimbursementDialog implements OnInit, Validators {
     
     }
 
+  
+    deleteVoucherData(finalVoucherData: TravelExpensesWithVoucherOptions) {
+        let initialVoucherData: TravelExpensesWithVoucherOptions = this.reimbursementformInfo.travelExpensesWithVoucherOptions;
+        let deletedItemsId: number[] = [];
+
+        if (initialVoucherData.TravelExpensesWithVoucherItems.length > finalVoucherData.TravelExpensesWithVoucherItems.length) {
+
+            initialVoucherData.TravelExpensesWithVoucherItems.forEach(item => {
+                let index = finalVoucherData.TravelExpensesWithVoucherItems.findIndex((voucherItem: TravelExpensesWithVoucherItem) => { return item.id == voucherItem.id })
+
+                if (index === -1) {
+                    deletedItemsId.push(item.id);
+                }
+            });
+
+        }
+
+        if (deletedItemsId.length > 0) {
+            this.travelExpensesWithVoucherService.deleteTravelExpensesWithVoucher(deletedItemsId).subscribe(
+                (val) => {
+                    console.log("POST call success");
+                },
+                response => {
+                    console.log("POST call in error", response);
+                },
+                () => {
+                    console.log("The POST observable is now completed.");
+                });
+        }
+
+
+    }
+
 
   createUpdatereNonVoucherItems() {
     let saveNonVoucherData: TravelExpensesWithoutVoucherOptions;
@@ -575,20 +589,7 @@ export class ReimbursementDialog implements OnInit, Validators {
         }
 
       });
-
-      console.log(addNonVoucherData);
-      saveNonVoucherData.TravelExpensesWithoutVoucherItems.forEach(item => {
-        item.reimbursementInfoId = this.data;
-
-        if (item.id === null) {
-          item.id = 0;
-          addNonVoucherData.TravelExpensesWithoutVoucherItems.push(item);
-        }
-        else {
-
-          updateNonVoucherData.TravelExpensesWithoutVoucherItems.push(item);
-        }
-      });
+      
 
       if (addNonVoucherData.TravelExpensesWithoutVoucherItems.length > 0) {
       this.travelExpensesWithoutVoucherService.addTravelExpensesWithoutVoucherInfo(addNonVoucherData).subscribe(

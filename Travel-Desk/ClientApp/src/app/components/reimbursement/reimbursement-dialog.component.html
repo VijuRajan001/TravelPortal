@@ -220,8 +220,8 @@
         <mat-tab label="Boarding & Lodging Expenses">
             <form [formGroup]="BoardingExpensesForm" (ngSubmit)="onSubmit()">
                 <div class="form-content">
-                    <boardingLodging-items-array formArrayName="lodgingItems"
-                                       [boardingLodgingItemsFormArray]="BoardingExpensesForm.get('lodgingItems')">
+                    <boardingLodging-items-array formArrayName="boardingLodgingItems"
+                                       [boardingLodgingItemsFormArray]="BoardingExpensesForm.get('boardingLodgingItems')">
                     </boardingLodging-items-array>
                 </div>
 
@@ -240,8 +240,8 @@
         <mat-tab label="Travel Expenses supported by Voucher">
             <form [formGroup]="TravelWithVoucherForm" (ngSubmit)="onSubmit()">
                 <div class="form-content">
-                    <travelExpensesWithVoucher-items-array formArrayName="voucherItems"
-                                       [travelExpensesWithVoucherItemsFormArray]="TravelWithVoucherForm.get('voucherItems')">
+                    <travelExpensesWithVoucher-items-array formArrayName="travelExpensesWithVoucherItems"
+                                       [travelExpensesWithVoucherItemsFormArray]="TravelWithVoucherForm.get('travelExpensesWithVoucherItems')">
                     </travelExpensesWithVoucher-items-array>
                 </div>
 
@@ -260,8 +260,8 @@
         <mat-tab label="Travel Expenses Unsupported by Voucher">
             <form [formGroup]="TravelWithoutVoucherForm" (ngSubmit)="onSubmit()">
                 <div class="form-content">
-                    <travelExpensesWithoutVoucher-items-array formArrayName="nonVoucherItems"
-                                       [travelExpensesWithoutVoucherItemsFormArray]="TravelWithoutVoucherForm.get('nonVoucherItems')">
+                    <travelExpensesWithoutVoucher-items-array formArrayName="travelExpensesWithoutVoucherItems"
+                                       [travelExpensesWithoutVoucherItemsFormArray]="TravelWithoutVoucherForm.get('travelExpensesWithoutVoucherItems')">
                     </travelExpensesWithoutVoucher-items-array>
                 </div>
 

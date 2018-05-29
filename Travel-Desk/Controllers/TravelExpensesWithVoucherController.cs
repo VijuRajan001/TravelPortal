@@ -67,13 +67,13 @@ namespace TravelDesk.Controllers
             
             foreach(var item in travelExpensesWithVoucherItems)
             {
-                var refItem = travelExpensesWithVoucherDataList.FirstOrDefault(i => i.ReimbursementInfoId == item.ReimbursementInfoId);
+                var refItem = travelExpensesWithVoucherDataList.FirstOrDefault(i => i.TravelExpensesWithVoucherInfoId == item.Id);
                 if(refItem!=null)
                 {
                     refItem.Date = item.Date;
                     refItem.From = item.From;
                     refItem.To = item.To;
-                    refItem.ModeofConveyance = item.ModeofConveyance;
+                    refItem.ModeofConveyance = item.ModeOfConveyance;
                     refItem.Currency = item.Currency;
                     refItem.AmountSpent = item.AmountSpent;
                     refItem.Remarks = item.Remarks;

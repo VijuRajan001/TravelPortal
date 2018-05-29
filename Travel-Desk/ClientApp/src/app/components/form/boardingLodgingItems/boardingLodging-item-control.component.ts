@@ -28,10 +28,11 @@ export class BoardingLodgingItemControlComponent {
  
 
     static buildItemwithValue(data: any) {
+      debugger;
 
       return new FormGroup({
-             'id': new FormControl(),
-            'placeOfStay': new FormControl(data.placeOfStay),
+             'id': new FormControl(data.id),
+            'placeofStay': new FormControl(data.placeofStay),
             'fromDate': new FormControl(data.fromDate, Validators.required),
             'toDate': new FormControl(data.toDate, Validators.required),
             'currency': new FormControl(data.currency, Validators.required),
@@ -45,7 +46,7 @@ export class BoardingLodgingItemControlComponent {
     static buildItem(data: any) {
       return new FormGroup({
             'id': new FormControl(),
-            'placeOfStay': new FormControl(data.placeOfStay),
+            'placeofStay': new FormControl(data.placeofStay),
             'fromDate': new FormControl(data.fromDate, Validators.required),
             'toDate': new FormControl(data.toDate, Validators.required),
             'currency': new FormControl(data.currency, Validators.required),

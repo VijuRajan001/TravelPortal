@@ -29,7 +29,7 @@ export class TravelExpensesWithVoucherItemControlComponent {
     static buildItemwithValue(data: any) {
 
       return new FormGroup({
-            'id':new FormControl(),
+            'id':new FormControl(data.id),
             'date': new FormControl(data.date),
             'from': new FormControl(data.from, Validators.required),
             'to': new FormControl(data.to, Validators.required),

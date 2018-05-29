@@ -136,6 +136,8 @@ namespace TravelDesk.Mappings
                 .ReverseMap();
 
             CreateMap<FareInfo, FareItem>()
+                .ForMember(dest => dest.Id,
+                            opt => opt.MapFrom(src => src.FareInfoId))
                 .ForMember(dest => dest.TravelMode,
                             opt => opt.MapFrom(src => src.TravelMode))
                 .ForMember(dest => dest.Date,
@@ -180,6 +182,8 @@ namespace TravelDesk.Mappings
 
 
             CreateMap<BoardingLodgingInfo, BoardingLodgingItem>()
+                .ForMember(dest => dest.Id,
+                            opt => opt.MapFrom(src => src.BoardingInfoId))
                 .ForMember(dest => dest.PlaceofStay,
                             opt => opt.MapFrom(src => src.PlaceofStay))
                 .ForMember(dest => dest.FromDate,
@@ -202,6 +206,8 @@ namespace TravelDesk.Mappings
 
 
             CreateMap<TravelExpensesWithoutVoucherInfo, TravelExpensesWithoutVoucherItem>()
+                .ForMember(dest => dest.Id,
+                            opt => opt.MapFrom(src => src.TravelExpensesWithoutVoucherInfoId))
                 .ForMember(dest => dest.Date,
                             opt => opt.MapFrom(src => src.Date))
                 .ForMember(dest => dest.From,
@@ -216,21 +222,21 @@ namespace TravelDesk.Mappings
                             opt => opt.MapFrom(src => src.AmountSpent))
                 .ForMember(dest => dest.Remarks,
                             opt => opt.MapFrom(src => src.Remarks))
-                .ForMember(dest => dest.Total,
-                            opt => opt.MapFrom(src => src.Total))
                 .ForMember(dest => dest.ReimbursementInfoId,
-                            opt => opt.MapFrom(src => src.ReimbursementInfo))
+                            opt => opt.MapFrom(src => src.ReimbursementInfoId))
                 .ReverseMap();
 
 
             CreateMap<TravelExpensesWithVoucherInfo, TravelExpensesWithVoucherItem>()
+                .ForMember(dest => dest.Id,
+                            opt => opt.MapFrom(src => src.TravelExpensesWithVoucherInfoId))
                 .ForMember(dest => dest.Date,
                             opt => opt.MapFrom(src => src.Date))
                 .ForMember(dest => dest.From,
                             opt => opt.MapFrom(src => src.From))
                 .ForMember(dest => dest.To,
                             opt => opt.MapFrom(src => src.To))
-                .ForMember(dest => dest.ModeofConveyance,
+                .ForMember(dest => dest.ModeOfConveyance,
                             opt => opt.MapFrom(src => src.ModeofConveyance))
                 .ForMember(dest => dest.Currency,
                             opt => opt.MapFrom(src => src.Currency))
@@ -246,6 +252,8 @@ namespace TravelDesk.Mappings
 
 
             CreateMap<OtherExpensesInfo, OtherExpensesItem>()
+                .ForMember(dest => dest.Id,
+                            opt => opt.MapFrom(src => src.OtherExpensesInfoId))
                 .ForMember(dest => dest.Date,
                             opt => opt.MapFrom(src => src.Date))
                 .ForMember(dest => dest.NatureOfExpenses,

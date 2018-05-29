@@ -29,11 +29,11 @@ export class TravelExpensesWithoutVoucherItemControlComponent {
     static buildItemwithValue(data: any) {
 
       return new FormGroup({
-            'id': new FormControl(),
+            'id': new FormControl(data.id),
             'date': new FormControl(data.date),
             'from': new FormControl(data.from, Validators.required),
             'to': new FormControl(data.to, Validators.required),
-            'modeOfConveyance': new FormControl(data.modeOfConveyance, Validators.required),
+            'modeofConveyance': new FormControl(data.modeofConveyance, Validators.required),
             'currency': new FormControl(data.currency, Validators.required),
             'amountSpent': new FormControl(data.amountSpent, Validators.required),
             'remarks': new FormControl(data.remarks, Validators.required)
@@ -48,7 +48,7 @@ export class TravelExpensesWithoutVoucherItemControlComponent {
             'date': new FormControl(),
             'from': new FormControl(val, Validators.required),
             'to': new FormControl(val, Validators.required),
-            'modeOfConveyance': new FormControl(val, Validators.required),
+            'modeofConveyance': new FormControl(val, Validators.required),
             'currency': new FormControl(val, Validators.required),
             'amountSpent': new FormControl(val, Validators.required),
             'remarks': new FormControl(val, Validators.required)

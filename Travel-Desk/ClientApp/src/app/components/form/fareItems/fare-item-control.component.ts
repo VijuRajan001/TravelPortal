@@ -35,7 +35,7 @@ export class FareItemControlComponent {
             'from': new FormControl(data.from, Validators.required),
             'to': new FormControl(data.to, Validators.required),
             'currency': new FormControl(data.currency, Validators.required),
-            'amountspent': new FormControl(data.amountspent, Validators.required),
+            'amountSpent': new FormControl(data.amountSpent, Validators.required),
             'remarks': new FormControl(data.remarks, Validators.required)
 
         });
@@ -50,7 +50,7 @@ export class FareItemControlComponent {
             'from': new FormControl(val, Validators.required),
             'to': new FormControl(val, Validators.required),
             'currency': new FormControl(val, Validators.required),
-            'amountspent': new FormControl(val, Validators.required),
+            'amountSpent': new FormControl(val, Validators.required),
             'remarks': new FormControl(val, Validators.required)
         })
     }

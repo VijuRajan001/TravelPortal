@@ -7,6 +7,7 @@ namespace TravelDesk.Models
 {
     public class BoardingLodgingItem
     {
+        public int Id { get; set; }
         public string PlaceofStay { get;
             set; }
         public DateTime FromDate { get;
