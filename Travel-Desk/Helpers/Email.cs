@@ -8,11 +8,11 @@ using TravelDesk.Models;
 
 namespace TravelDesk.Helpers
 {
-    public class Email
+    public static class Email
     {
 
         
-        public string SendMail(EmailModel model)
+        public static string SendMail(EmailModel model)
         {
             using (MailMessage mm = new MailMessage(model.Email, model.To))
             {
@@ -21,9 +21,9 @@ namespace TravelDesk.Helpers
                 mm.IsBodyHtml = false;
                 using (SmtpClient smtp = new SmtpClient())
                 {
-                    smtp.Host = "smtp.gmail.com";
+                    smtp.Host = "smtp.office365.com";
                     smtp.EnableSsl = true;
-                    NetworkCredential NetworkCred = new NetworkCredential(model.Email, model.Password);
+                    NetworkCredential NetworkCred = new NetworkCredential(model.Email, "Monday$321");
                     smtp.UseDefaultCredentials = true;
                     smtp.Credentials = NetworkCred;
                     smtp.Port = 587;

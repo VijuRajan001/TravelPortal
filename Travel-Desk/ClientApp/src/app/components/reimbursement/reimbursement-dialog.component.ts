@@ -49,12 +49,13 @@ import { ITravelExpensesWithVoucherItem, TravelExpensesWithVoucherItem } from '.
 import { TravelExpensesWithVoucherOptions, ITravelExpensesWithVoucherOptions } from '../../shared/models/travelExpensesWithVoucheroptions.interface';
 import { ITravelExpensesWithoutVoucherOptions, TravelExpensesWithoutVoucherOptions } from '../../shared/models/travelExpensesWithoutVoucheroptions.interface';
 import { OtherExpensesOptions, IOtherExpensesOptions } from '../../shared/models/otherExpensesoptions.interface';
-import { PerDiemItem } from '../../shared/models/perDiemitem.interface';
+import { PerDiemItem, IPerDiemItem } from '../../shared/models/perDiemitem.interface';
 import { FareItem } from '../../shared/models/fareitem.interface';
 import { Reimbursementform } from '../../shared/models/reimbursementform.interface';
 import { BoardingLodgingItem } from '../../shared/models/boardingLodgingitem.interface';
 import { TravelExpensesWithoutVoucherItem } from '../../shared/models/travelExpensesWithoutVoucheritem.interface';
 import { OtherExpensesItem } from '../../shared/models/otherExpensesitem.interface';
+import { PerDiemOptions, IPerDiemOptions } from '../../shared/models/perDiemoptions.interface';
 @Component({
     selector: 'reimbursement-dialog',
     templateUrl: './reimbursement-dialog.component.html',
@@ -157,10 +158,10 @@ export class ReimbursementDialog implements OnInit, Validators {
         });
 
         this.PerDiemForm = this.fb.group({
-          'arrivaldate': new FormControl(null, [Validators.required]),
-          'departuredate': new FormControl(null, [Validators.required]),
-          'currency': new FormControl(null, [Validators.required]),
-          'eligibility': new FormControl(null, [Validators.required]),
+          'id': new FormControl(0),
+          'arrivalDate': new FormControl(null, [Validators.required]),
+          'departureDate': new FormControl(null, [Validators.required]),
+          'currency': new FormControl(null, [Validators.required]),          
           'totalDays': new FormControl(null, [Validators.required, Validators.maxLength(50)]),
           'totalAmount': new FormControl(null, [Validators.required]),
           'remarks': new FormControl(null, [Validators.required]),
@@ -195,10 +196,11 @@ export class ReimbursementDialog implements OnInit, Validators {
           let otherExpenseData = this.otherExpensesService.getOtherExpensesForRequest(this.data);
            forkJoin([reimbursementData, fareData, perDiemData, boardingData, voucherData,nonVoucher,otherExpenseData] ).subscribe(results => {
 
-                this.ReimbursementForm.patchValue(new ReimbursementData(<IReimbursementData>results[0]));
-                let fareOptions = new FareOptions(<IFareOptions>results[1]);
-                debugger;
-                let boardingOptions = new BoardingLodgingOptions(<IBoardingLodgingOptions>results[3]);
+             this.ReimbursementForm.patchValue(new ReimbursementData(<IReimbursementData>results[0]));
+             this.initializePerDiemForm(new PerDiemOptions(<IPerDiemOptions>results[2]));
+             let fareOptions = new FareOptions(<IFareOptions>results[1]);
+                
+             let boardingOptions = new BoardingLodgingOptions(<IBoardingLodgingOptions>results[3]);
              let VoucherOptions = new TravelExpensesWithVoucherOptions(<ITravelExpensesWithVoucherOptions>results[4]);
              let nonVoucherOptions = new TravelExpensesWithoutVoucherOptions(<ITravelExpensesWithoutVoucherOptions>results[5]);
              let otherExpenseOptions = new OtherExpensesOptions(<IOtherExpensesOptions>results[6]);
@@ -801,22 +803,35 @@ export class ReimbursementDialog implements OnInit, Validators {
 
   }
 
+  initializePerDiemForm(perDiemOptions: PerDiemOptions) {
+
+    for (let perDiemItem of perDiemOptions.PerDiemItems) {
+      this.PerDiemForm.controls['id'].setValue(perDiemItem.id);
+      this.PerDiemForm.controls['arrivalDate'].setValue(perDiemItem.arrivalDate);
+      this.PerDiemForm.controls['departureDate'].setValue(perDiemItem.departureDate);
+      this.PerDiemForm.controls['currency'].setValue(perDiemItem.currency);
+      this.PerDiemForm.controls['totalDays'].setValue(perDiemItem.totalDays);
+      this.PerDiemForm.controls['totalAmount'].setValue(perDiemItem.totalAmount);
+      this.PerDiemForm.controls['remarks'].setValue(perDiemItem.remarks)
+      }
+
+
+  }
 
 
   createUpdatePerDiem() {
     let perDiemItem: PerDiemItem;
     if (this.PerDiemForm.valid) {
       perDiemItem = new PerDiemItem();
-
-      perDiemItem.arrivalDate = this.PerDiemForm.controls['arrivaldate'].value;
-      perDiemItem.departureDate = this.PerDiemForm.controls['departuredate'].value;
+      perDiemItem.id=this.PerDiemForm.controls['id'].value;
+      perDiemItem.arrivalDate = this.PerDiemForm.controls['arrivalDate'].value;
+      perDiemItem.departureDate = this.PerDiemForm.controls['departureDate'].value;
       perDiemItem.currency = this.PerDiemForm.controls['currency'].value;
-      perDiemItem.eligibility = this.PerDiemForm.controls['eligibility'].value;
       perDiemItem.totalDays = this.PerDiemForm.controls['totalDays'].value;
       perDiemItem.totalAmount = this.PerDiemForm.controls['totalAmount'].value;
       perDiemItem.remarks = this.PerDiemForm.controls['remarks'].value;
-
-      if (this.data == 0) {
+      perDiemItem.reimbursementInfoId = this.data;
+      if (typeof(perDiemItem.id) == 'undefined' || perDiemItem.id == null) {
         this.perDiemService.addPerDiemInfo(perDiemItem).subscribe(
           (val) => {
             console.log("POST call success");

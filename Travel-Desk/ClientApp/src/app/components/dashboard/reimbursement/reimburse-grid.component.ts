@@ -79,6 +79,38 @@ export class ReimburseGrid implements OnInit {
 
     }
 
+  approve(id: number) {
+
+      this.reimbursementService.approveRequest(id).subscribe(
+          (val) => {
+            this.dataSource.loadReimbursement();
+          },
+          response => {
+            console.log("POST call in error", response);
+          },
+          () => {
+            console.log("The POST observable is now completed.");
+          });
+
+    }
+
+    decline(id: number) {
+
+
+      this.reimbursementService.declineRequest(id).subscribe(
+          (val) => {
+            this.dataSource.loadReimbursement();
+          },
+          response => {
+            console.log("POST call in error", response);
+          },
+          () => {
+            console.log("The POST observable is now completed.");
+          });
+
+    }
+    
+
 
 }
 
@@ -107,7 +139,12 @@ export class ReimbursementDataSource extends DataSource<any>
       catchError(() => of([])),
       finalize(() => this.loadingReimbursementSubject.next(false))
     )
-      .subscribe(request => this.reimbursementSubject.next(request));
+      .subscribe(request => {
+        this.reimbursementSubject.next(request);
+        console.log(request);
+      }
+
+    );
 
 
   }

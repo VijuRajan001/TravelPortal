@@ -57,29 +57,26 @@ namespace TravelDesk.Controllers
         }
 
         [HttpPost("UpdatePerDiem")]
-        public void UpdatePerDiem([FromBody]PerDiemViewModel perDiemData)
+        public void UpdatePerDiem([FromBody]PerDiemItem perDiemData)
         {
-            List<PerDiemItem> perDiemItems = new List<PerDiemItem>();
-            perDiemItems.AddRange(perDiemData.perDiemItems);
-            
-            
-            List<PerDiemInfo> perDiemDataList = (_unitofWork.PerDiemRepository.GetPerDiemForRequest(perDiemItems.First().ReimbursementInfoId));
-            
-            foreach(var item in perDiemItems)
-            {
-                var refItem = perDiemDataList.FirstOrDefault(i => i.ReimbursementInfoId == item.ReimbursementInfoId);
+
+
+            List<PerDiemInfo> perDiemDataList = (_unitofWork.PerDiemRepository.GetPerDiemForRequest(perDiemData.ReimbursementInfoId));
+
+
+            var refItem = perDiemDataList.FirstOrDefault(i => i.PerDiemInfoId == perDiemData.Id);
                 if(refItem!=null)
                 {
-                    refItem.ArrivalDate = item.ArrivalDate;
-                    refItem.DepartureDate = item.DepartureDate;
-                    refItem.Currency = item.Currency;
-                    refItem.Eligibility = item.Eligibility;
-                    refItem.TotalDays = item.TotalDays;
-                    refItem.TotalAmount = item.TotalAmount;
-                    refItem.Remarks = item.Remarks;
+                refItem.ArrivalDate = perDiemData.ArrivalDate;
+                    refItem.DepartureDate = perDiemData.DepartureDate;
+                    refItem.Currency = perDiemData.Currency;
+                    refItem.Eligibility = perDiemData.Eligibility;
+                    refItem.TotalDays = perDiemData.TotalDays;
+                    refItem.TotalAmount = perDiemData.TotalAmount;
+                    refItem.Remarks = perDiemData.Remarks;
 
                 }
-            }
+            
 
             _unitofWork.Complete();
 

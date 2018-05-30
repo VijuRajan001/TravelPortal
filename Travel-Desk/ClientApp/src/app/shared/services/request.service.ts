@@ -54,5 +54,18 @@ export class RequestService extends BaseService {
       
       return this.http.post(this.baseUrl + 'api/Request/UpdateRequest', 
         JSON.stringify(requestData));
-    }
+  }
+
+  approveRequest(id: number) : Observable<any>{
+    return this.http.get(this.baseUrl + 'api/Request/ApproveRequest', {
+      params: new HttpParams().set('id', id.toString())
+    });
+
+  }
+  declineRequest(id: number) : Observable<any>{
+    return this.http.get(this.baseUrl + 'api/Request/DeclineRequest', {
+      params: new HttpParams().set('id', id.toString())
+      });
+
+  }
 }

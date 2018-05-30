@@ -133,6 +133,8 @@ namespace TravelDesk.Mappings
                             opt => opt.MapFrom(src => src.TravelExpenseReimbursed))
                 .ForMember(dest => dest.AnyOtherExpenseReimbursed,
                             opt => opt.MapFrom(src => src.AnyOtherExpenseReimbursed))
+                            .ForMember(dest => dest.ReimbursementStatus,
+                            opt => opt.MapFrom(src => src.ReimbursementStatus))
                 .ReverseMap();
 
             CreateMap<FareInfo, FareItem>()
@@ -160,6 +162,10 @@ namespace TravelDesk.Mappings
 
 
             CreateMap<PerDiemInfo, PerDiemItem>()
+
+                .ForMember(dest => dest.Id,
+                            opt => opt.MapFrom(src => src.PerDiemInfoId))
+
                 .ForMember(dest => dest.ArrivalDate,
                             opt => opt.MapFrom(src => src.ArrivalDate))
                 .ForMember(dest => dest.DepartureDate,

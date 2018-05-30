@@ -1,29 +1,31 @@
 export class PerDiemItem {
 
     constructor(perDiemItem: IPerDiemItem = {
+        id:0,
         arrivalDate: "",
         departureDate: "",
-        currency: "",
-        eligibility: 0,
+        currency: "",        
         totalDays: 0,
         totalAmount: 0,
         remarks: "",
         reimbursementInfoId: 0,
     }) {
+        this.id = perDiemItem.id;
         this.arrivalDate = perDiemItem.arrivalDate;
         this.departureDate = perDiemItem.departureDate;
-        this.currency = perDiemItem.currency;
-        this.eligibility = perDiemItem.eligibility;
+        this.currency = perDiemItem.currency;        
         this.totalDays = perDiemItem.totalDays;
         this.totalAmount = perDiemItem.totalAmount;
         this.remarks = perDiemItem.remarks;
         this.reimbursementInfoId = perDiemItem.reimbursementInfoId;
         
-    }
+        
+  }
+    public id: number;
     public arrivalDate: string;
     public departureDate: string;
     public currency: string;
-    public eligibility: number;
+    
     public totalDays: number;
     public totalAmount: number;
     public remarks: string;
@@ -32,10 +34,10 @@ export class PerDiemItem {
 
 
 export interface IPerDiemItem {
+    id: number;
     arrivalDate: string;
     departureDate: string;
     currency: string;
-    eligibility: number;
     totalDays: number;
     totalAmount: number;
     remarks: string;

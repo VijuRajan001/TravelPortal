@@ -9,6 +9,7 @@ using AutoMapper;
 using DataAccessRepository.Core;
 using DataAccessRepository.Entities;
 using Microsoft.AspNetCore.Mvc;
+using TravelDesk.Helpers;
 using TravelDesk.Models;
 using TravelDesk.ViewModels;
 
@@ -81,5 +82,33 @@ namespace TravelDesk.Controllers
             
         }
 
+
+        [HttpGet("ApproveRequest")]
+        public void ApproveRequest(int id)
+        {
+            ReimbursementInfo newRequest = _unitofWork.ReimbursementRepository.Get(id);
+            newRequest.ReimbursementStatus = "Approved";
+            int i = _unitofWork.Complete();
+            EmailModel email = new EmailModel();
+            email.To = "vijurajana@nousinfo.com";
+            email.Subject = "Travel reimbursement Status for reimbursement Id " + id;
+            email.Body = "Reimbursement Status for reimbursement Id " + id + " has been Approved";
+            email.Email = "vijurajana@nousinfo.com";
+            Email.SendMail(email);
+        }
+
+        [HttpGet("DeclineRequest")]
+        public void DeclineRequest(int id)
+        {
+            ReimbursementInfo newRequest = _unitofWork.ReimbursementRepository.Get(id);
+            newRequest.ReimbursementStatus = "Declined";
+            int i = _unitofWork.Complete();
+            EmailModel email = new EmailModel();
+            email.To = "vijurajana@nousinfo.com";
+            email.Subject = "Travel reimbursement Status for Request Id " + id;
+            email.Body = "Reimbursement Status for reimbursement Id " + id + " has been Declined";
+            email.Email = "vijurajana@nousinfo.com";
+            Email.SendMail(email);
+        }
     }
 }

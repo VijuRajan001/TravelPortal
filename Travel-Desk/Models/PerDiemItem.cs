@@ -7,6 +7,7 @@ namespace TravelDesk.Models
 {
     public class PerDiemItem
     {
+        public int Id { get; set; }
         public DateTime ArrivalDate { get; set; }
         public DateTime DepartureDate { get; set; }
         public string Currency { get; set; }

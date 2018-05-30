@@ -17,7 +17,8 @@ export class ReimbursementData {
         travelBillabletoCustomer: false,
         flightChargesReimbursed: false,
         travelExpenseReimbursed: false,
-        anyOtherExpenseReimbursed: false
+        anyOtherExpenseReimbursed: false,
+        reimbursementStatus: ''
     }) {
 
         this.reimbursementInfoId = request.reimbursementInfoId;
@@ -36,6 +37,7 @@ export class ReimbursementData {
       this.flightChargesReimbursed = request.flightChargesReimbursed;
       this.travelExpenseReimbursed = request.travelExpenseReimbursed;
       this.anyOtherExpenseReimbursed = request.anyOtherExpenseReimbursed;
+      this.reimbursementStatus = request.reimbursementStatus;
 
     }
     public reimbursementInfoId: number;
@@ -54,6 +56,7 @@ export class ReimbursementData {
     public flightChargesReimbursed: boolean;
     public travelExpenseReimbursed: boolean;
     public anyOtherExpenseReimbursed: boolean;
+  public reimbursementStatus: string;
 
 }
 
@@ -75,4 +78,5 @@ export interface IReimbursementData {
      flightChargesReimbursed: boolean;
      travelExpenseReimbursed: boolean;
      anyOtherExpenseReimbursed: boolean;
+     reimbursementStatus: string;
 }

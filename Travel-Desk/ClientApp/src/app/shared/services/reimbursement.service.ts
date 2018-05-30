@@ -48,5 +48,18 @@ export class ReimbursementService extends BaseService {
       
       return this.http.post(this.baseUrl + 'api/Reimbursement/UpdateReimbursement', 
         JSON.stringify(reimbursementData));
-    }
+  }
+
+  approveRequest(id: number) : Observable<any>{
+    return this.http.get(this.baseUrl + 'api/Reimbursement/ApproveRequest', {
+      params: new HttpParams().set('id', id.toString())
+    });
+
+  }
+  declineRequest(id: number) : Observable<any>{
+    return this.http.get(this.baseUrl + 'api/Reimbursement/DeclineRequest', {
+      params: new HttpParams().set('id', id.toString())
+      });
+
+  }
 }

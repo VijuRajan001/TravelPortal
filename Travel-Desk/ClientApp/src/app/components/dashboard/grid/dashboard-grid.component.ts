@@ -89,7 +89,36 @@ export class TableOverviewExample implements OnInit {
         
     }
 
+    approve(id: number) {
 
+      this.requestService.approveRequest(id).subscribe(
+          (val) => {
+            this.dataSource.loadRequests();
+          },
+          response => {
+            console.log("POST call in error", response);
+          },
+          () => {
+            console.log("The POST observable is now completed.");
+          });
+
+    }
+
+    decline(id: number) {
+
+
+      this.requestService.declineRequest(id).subscribe(
+          (val) => {
+            this.dataSource.loadRequests();
+          },
+          response => {
+            console.log("POST call in error", response);
+          },
+          () => {
+            console.log("The POST observable is now completed.");
+          });
+
+    }
     
     loadRequestPage() {
 

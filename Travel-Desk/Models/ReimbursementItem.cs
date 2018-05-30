@@ -39,5 +39,6 @@ namespace TravelDesk.Models
             set; }
         public Boolean AnyOtherExpenseReimbursed { get;
             set; }
+        public string ReimbursementStatus { get; set; }
     }
 }

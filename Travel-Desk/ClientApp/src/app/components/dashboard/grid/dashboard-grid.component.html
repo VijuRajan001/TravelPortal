@@ -52,10 +52,10 @@
         <button mat-icon-button (click)="openRequestDialog(row.requestId)" color="primary">
           <mat-icon>edit</mat-icon>
         </button>
-        <button mat-icon-button (click)="requestId.status=true" style="color:greenyellow">
+        <button mat-icon-button *ngIf="row.reimbursementStatus!='Approved'" (click)="approve(row.requestId)" style="color:greenyellow">
           <mat-icon>check</mat-icon>
         </button>
-        <button mat-icon-button (click)="requestId.status=false" color="accent">
+        <button mat-icon-button *ngIf="row.reimbursementStatus!='Declined'" (click)="decline(row.requestId)" color="accent">
           <mat-icon>close</mat-icon>
         </button>
       </mat-cell>

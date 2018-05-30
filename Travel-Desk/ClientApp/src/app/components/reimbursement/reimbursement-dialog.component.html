@@ -154,19 +154,19 @@
           <form [formGroup]="PerDiemForm" (ngSubmit)="onSubmit()">
             <div class="form-content form-container">
               <mat-form-field>
-                <input matInput [max]="maxDate" placeholder="Date of Arrival at Location" class="datecontrol" [matDatepicker]="arrivaldate" (focus)="arrivaldate.open()" readonly formControlName="arrivaldate">
+                <input matInput [max]="maxDate" placeholder="Date of Arrival at Location" class="datecontrol" [matDatepicker]="arrivaldate" (focus)="arrivaldate.open()" readonly formControlName="arrivalDate">
                 <mat-datepicker-toggle matSuffix [for]="arrivaldate"></mat-datepicker-toggle>
                 <mat-datepicker #arrivaldate></mat-datepicker>
-                <mat-error *ngIf="PerDiemForm.get('arrivaldate').hasError('required')">
+                <mat-error *ngIf="PerDiemForm.get('arrivalDate').hasError('required')">
                   Date of Arrival is <strong>required</strong>
                 </mat-error>
               </mat-form-field>
               
               <mat-form-field>
-                <input matInput [max]="maxDate" placeholder="Date of Departure from Location" class="datecontrol" [matDatepicker]="departuredate" (focus)="departuredate.open()" readonly formControlName="departuredate">
+                <input matInput [max]="maxDate" placeholder="Date of Departure from Location" class="datecontrol" [matDatepicker]="departuredate" (focus)="departuredate.open()" readonly formControlName="departureDate">
                 <mat-datepicker-toggle matSuffix [for]="departuredate"></mat-datepicker-toggle>
                 <mat-datepicker #departuredate></mat-datepicker>
-                <mat-error *ngIf="PerDiemForm.get('departuredate').hasError('required')">
+                <mat-error *ngIf="PerDiemForm.get('departureDate').hasError('required')">
                   Date of Arrival is <strong>required</strong>
                 </mat-error>
               </mat-form-field>
@@ -178,12 +178,7 @@
                   Website is <strong>required</strong>
                 </mat-error>
               </mat-form-field>
-              <mat-form-field>
-                <input matInput placeholder="Per diem Eligibility" formControlName="eligibility" [attr.id]="'eligibility'+index" required>
-                <mat-error *ngIf="PerDiemForm.get('eligibility').hasError('required')">
-                  Mobile number is <strong>required</strong>
-                </mat-error>
-              </mat-form-field>
+              
               <mat-form-field>
                 <input matInput placeholder="Total No. of Days" formControlName="totalDays" [attr.id]="'totalDays'+index" required>
                 <mat-error *ngIf="PerDiemForm.get('totalDays').hasError('required')">
