@@ -28,7 +28,7 @@ namespace TravelDesk.Controllers
         [HttpPost("AddOtherExpenses")]
         public void AddOtherExpenses([FromBody] OtherExpensesViewModel otherExpensesViewModel)
         {
-            List<OtherExpensesInfo> _otherExpensesItems = _mapper.Map<List<OtherExpensesItem>, List<OtherExpensesInfo>>(otherExpensesViewModel.otherExpensesItems);
+            List<OtherExpensesInfo> _otherExpensesItems = _mapper.Map<List<OtherExpensesItem>, List<OtherExpensesInfo>>(otherExpensesViewModel.otherExpenseItems);
             _unitofWork.OtherExpensesRepository.AddOtherExpensesOptions(_otherExpensesItems);
             _unitofWork.Complete();
 
@@ -38,7 +38,7 @@ namespace TravelDesk.Controllers
         public OtherExpensesViewModel GetOtherExpensesForRequest(int id)
         {
             OtherExpensesViewModel otherExpensesOptions = new OtherExpensesViewModel();
-            otherExpensesOptions.otherExpensesItems = _mapper.Map<List<OtherExpensesInfo>, List<OtherExpensesItem>>(_unitofWork.OtherExpensesRepository.GetOtherExpensesForRequest(id));
+            otherExpensesOptions.otherExpenseItems = _mapper.Map<List<OtherExpensesInfo>, List<OtherExpensesItem>>(_unitofWork.OtherExpensesRepository.GetOtherExpensesForRequest(id));
 
             return otherExpensesOptions;
 
@@ -60,14 +60,14 @@ namespace TravelDesk.Controllers
         public void UpdateOtherExpenses([FromBody]OtherExpensesViewModel otherExpensesData)
         {
             List<OtherExpensesItem> otherExpensesItems = new List<OtherExpensesItem>();
-            otherExpensesItems.AddRange(otherExpensesData.otherExpensesItems);
+            otherExpensesItems.AddRange(otherExpensesData.otherExpenseItems);
             
             
             List<OtherExpensesInfo> otherExpensesList = (_unitofWork.OtherExpensesRepository.GetOtherExpensesForRequest(otherExpensesItems.First().ReimbursementInfoId));
             
             foreach(var item in otherExpensesItems)
             {
-                var refItem = otherExpensesList.FirstOrDefault(i => i.ReimbursementInfoId == item.ReimbursementInfoId);
+                var refItem = otherExpensesList.FirstOrDefault(i => i.OtherExpensesInfoId == item.Id);
                 if(refItem!=null)
                 {
                     refItem.Date = item.Date;

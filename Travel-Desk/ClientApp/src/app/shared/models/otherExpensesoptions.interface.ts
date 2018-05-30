@@ -11,10 +11,10 @@ export class OtherExpensesOptions {
     }) {
 
        otherExpensesOptions.otherExpenseItems.forEach(item => item.supportByVoucher = false);
-      this.OtherExpensesItems = otherExpensesOptions.otherExpenseItems;
+      this.OtherExpenseItems = otherExpensesOptions.otherExpenseItems;
 
     }
-    public OtherExpensesItems: OtherExpensesItem[];
+    public OtherExpenseItems: OtherExpensesItem[];
    
 }
 

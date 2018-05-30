@@ -53,6 +53,8 @@ import { PerDiemItem } from '../../shared/models/perDiemitem.interface';
 import { FareItem } from '../../shared/models/fareitem.interface';
 import { Reimbursementform } from '../../shared/models/reimbursementform.interface';
 import { BoardingLodgingItem } from '../../shared/models/boardingLodgingitem.interface';
+import { TravelExpensesWithoutVoucherItem } from '../../shared/models/travelExpensesWithoutVoucheritem.interface';
+import { OtherExpensesItem } from '../../shared/models/otherExpensesitem.interface';
 @Component({
     selector: 'reimbursement-dialog',
     templateUrl: './reimbursement-dialog.component.html',
@@ -197,7 +199,9 @@ export class ReimbursementDialog implements OnInit, Validators {
                 let fareOptions = new FareOptions(<IFareOptions>results[1]);
                 debugger;
                 let boardingOptions = new BoardingLodgingOptions(<IBoardingLodgingOptions>results[3]);
-                let VoucherOptions = new TravelExpensesWithVoucherOptions(<ITravelExpensesWithVoucherOptions>results[4]);
+             let VoucherOptions = new TravelExpensesWithVoucherOptions(<ITravelExpensesWithVoucherOptions>results[4]);
+             let nonVoucherOptions = new TravelExpensesWithoutVoucherOptions(<ITravelExpensesWithoutVoucherOptions>results[5]);
+             let otherExpenseOptions = new OtherExpensesOptions(<IOtherExpensesOptions>results[6]);
         //        let hotelOptions = new HotelOptions(<IHotelOptions>results[2]);
 
                 
@@ -230,12 +234,39 @@ export class ReimbursementDialog implements OnInit, Validators {
                     i = i + 1;
 
 
-                });
+             });
+             i = 0;
+             debugger;
+             nonVoucherOptions.TravelExpensesWithoutVoucherItems.forEach(item => {
+               if (i == 0) {
+                 (this.TravelWithoutVoucherForm.get('travelExpensesWithoutVoucherItems') as FormArray).setControl(i, TravelExpensesWithoutVoucherItemsArrayComponent.buildItemsWithValue(item));
+               } else {
+                 (this.TravelWithoutVoucherForm.get('travelExpensesWithoutVoucherItems') as FormArray).insert(i, TravelExpensesWithoutVoucherItemsArrayComponent.buildItemsWithValue(item));
+               }
+               i = i + 1;
+
+
+             });
+
+             i = 0;
+             otherExpenseOptions.OtherExpenseItems.forEach(item => {
+               if (i == 0) {
+                 (this.OtherExpensesForm.get('otherExpenseItems') as FormArray).setControl(i, OtherExpensesItemsArrayComponent.buildItemsWithValue(item));
+               } else {
+                 (this.OtherExpensesForm.get('otherExpenseItems') as FormArray).insert(i, OtherExpensesItemsArrayComponent.buildItemsWithValue(item));
+               }
+               i = i + 1;
+
+
+             });
+
 
 
                   this.reimbursementformInfo.fareOptions = new FareOptions(<IFareOptions> this.FareOptionsForm.value);
                   this.reimbursementformInfo.boardingLodgingOptions = new BoardingLodgingOptions(<IBoardingLodgingOptions> this.BoardingExpensesForm.value);
-                  this.reimbursementformInfo.travelExpensesWithVoucherOptions = new TravelExpensesWithVoucherOptions(<ITravelExpensesWithVoucherOptions>this.TravelWithVoucherForm.value);
+             this.reimbursementformInfo.travelExpensesWithVoucherOptions = new TravelExpensesWithVoucherOptions(<ITravelExpensesWithVoucherOptions>this.TravelWithVoucherForm.value);
+             this.reimbursementformInfo.travelExpensesWithoutVoucherOptions = new TravelExpensesWithoutVoucherOptions(<ITravelExpensesWithoutVoucherOptions>this.TravelWithoutVoucherForm.value);
+             this.reimbursementformInfo.otherExpensesOptions = new OtherExpensesOptions(<IOtherExpensesOptions>this.OtherExpensesForm.value);
         //        this.traveldata.passportData = new Passport(<IPassport>this.PassportForm.value);
         //        this.traveldata.forexCardData = new ForexCard(<IForexCard>this.ForexForm.value);
 
@@ -574,7 +605,7 @@ export class ReimbursementDialog implements OnInit, Validators {
 
 
       saveNonVoucherData = new TravelExpensesWithoutVoucherOptions(<ITravelExpensesWithoutVoucherOptions>this.TravelWithoutVoucherForm.value);
-      //this.deleteFare(savefaredata);
+      this.deleteNonVoucherData(saveNonVoucherData);
       saveNonVoucherData.TravelExpensesWithoutVoucherItems.forEach(item => {
         item.reimbursementInfoId = this.data;
 
@@ -619,7 +650,39 @@ export class ReimbursementDialog implements OnInit, Validators {
       }
     }
 
-  
+
+  deleteNonVoucherData(finalNonVoucherData: TravelExpensesWithoutVoucherOptions) {
+    let initialNonVoucherData: TravelExpensesWithoutVoucherOptions = this.reimbursementformInfo.travelExpensesWithoutVoucherOptions;
+    let deletedItemsId: number[] = [];
+
+    if (initialNonVoucherData.TravelExpensesWithoutVoucherItems.length > finalNonVoucherData.TravelExpensesWithoutVoucherItems.length) {
+
+      initialNonVoucherData.TravelExpensesWithoutVoucherItems.forEach(item => {
+        let index = finalNonVoucherData.TravelExpensesWithoutVoucherItems.findIndex((nonVoucherItem: TravelExpensesWithoutVoucherItem) => { return item.id == nonVoucherItem.id })
+
+        if (index === -1) {
+          deletedItemsId.push(item.id);
+        }
+      });
+
+    }
+
+    if (deletedItemsId.length > 0) {
+      this.travelExpensesWithoutVoucherService.deleteTravelExpensesWithoutVoucher(deletedItemsId).subscribe(
+        (val) => {
+          console.log("POST call success");
+        },
+        response => {
+          console.log("POST call in error", response);
+        },
+        () => {
+          console.log("The POST observable is now completed.");
+        });
+    }
+
+
+  }
+
 
     //updateRequest() {
 
@@ -660,37 +723,24 @@ export class ReimbursementDialog implements OnInit, Validators {
 
 
       saveOtherExpenseData = new OtherExpensesOptions(<IOtherExpensesOptions>this.OtherExpensesForm.value);
-      //this.deleteFare(savefaredata);
-      saveOtherExpenseData.OtherExpensesItems.forEach(item => {
+      this.deleteOtherExpenseData(saveOtherExpenseData);
+      saveOtherExpenseData.OtherExpenseItems.forEach(item => {
         item.reimbursementInfoId = this.data;
 
-        if (item.id === null) {
+        if (item.id === null || item.id ==0) {
           item.id = 0;
-          addOtherExpenseData.OtherExpensesItems.push(item);
+          addOtherExpenseData.OtherExpenseItems.push(item);
 
         }
         else {
 
-          updateOtherExpenseData.OtherExpensesItems.push(item);
+          updateOtherExpenseData.OtherExpenseItems.push(item);
         }
 
       });
 
-      console.log(addOtherExpenseData);
-      saveOtherExpenseData.OtherExpensesItems.forEach(item => {
-        item.reimbursementInfoId = this.data;
-
-        if (item.id === null) {
-          item.id = 0;
-          addOtherExpenseData.OtherExpensesItems.push(item);
-        }
-        else {
-
-          updateOtherExpenseData.OtherExpensesItems.push(item);
-        }
-      });
-
-      if(addOtherExpenseData.OtherExpensesItems.length>0)
+     
+      if(addOtherExpenseData.OtherExpenseItems.length>0)
       this.otherExpensesService.addOtherExpensesInfo(addOtherExpenseData).subscribe(
         (val) => {
           console.log("POST call success");
@@ -702,7 +752,7 @@ export class ReimbursementDialog implements OnInit, Validators {
           console.log("The POST observable is now completed.");
         });
 
-      if(updateOtherExpenseData.OtherExpensesItems.length>0)
+      if(updateOtherExpenseData.OtherExpenseItems.length>0)
       this.otherExpensesService.updateOtherExpensesInfo(updateOtherExpenseData).subscribe(
           (val) => {
               console.log("POST call success");
@@ -717,6 +767,41 @@ export class ReimbursementDialog implements OnInit, Validators {
     }
 
   }
+
+
+  deleteOtherExpenseData(finalExpenseData: OtherExpensesOptions) {
+    let initialExpenseData: OtherExpensesOptions = this.reimbursementformInfo.otherExpensesOptions;
+    let deletedItemsId: number[] = [];
+
+    if (initialExpenseData.OtherExpenseItems.length > finalExpenseData.OtherExpenseItems.length) {
+
+      initialExpenseData.OtherExpenseItems.forEach(item => {
+        let index = finalExpenseData.OtherExpenseItems.findIndex((otherExpenseItem: OtherExpensesItem) => { return item.id == otherExpenseItem.id })
+
+        if (index === -1) {
+          deletedItemsId.push(item.id);
+        }
+      });
+
+    }
+
+    if (deletedItemsId.length > 0) {
+      this.otherExpensesService.deleteOtherExpenses(deletedItemsId).subscribe(
+        (val) => {
+          console.log("POST call success");
+        },
+        response => {
+          console.log("POST call in error", response);
+        },
+        () => {
+          console.log("The POST observable is now completed.");
+        });
+    }
+
+
+  }
+
+
 
   createUpdatePerDiem() {
     let perDiemItem: PerDiemItem;

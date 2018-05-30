@@ -29,7 +29,7 @@ export class OtherExpensesItemControlComponent {
     static buildItemwithValue(data: any) {
 
       return new FormGroup({
-        'id': new FormControl(),
+        'id': new FormControl(data.id),
             'date': new FormControl(data.date),
             'natureOfExpenses': new FormControl(data.natureOfExpenses, Validators.required),
             'currency': new FormControl(data.currency, Validators.required),

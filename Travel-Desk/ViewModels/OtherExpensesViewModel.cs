@@ -8,7 +8,7 @@ namespace TravelDesk.ViewModels
 {
     public class OtherExpensesViewModel
     { 
-        public List<OtherExpensesItem> otherExpensesItems { get; set; }
+        public List<OtherExpensesItem> otherExpenseItems { get; set; }
         
     }
 }

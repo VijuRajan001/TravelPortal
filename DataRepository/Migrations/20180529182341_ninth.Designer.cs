@@ -12,9 +12,10 @@ using System;
 namespace DataRepository.Migrations
 {
     [DbContext(typeof(TravDeskDbcontext))]
-    partial class TravDeskDbcontextModelSnapshot : ModelSnapshot
+    [Migration("20180529182341_ninth")]
+    partial class ninth
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
