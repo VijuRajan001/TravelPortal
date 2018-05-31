@@ -103,7 +103,7 @@ export class RequestDialog implements OnInit, Validators {
         return (this.FlightOptionsForm.get('returnFlightItems') as FormArray);
     }
 
-    onNoClick(): void {
+    close(): void {
         this.dialogRef.close();
     }
 
@@ -547,7 +547,7 @@ export class RequestDialog implements OnInit, Validators {
          this.requestService.addRequest(requestdata).subscribe(
            (val) => {
              
-             this.dialogRef.close();
+             
            },
            response => {
              console.log("POST call in error", response);
@@ -570,6 +570,8 @@ export class RequestDialog implements OnInit, Validators {
              });
 
        }
+
+       
 
       }
     

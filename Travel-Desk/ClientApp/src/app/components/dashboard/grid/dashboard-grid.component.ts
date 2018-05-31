@@ -79,7 +79,7 @@ export class TableOverviewExample implements OnInit {
             data: id
         });
 
-        dialogRef.afterClosed().subscribe(result => {
+        dialogRef.beforeClose().subscribe(result => {
 
             this.dataSource.loadRequests();
 
