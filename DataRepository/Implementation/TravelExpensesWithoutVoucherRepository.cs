@@ -12,7 +12,7 @@ namespace DataAccessRepository.Implementation
     public class TravelExpensesWithoutVoucherRepository : Repository<TravelExpensesWithoutVoucherInfo>, ITravelExpensesWithoutVoucherRepository
     {
 
-        public TravelExpensesWithoutVoucherRepository(TravDeskDbcontext context) : base(context)
+        public TravelExpensesWithoutVoucherRepository() 
         {
 
 
@@ -22,20 +22,14 @@ namespace DataAccessRepository.Implementation
 
         public void AddTravelExpensesWithoutVoucherOptions(List<TravelExpensesWithoutVoucherInfo> travelExpensesWithoutVoucherItems)
         {
-            TravDeskDbcontext.TravelExpensesWithoutVoucherInfo.AddRange(travelExpensesWithoutVoucherItems);
+          
         }
 
         List<TravelExpensesWithoutVoucherInfo> ITravelExpensesWithoutVoucherRepository.GetTravelExpensesWithoutVoucherForRequest(int id)
         {
-            List<TravelExpensesWithoutVoucherInfo> TravelExpensesWithoutVoucherInfo = new List<TravelExpensesWithoutVoucherInfo>();
-            TravelExpensesWithoutVoucherInfo = TravDeskDbcontext.TravelExpensesWithoutVoucherInfo.Where(f => f.ReimbursementInfoId == id).ToList();
-
-            return TravelExpensesWithoutVoucherInfo;
+            return null;
         }
 
-        public TravDeskDbcontext TravDeskDbcontext
-        {
-            get { return Context as TravDeskDbcontext; }
-        }
+       
     }
 }

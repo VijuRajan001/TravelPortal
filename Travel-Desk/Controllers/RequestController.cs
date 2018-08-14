@@ -6,8 +6,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using DataAccessRepository.Core;
+
 using DataAccessRepository.Entities;
+using DataAccessRepository.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using TravelDesk.Helpers;
 using TravelDesk.Models;
@@ -18,12 +19,14 @@ namespace TravelDesk.Controllers
     [Route("api/[controller]")]
     public class RequestController : Controller
     {
-        private IUnitOfWork _unitofWork;
+        
         private readonly IMapper _mapper;
-        public RequestController(IUnitOfWork unitOfWork, IMapper mapper)
+        private IRequestRepository _repository;
+        public RequestController(IRequestRepository repository, IMapper mapper)
         {
             _mapper = mapper;
-            _unitofWork = unitOfWork;
+            _repository = repository;
+            
         }
 
         [HttpPost("AddRequest")]
@@ -33,8 +36,7 @@ namespace TravelDesk.Controllers
             RequestInfo newRequest = new RequestInfo();
             newRequest=_mapper.Map<RequestItem, RequestInfo>(requestData);
             
-            _unitofWork.RequestRepository.Add(newRequest);
-            int i = _unitofWork.Complete();
+            
 
         }
 
@@ -42,61 +44,61 @@ namespace TravelDesk.Controllers
         public List<RequestItem> GetRequestList()
         {
 
-            List<RequestItem> requestDataList = _mapper.Map<List<RequestInfo>, List<RequestItem>>(_unitofWork.RequestRepository.GetAll().ToList());
+            List<RequestItem> requestDataList = _mapper.Map<List<RequestInfo>, List<RequestItem>>(_repository.GetAllRequestsWithStatus(1).ToList());
             return requestDataList.OrderByDescending(x=>x.RequestId).ToList();
 
 
 
         }
 
-        [HttpGet("GetRequestById")]
-        public RequestItem GetRequestById(int Id)
-        {
-            RequestItem requestData = _mapper.Map<RequestInfo, RequestItem>(_unitofWork.RequestRepository.Get(Id));
-            return requestData;
-        }
+        //[HttpGet("GetRequestById")]
+        //public RequestItem GetRequestById(int Id)
+        //{
+        //    RequestItem requestData = _mapper.Map<RequestInfo, RequestItem>(_unitofWork.RequestRepository.Get(Id));
+        //    return requestData;
+        //}
 
-        [HttpPost("UpdateRequest")]
-        public void UpdateRequest([FromBody]RequestItem requestData)
-        {
-            RequestInfo newRequest = _unitofWork.RequestRepository.Get(requestData.RequestId);
-            newRequest.ProjectId = requestData.Project_Code;
-            newRequest.TravelCountry = requestData.Country;
-            newRequest.TravelStart = requestData.TravelDate;
-            newRequest.TravelReturn = requestData.ReturnDate;
-            newRequest.RequestStatus = requestData.RequestStatus;
-            int i = _unitofWork.Complete();
+        //[HttpPost("UpdateRequest")]
+        //public void UpdateRequest([FromBody]RequestItem requestData)
+        //{
+        //    RequestInfo newRequest = _unitofWork.RequestRepository.Get(requestData.RequestId);
+        //    newRequest.ProjectId = requestData.Project_Code;
+        //    newRequest.TravelCountry = requestData.Country;
+        //    newRequest.TravelStart = requestData.TravelDate;
+        //    newRequest.TravelReturn = requestData.ReturnDate;
+        //    newRequest.RequestStatus = requestData.RequestStatus;
+        //    int i = _unitofWork.Complete();
             
             
-        }
+        //}
 
 
-        [HttpGet("ApproveRequest")]
-        public void ApproveRequest(int id)
-        {
-            RequestInfo newRequest = _unitofWork.RequestRepository.Get(id);
-            newRequest.RequestStatus = "Approved";
-            int i = _unitofWork.Complete();
-            EmailModel email = new EmailModel();
-            email.To = "vijurajana@nousinfo.com";
-            email.Subject = "travel Request Status for Request Id " + id;
-            email.Body= "Request Status for Request Id " + id + " has been Approved";
-            email.Email = "vijurajana@nousinfo.com";
-            Email.SendMail(email);
-        }
+        //[HttpGet("ApproveRequest")]
+        //public void ApproveRequest(int id)
+        //{
+        //    RequestInfo newRequest = _unitofWork.RequestRepository.Get(id);
+        //    newRequest.RequestStatus = "Approved";
+        //    int i = _unitofWork.Complete();
+        //    EmailModel email = new EmailModel();
+        //    email.To = "vijurajana@nousinfo.com";
+        //    email.Subject = "travel Request Status for Request Id " + id;
+        //    email.Body= "Request Status for Request Id " + id + " has been Approved";
+        //    email.Email = "vijurajana@nousinfo.com";
+        //    Email.SendMail(email);
+        //}
 
-        [HttpGet("DeclineRequest")]
-        public void DeclineRequest(int id)
-        {
-            RequestInfo newRequest = _unitofWork.RequestRepository.Get(id);
-            newRequest.RequestStatus = "Declined";
-            int i = _unitofWork.Complete();
-            EmailModel email = new EmailModel();
-            email.To = "vijurajana@nousinfo.com";
-            email.Subject = "travel Request Status for Request Id " + id;
-            email.Body = "Request Status for Request Id " + id + " has been Declined";
-            email.Email = "vijurajana@nousinfo.com";
-            Email.SendMail(email);
-        }
+        //[HttpGet("DeclineRequest")]
+        //public void DeclineRequest(int id)
+        //{
+        //    RequestInfo newRequest = _unitofWork.RequestRepository.Get(id);
+        //    newRequest.RequestStatus = "Declined";
+        //    int i = _unitofWork.Complete();
+        //    EmailModel email = new EmailModel();
+        //    email.To = "vijurajana@nousinfo.com";
+        //    email.Subject = "travel Request Status for Request Id " + id;
+        //    email.Body = "Request Status for Request Id " + id + " has been Declined";
+        //    email.Email = "vijurajana@nousinfo.com";
+        //    Email.SendMail(email);
+        //}
     }
 }

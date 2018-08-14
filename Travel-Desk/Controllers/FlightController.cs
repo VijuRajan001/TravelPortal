@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using DataAccessRepository.Core;
+
 using DataAccessRepository.Entities;
 using Microsoft.AspNetCore.Mvc;
 using TravelDesk.Models;
@@ -17,82 +17,82 @@ namespace TravelDesk.Controllers
     [Route("api/[controller]")]
     public class FlightController : Controller
     {
-        private IUnitOfWork _unitofWork;
-        private readonly IMapper _mapper;
-        public FlightController(IUnitOfWork unitOfWork, IMapper mapper)
-        {
-            _mapper = mapper;
-            _unitofWork = unitOfWork;
-        }
+        //private IUnitOfWork _unitofWork;
+        //private readonly IMapper _mapper;
+        //public FlightController(IUnitOfWork unitOfWork, IMapper mapper)
+        //{
+        //    _mapper = mapper;
+        //    _unitofWork = unitOfWork;
+        //}
 
-        [HttpPost("AddFlights")]
-        public void AddFlights([FromBody]FlightOptionsViewModel flightData)
-        {
+        //[HttpPost("AddFlights")]
+        //public void AddFlights([FromBody]FlightOptionsViewModel flightData)
+        //{
 
-            List<FlightInfo> _onwardflightItems = _mapper.Map<List<FlightItem>, List<FlightInfo>>(flightData.OnwardFlightItems);
-            List<FlightInfo> _returnflightItems = _mapper.Map<List<FlightItem>, List<FlightInfo>>(flightData.ReturnFlightItems);
-                if(_onwardflightItems.Count>0 && _returnflightItems.Count > 0) { 
-                _unitofWork.FlightRepository.AddOnwardFlightOptions(_onwardflightItems);
-                _unitofWork.FlightRepository.AddReturnFlightOptions(_returnflightItems);
+        //    List<FlightInfo> _onwardflightItems = _mapper.Map<List<FlightItem>, List<FlightInfo>>(flightData.OnwardFlightItems);
+        //    List<FlightInfo> _returnflightItems = _mapper.Map<List<FlightItem>, List<FlightInfo>>(flightData.ReturnFlightItems);
+        //        if(_onwardflightItems.Count>0 && _returnflightItems.Count > 0) { 
+        //        _unitofWork.FlightRepository.AddOnwardFlightOptions(_onwardflightItems);
+        //        _unitofWork.FlightRepository.AddReturnFlightOptions(_returnflightItems);
             
 
-                _unitofWork.Complete();
-            }
+        //        _unitofWork.Complete();
+        //    }
 
-        }
+        //}
 
-        [HttpGet("GetFlightsForRequest")]
-        public FlightOptionsViewModel GetFlightsForRequest(int id)
-        {
-            FlightOptionsViewModel vm = new FlightOptionsViewModel();
-            List<FlightItem> flightDataList = _mapper.Map<List<FlightInfo>, List<FlightItem>>(_unitofWork.FlightRepository.GetFlightsForRequest(id));
-            vm.OnwardFlightItems=flightDataList.FindAll(item => item.FlightDirection == "Onward");
-            vm.ReturnFlightItems = flightDataList.FindAll(item => item.FlightDirection == "Return");
-            return vm;
+        //[HttpGet("GetFlightsForRequest")]
+        //public FlightOptionsViewModel GetFlightsForRequest(int id)
+        //{
+        //    FlightOptionsViewModel vm = new FlightOptionsViewModel();
+        //    List<FlightItem> flightDataList = _mapper.Map<List<FlightInfo>, List<FlightItem>>(_unitofWork.FlightRepository.GetFlightsForRequest(id));
+        //    vm.OnwardFlightItems=flightDataList.FindAll(item => item.FlightDirection == "Onward");
+        //    vm.ReturnFlightItems = flightDataList.FindAll(item => item.FlightDirection == "Return");
+        //    return vm;
 
 
 
-        }
+        //}
 
-        [HttpPost("DeleteFlights")]
-        public void DeleteFlights([FromBody]List<int> deletedIDs)
-        {
-           foreach(var id in deletedIDs)
-            {
-                _unitofWork.FlightRepository.Remove(_unitofWork.FlightRepository.Get(id));
-                _unitofWork.Complete();
+        //[HttpPost("DeleteFlights")]
+        //public void DeleteFlights([FromBody]List<int> deletedIDs)
+        //{
+        //   foreach(var id in deletedIDs)
+        //    {
+        //        _unitofWork.FlightRepository.Remove(_unitofWork.FlightRepository.Get(id));
+        //        _unitofWork.Complete();
 
-            }
-        }
+        //    }
+        //}
 
-        [HttpPost("UpdateFlights")]
-        public void UpdateFlights([FromBody]FlightOptionsViewModel flightData)
-        {
-            List<FlightItem> flightItems = new List<FlightItem>();
-            flightItems.AddRange(flightData.OnwardFlightItems);
-            flightItems.AddRange(flightData.ReturnFlightItems);
+        //[HttpPost("UpdateFlights")]
+        //public void UpdateFlights([FromBody]FlightOptionsViewModel flightData)
+        //{
+        //    List<FlightItem> flightItems = new List<FlightItem>();
+        //    flightItems.AddRange(flightData.OnwardFlightItems);
+        //    flightItems.AddRange(flightData.ReturnFlightItems);
 
-            if (flightItems.Count>0)
-            { 
-                List<FlightInfo> flightDataList = (_unitofWork.FlightRepository.GetFlightsForRequest(flightItems.First().RequestInfoId));
+        //    if (flightItems.Count>0)
+        //    { 
+        //        List<FlightInfo> flightDataList = (_unitofWork.FlightRepository.GetFlightsForRequest(flightItems.First().RequestInfoId));
             
-                foreach(var item in flightItems)
-                {
-                    var refItem = flightDataList.FirstOrDefault(i => i.Id == item.Id);
-                    if(refItem!=null)
-                    {
-                        refItem.FlightFrom = item.FlightFrom;
-                        refItem.FlightTo = item.FlightTo;
-                        refItem.FlightName = item.FlightName;
-                        refItem.FlightItemId = item.FlightItemId;
+        //        foreach(var item in flightItems)
+        //        {
+        //            var refItem = flightDataList.FirstOrDefault(i => i.Id == item.Id);
+        //            if(refItem!=null)
+        //            {
+        //                refItem.FlightFrom = item.FlightFrom;
+        //                refItem.FlightTo = item.FlightTo;
+        //                refItem.FlightName = item.FlightName;
+        //                refItem.FlightItemId = item.FlightItemId;
     
-                    }
-                }
+        //            }
+        //        }
 
-                _unitofWork.Complete();
-            }
+        //        _unitofWork.Complete();
+        //    }
 
-        }
+        //}
 
     }
 }

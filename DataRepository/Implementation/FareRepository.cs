@@ -9,33 +9,33 @@ using System.Text;
 
 namespace DataAccessRepository.Implementation
 {
-    public class FareRepository: Repository<FareInfo>,IFareRepository
+    public class FareRepository: Repository<FareInfo>//,IFareRepository
     {
 
-        public FareRepository(TravDeskDbcontext context) : base(context)
-        {
+        //public FareRepository(TravDeskDbcontext context) : base(context)
+        //{
 
 
-        }
+        //}
       
         
 
-        public void AddFare(List<FareInfo> fareItems)
-        {
-            TravDeskDbcontext.FareInfo.AddRange(fareItems);
-        }
+        //public void AddFare(List<FareInfo> fareItems)
+        //{
+        //    TravDeskDbcontext.FareInfo.AddRange(fareItems);
+        //}
 
-        public List<FareInfo> GetFareForRequest(int id)
-        {
-            List<FareInfo> FareInfo = new List<FareInfo>();
-            FareInfo = TravDeskDbcontext.FareInfo.Where(f => f.ReimbursementInfoId == id).ToList();
+        //public List<FareInfo> GetFareForRequest(int id)
+        //{
+        //    List<FareInfo> FareInfo = new List<FareInfo>();
+        //    FareInfo = TravDeskDbcontext.FareInfo.Where(f => f.ReimbursementInfoId == id).ToList();
 
-            return FareInfo;
-        }
+        //    return FareInfo;
+        //}
 
-        public TravDeskDbcontext TravDeskDbcontext
-        {
-            get { return Context as TravDeskDbcontext; }
-        }
+        //public TravDeskDbcontext TravDeskDbcontext
+        //{
+        //    get { return Context as TravDeskDbcontext; }
+        //}
     }
 }

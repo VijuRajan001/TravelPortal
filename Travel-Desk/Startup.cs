@@ -1,5 +1,5 @@
 using DataAccessRepository.Base;
-using DataAccessRepository.Core;
+
 using DataAccessRepository.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -16,6 +16,11 @@ using TravelDesk.Auth.Interfaces;
 using TravelDesk.Models;
 using AutoMapper;
 using DataAccessRepository.SeedData;
+using DataRepository.Core;
+using DataAccessRepository.Implementation;
+using DataAccessRepository.Interfaces;
+using DataRepository.Interfaces;
+using DataRepository.Implementation;
 
 namespace Travel_Desk
 {
@@ -34,7 +39,13 @@ namespace Travel_Desk
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+
+
+
+            services.AddOptions();
+
+            services.Configure<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"));
+
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -42,11 +53,12 @@ namespace Travel_Desk
                 configuration.RootPath = "ClientApp/dist";
             });
 
-            services.AddDbContext<TravDeskDbcontext>(options =>
-                                  options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
-                                   b => b.MigrationsAssembly("TravelDesk")));
+            
+
+               
             services.AddSingleton<IJwtFactory, JwtFactory>();
-            services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<IRequestRepository, RequestRepository>();
+            services.AddTransient<IAuthRepository, AuthRepository>();
 
             var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
 
@@ -68,9 +80,8 @@ namespace Travel_Desk
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = _signingKey,
 
-                RequireExpirationTime = false,
                 ValidateLifetime = true,
-                ClockSkew = System.TimeSpan.Zero
+                
             };
 
             services.AddAuthentication(options =>
@@ -90,25 +101,14 @@ namespace Travel_Desk
             });
 
 
-            services.AddIdentity<AppUser, IdentityRole>
-               (o =>
-               {
-                   // configure identity options
-                   o.Password.RequireDigit = false;
-                   o.Password.RequireLowercase = false;
-                   o.Password.RequireUppercase = false;
-                   o.Password.RequireNonAlphanumeric = false;
-                   o.Password.RequiredLength = 6;
-               })
-               .AddEntityFrameworkStores<TravDeskDbcontext>()
-               .AddDefaultTokenProviders();
+            
 
             services.AddMvc().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
             services.AddAutoMapper(typeof(Startup));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, UserManager<AppUser> userManager)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -142,7 +142,7 @@ namespace Travel_Desk
                 }
             });
 
-            SeedData.SeedUsers(userManager);
+            
         }
     }
 }

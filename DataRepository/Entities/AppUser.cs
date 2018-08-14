@@ -4,12 +4,17 @@ using Microsoft.AspNetCore.Identity;
 
 namespace DataAccessRepository.Entities
 {
-    public class AppUser : IdentityUser
+    public class AppUserLogin
     {
         // Extended Properties
-        public string FirstName { get; set; }
+        public string Name { get; set; }
+        public string LoginId { get; set; }
         public string LastName { get; set; }
-        public long? FacebookId { get; set; }
-        public string PictureUrl { get; set; }
+        public string Role { get; set; }
+        public string Email { get; set; }
+        
+        
+        
+     
     }
 }
